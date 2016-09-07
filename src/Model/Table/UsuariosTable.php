@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Model\Table;
 
 use Cake\ORM\Query;
@@ -19,8 +20,7 @@ use Cake\Validation\Validator;
  *
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
  */
-class UsuariosTable extends Table
-{
+class UsuariosTable extends Table {
 
     /**
      * Initialize method
@@ -28,8 +28,7 @@ class UsuariosTable extends Table
      * @param array $config The configuration for the Table.
      * @return void
      */
-    public function initialize(array $config)
-    {
+    public function initialize(array $config) {
         parent::initialize($config);
 
         $this->table('usuarios');
@@ -45,24 +44,23 @@ class UsuariosTable extends Table
      * @param \Cake\Validation\Validator $validator Validator instance.
      * @return \Cake\Validation\Validator
      */
-    public function validationDefault(Validator $validator)
-    {
+    public function validationDefault(Validator $validator) {
         $validator
-            ->integer('id')
-            ->allowEmpty('id', 'create');
+                ->integer('id')
+                ->allowEmpty('id', 'create');
 
         $validator
-            ->allowEmpty('nome');
+                ->allowEmpty('nome');
 
         $validator
-            ->allowEmpty('login');
+                ->allowEmpty('login');
 
         $validator
-            ->allowEmpty('senha');
+                ->allowEmpty('senha');
 
         $validator
-            ->integer('status')
-            ->allowEmpty('status');
+                ->integer('status')
+                ->allowEmpty('status');
 
         return $validator;
     }
@@ -74,10 +72,20 @@ class UsuariosTable extends Table
      * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
      * @return \Cake\ORM\RulesChecker
      */
-    public function buildRules(RulesChecker $rules)
-    {
+    public function buildRules(RulesChecker $rules) {
         $rules->add($rules->isUnique(['login']));
 
         return $rules;
     }
+
+    public function beforeSave(\Cake\Event\Event $event, \Cake\ORM\Entity $entity) {
+        if (!empty($entity->senha) AND trim($entity->senha) != '' AND strlen($entity->senha) < 50) {
+            $hasher = new \Cake\Auth\DefaultPasswordHasher();
+            $entity->senha = $hasher->hash($entity->senha);
+        } else {
+            unset($entity->senha);
+        }
+        return true;
+    }
+
 }
