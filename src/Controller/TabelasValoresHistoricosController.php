@@ -55,11 +55,11 @@ class TabelasValoresHistoricosController extends AppController
         if ($this->request->is('post')) {
             $tabelasValoresHistorico = $this->TabelasValoresHistoricos->patchEntity($tabelasValoresHistorico, $this->request->data);
             if ($this->TabelasValoresHistoricos->save($tabelasValoresHistorico)) {
-                $this->Flash->success(__('The tabelas valores historico has been saved.'));
+                $this->Flash->success(__('Registro salvo com sucesso.'));
 
                 return $this->redirect(['action' => 'index']);
             } else {
-                $this->Flash->error(__('The tabelas valores historico could not be saved. Please, try again.'));
+                $this->Flash->error(__('Não foi possivel salvar o registro.'));
             }
         }
         $tabelasPrecos = $this->TabelasValoresHistoricos->TabelasPrecos->find('list', ['limit' => 200]);
@@ -83,11 +83,11 @@ class TabelasValoresHistoricosController extends AppController
         if ($this->request->is(['patch', 'post', 'put'])) {
             $tabelasValoresHistorico = $this->TabelasValoresHistoricos->patchEntity($tabelasValoresHistorico, $this->request->data);
             if ($this->TabelasValoresHistoricos->save($tabelasValoresHistorico)) {
-                $this->Flash->success(__('The tabelas valores historico has been saved.'));
+                $this->Flash->success(__('Registro salvo com sucesso.'));
 
                 return $this->redirect(['action' => 'index']);
             } else {
-                $this->Flash->error(__('The tabelas valores historico could not be saved. Please, try again.'));
+                $this->Flash->error(__('Não foi possivel salvar o registro.'));
             }
         }
         $tabelasPrecos = $this->TabelasValoresHistoricos->TabelasPrecos->find('list', ['limit' => 200]);
@@ -108,9 +108,9 @@ class TabelasValoresHistoricosController extends AppController
         $this->request->allowMethod(['post', 'delete']);
         $tabelasValoresHistorico = $this->TabelasValoresHistoricos->get($id);
         if ($this->TabelasValoresHistoricos->delete($tabelasValoresHistorico)) {
-            $this->Flash->success(__('The tabelas valores historico has been deleted.'));
+            $this->Flash->success(__('Registro removido com sucesso.'));
         } else {
-            $this->Flash->error(__('The tabelas valores historico could not be deleted. Please, try again.'));
+            $this->Flash->error(__('Não foi possivel removido o registro.'));
         }
 
         return $this->redirect(['action' => 'index']);

@@ -55,11 +55,11 @@ class PacientesMidiasController extends AppController
         if ($this->request->is('post')) {
             $pacientesMidia = $this->PacientesMidias->patchEntity($pacientesMidia, $this->request->data);
             if ($this->PacientesMidias->save($pacientesMidia)) {
-                $this->Flash->success(__('The pacientes midia has been saved.'));
+                $this->Flash->success(__('Registro salvo com sucesso.'));
 
                 return $this->redirect(['action' => 'index']);
             } else {
-                $this->Flash->error(__('The pacientes midia could not be saved. Please, try again.'));
+                $this->Flash->error(__('Não foi possivel salvar o registro.'));
             }
         }
         $pacientes = $this->PacientesMidias->Pacientes->find('list', ['limit' => 200]);
@@ -83,11 +83,11 @@ class PacientesMidiasController extends AppController
         if ($this->request->is(['patch', 'post', 'put'])) {
             $pacientesMidia = $this->PacientesMidias->patchEntity($pacientesMidia, $this->request->data);
             if ($this->PacientesMidias->save($pacientesMidia)) {
-                $this->Flash->success(__('The pacientes midia has been saved.'));
+                $this->Flash->success(__('Registro salvo com sucesso.'));
 
                 return $this->redirect(['action' => 'index']);
             } else {
-                $this->Flash->error(__('The pacientes midia could not be saved. Please, try again.'));
+                $this->Flash->error(__('Não foi possivel salvar o registro.'));
             }
         }
         $pacientes = $this->PacientesMidias->Pacientes->find('list', ['limit' => 200]);
@@ -108,9 +108,9 @@ class PacientesMidiasController extends AppController
         $this->request->allowMethod(['post', 'delete']);
         $pacientesMidia = $this->PacientesMidias->get($id);
         if ($this->PacientesMidias->delete($pacientesMidia)) {
-            $this->Flash->success(__('The pacientes midia has been deleted.'));
+            $this->Flash->success(__('Registro removido com sucesso.'));
         } else {
-            $this->Flash->error(__('The pacientes midia could not be deleted. Please, try again.'));
+            $this->Flash->error(__('Não foi possivel removido o registro.'));
         }
 
         return $this->redirect(['action' => 'index']);

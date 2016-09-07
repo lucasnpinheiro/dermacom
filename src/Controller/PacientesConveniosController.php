@@ -55,11 +55,11 @@ class PacientesConveniosController extends AppController
         if ($this->request->is('post')) {
             $pacientesConvenio = $this->PacientesConvenios->patchEntity($pacientesConvenio, $this->request->data);
             if ($this->PacientesConvenios->save($pacientesConvenio)) {
-                $this->Flash->success(__('The pacientes convenio has been saved.'));
+                $this->Flash->success(__('Registro salvo com sucesso.'));
 
                 return $this->redirect(['action' => 'index']);
             } else {
-                $this->Flash->error(__('The pacientes convenio could not be saved. Please, try again.'));
+                $this->Flash->error(__('Não foi possivel salvar o registro.'));
             }
         }
         $pacientes = $this->PacientesConvenios->Pacientes->find('list', ['limit' => 200]);
@@ -83,11 +83,11 @@ class PacientesConveniosController extends AppController
         if ($this->request->is(['patch', 'post', 'put'])) {
             $pacientesConvenio = $this->PacientesConvenios->patchEntity($pacientesConvenio, $this->request->data);
             if ($this->PacientesConvenios->save($pacientesConvenio)) {
-                $this->Flash->success(__('The pacientes convenio has been saved.'));
+                $this->Flash->success(__('Registro salvo com sucesso.'));
 
                 return $this->redirect(['action' => 'index']);
             } else {
-                $this->Flash->error(__('The pacientes convenio could not be saved. Please, try again.'));
+                $this->Flash->error(__('Não foi possivel salvar o registro.'));
             }
         }
         $pacientes = $this->PacientesConvenios->Pacientes->find('list', ['limit' => 200]);
@@ -108,9 +108,9 @@ class PacientesConveniosController extends AppController
         $this->request->allowMethod(['post', 'delete']);
         $pacientesConvenio = $this->PacientesConvenios->get($id);
         if ($this->PacientesConvenios->delete($pacientesConvenio)) {
-            $this->Flash->success(__('The pacientes convenio has been deleted.'));
+            $this->Flash->success(__('Registro removido com sucesso.'));
         } else {
-            $this->Flash->error(__('The pacientes convenio could not be deleted. Please, try again.'));
+            $this->Flash->error(__('Não foi possivel removido o registro.'));
         }
 
         return $this->redirect(['action' => 'index']);

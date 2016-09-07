@@ -55,11 +55,11 @@ class PacientesAcompanhamentosController extends AppController
         if ($this->request->is('post')) {
             $pacientesAcompanhamento = $this->PacientesAcompanhamentos->patchEntity($pacientesAcompanhamento, $this->request->data);
             if ($this->PacientesAcompanhamentos->save($pacientesAcompanhamento)) {
-                $this->Flash->success(__('The pacientes acompanhamento has been saved.'));
+                $this->Flash->success(__('Registro salvo com sucesso.'));
 
                 return $this->redirect(['action' => 'index']);
             } else {
-                $this->Flash->error(__('The pacientes acompanhamento could not be saved. Please, try again.'));
+                $this->Flash->error(__('Não foi possivel salvar o registro.'));
             }
         }
         $pacientes = $this->PacientesAcompanhamentos->Pacientes->find('list', ['limit' => 200]);
@@ -83,11 +83,11 @@ class PacientesAcompanhamentosController extends AppController
         if ($this->request->is(['patch', 'post', 'put'])) {
             $pacientesAcompanhamento = $this->PacientesAcompanhamentos->patchEntity($pacientesAcompanhamento, $this->request->data);
             if ($this->PacientesAcompanhamentos->save($pacientesAcompanhamento)) {
-                $this->Flash->success(__('The pacientes acompanhamento has been saved.'));
+                $this->Flash->success(__('Registro salvo com sucesso.'));
 
                 return $this->redirect(['action' => 'index']);
             } else {
-                $this->Flash->error(__('The pacientes acompanhamento could not be saved. Please, try again.'));
+                $this->Flash->error(__('Não foi possivel salvar o registro.'));
             }
         }
         $pacientes = $this->PacientesAcompanhamentos->Pacientes->find('list', ['limit' => 200]);
@@ -108,9 +108,9 @@ class PacientesAcompanhamentosController extends AppController
         $this->request->allowMethod(['post', 'delete']);
         $pacientesAcompanhamento = $this->PacientesAcompanhamentos->get($id);
         if ($this->PacientesAcompanhamentos->delete($pacientesAcompanhamento)) {
-            $this->Flash->success(__('The pacientes acompanhamento has been deleted.'));
+            $this->Flash->success(__('Registro removido com sucesso.'));
         } else {
-            $this->Flash->error(__('The pacientes acompanhamento could not be deleted. Please, try again.'));
+            $this->Flash->error(__('Não foi possivel removido o registro.'));
         }
 
         return $this->redirect(['action' => 'index']);

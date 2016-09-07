@@ -55,11 +55,11 @@ class PacientesController extends AppController
         if ($this->request->is('post')) {
             $paciente = $this->Pacientes->patchEntity($paciente, $this->request->data);
             if ($this->Pacientes->save($paciente)) {
-                $this->Flash->success(__('The paciente has been saved.'));
+                $this->Flash->success(__('Registro salvo com sucesso.'));
 
                 return $this->redirect(['action' => 'index']);
             } else {
-                $this->Flash->error(__('The paciente could not be saved. Please, try again.'));
+                $this->Flash->error(__('Não foi possivel salvar o registro.'));
             }
         }
         $sexos = $this->Pacientes->Sexos->find('list', ['limit' => 200]);
@@ -90,11 +90,11 @@ class PacientesController extends AppController
         if ($this->request->is(['patch', 'post', 'put'])) {
             $paciente = $this->Pacientes->patchEntity($paciente, $this->request->data);
             if ($this->Pacientes->save($paciente)) {
-                $this->Flash->success(__('The paciente has been saved.'));
+                $this->Flash->success(__('Registro salvo com sucesso.'));
 
                 return $this->redirect(['action' => 'index']);
             } else {
-                $this->Flash->error(__('The paciente could not be saved. Please, try again.'));
+                $this->Flash->error(__('Não foi possivel salvar o registro.'));
             }
         }
         $sexos = $this->Pacientes->Sexos->find('list', ['limit' => 200]);
@@ -122,9 +122,9 @@ class PacientesController extends AppController
         $this->request->allowMethod(['post', 'delete']);
         $paciente = $this->Pacientes->get($id);
         if ($this->Pacientes->delete($paciente)) {
-            $this->Flash->success(__('The paciente has been deleted.'));
+            $this->Flash->success(__('Registro removido com sucesso.'));
         } else {
-            $this->Flash->error(__('The paciente could not be deleted. Please, try again.'));
+            $this->Flash->error(__('Não foi possivel removido o registro.'));
         }
 
         return $this->redirect(['action' => 'index']);

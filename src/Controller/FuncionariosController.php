@@ -55,11 +55,11 @@ class FuncionariosController extends AppController
         if ($this->request->is('post')) {
             $funcionario = $this->Funcionarios->patchEntity($funcionario, $this->request->data);
             if ($this->Funcionarios->save($funcionario)) {
-                $this->Flash->success(__('The funcionario has been saved.'));
+                $this->Flash->success(__('Registro salvo com sucesso.'));
 
                 return $this->redirect(['action' => 'index']);
             } else {
-                $this->Flash->error(__('The funcionario could not be saved. Please, try again.'));
+                $this->Flash->error(__('Não foi possivel salvar o registro.'));
             }
         }
         $conselhos = $this->Funcionarios->Conselhos->find('list', ['limit' => 200]);
@@ -85,11 +85,11 @@ class FuncionariosController extends AppController
         if ($this->request->is(['patch', 'post', 'put'])) {
             $funcionario = $this->Funcionarios->patchEntity($funcionario, $this->request->data);
             if ($this->Funcionarios->save($funcionario)) {
-                $this->Flash->success(__('The funcionario has been saved.'));
+                $this->Flash->success(__('Registro salvo com sucesso.'));
 
                 return $this->redirect(['action' => 'index']);
             } else {
-                $this->Flash->error(__('The funcionario could not be saved. Please, try again.'));
+                $this->Flash->error(__('Não foi possivel salvar o registro.'));
             }
         }
         $conselhos = $this->Funcionarios->Conselhos->find('list', ['limit' => 200]);
@@ -112,9 +112,9 @@ class FuncionariosController extends AppController
         $this->request->allowMethod(['post', 'delete']);
         $funcionario = $this->Funcionarios->get($id);
         if ($this->Funcionarios->delete($funcionario)) {
-            $this->Flash->success(__('The funcionario has been deleted.'));
+            $this->Flash->success(__('Registro removido com sucesso.'));
         } else {
-            $this->Flash->error(__('The funcionario could not be deleted. Please, try again.'));
+            $this->Flash->error(__('Não foi possivel removido o registro.'));
         }
 
         return $this->redirect(['action' => 'index']);

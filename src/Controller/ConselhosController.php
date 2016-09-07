@@ -52,11 +52,11 @@ class ConselhosController extends AppController
         if ($this->request->is('post')) {
             $conselho = $this->Conselhos->patchEntity($conselho, $this->request->data);
             if ($this->Conselhos->save($conselho)) {
-                $this->Flash->success(__('The conselho has been saved.'));
+                $this->Flash->success(__('Registro salvo com sucesso.'));
 
                 return $this->redirect(['action' => 'index']);
             } else {
-                $this->Flash->error(__('The conselho could not be saved. Please, try again.'));
+                $this->Flash->error(__('Não foi possivel salvar o registro.'));
             }
         }
         $this->set(compact('conselho'));
@@ -78,11 +78,11 @@ class ConselhosController extends AppController
         if ($this->request->is(['patch', 'post', 'put'])) {
             $conselho = $this->Conselhos->patchEntity($conselho, $this->request->data);
             if ($this->Conselhos->save($conselho)) {
-                $this->Flash->success(__('The conselho has been saved.'));
+                $this->Flash->success(__('Registro salvo com sucesso.'));
 
                 return $this->redirect(['action' => 'index']);
             } else {
-                $this->Flash->error(__('The conselho could not be saved. Please, try again.'));
+                $this->Flash->error(__('Não foi possivel salvar o registro.'));
             }
         }
         $this->set(compact('conselho'));
@@ -101,9 +101,9 @@ class ConselhosController extends AppController
         $this->request->allowMethod(['post', 'delete']);
         $conselho = $this->Conselhos->get($id);
         if ($this->Conselhos->delete($conselho)) {
-            $this->Flash->success(__('The conselho has been deleted.'));
+            $this->Flash->success(__('Registro removido com sucesso.'));
         } else {
-            $this->Flash->error(__('The conselho could not be deleted. Please, try again.'));
+            $this->Flash->error(__('Não foi possivel removido o registro.'));
         }
 
         return $this->redirect(['action' => 'index']);

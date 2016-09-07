@@ -55,11 +55,11 @@ class ComissoesCorrecoesController extends AppController
         if ($this->request->is('post')) {
             $comissoesCorreco = $this->ComissoesCorrecoes->patchEntity($comissoesCorreco, $this->request->data);
             if ($this->ComissoesCorrecoes->save($comissoesCorreco)) {
-                $this->Flash->success(__('The comissoes correco has been saved.'));
+                $this->Flash->success(__('Registro salvo com sucesso.'));
 
                 return $this->redirect(['action' => 'index']);
             } else {
-                $this->Flash->error(__('The comissoes correco could not be saved. Please, try again.'));
+                $this->Flash->error(__('Não foi possivel salvar o registro.'));
             }
         }
         $comissaos = $this->ComissoesCorrecoes->Comissaos->find('list', ['limit' => 200]);
@@ -82,11 +82,11 @@ class ComissoesCorrecoesController extends AppController
         if ($this->request->is(['patch', 'post', 'put'])) {
             $comissoesCorreco = $this->ComissoesCorrecoes->patchEntity($comissoesCorreco, $this->request->data);
             if ($this->ComissoesCorrecoes->save($comissoesCorreco)) {
-                $this->Flash->success(__('The comissoes correco has been saved.'));
+                $this->Flash->success(__('Registro salvo com sucesso.'));
 
                 return $this->redirect(['action' => 'index']);
             } else {
-                $this->Flash->error(__('The comissoes correco could not be saved. Please, try again.'));
+                $this->Flash->error(__('Não foi possivel salvar o registro.'));
             }
         }
         $comissaos = $this->ComissoesCorrecoes->Comissaos->find('list', ['limit' => 200]);
@@ -106,9 +106,9 @@ class ComissoesCorrecoesController extends AppController
         $this->request->allowMethod(['post', 'delete']);
         $comissoesCorreco = $this->ComissoesCorrecoes->get($id);
         if ($this->ComissoesCorrecoes->delete($comissoesCorreco)) {
-            $this->Flash->success(__('The comissoes correco has been deleted.'));
+            $this->Flash->success(__('Registro removido com sucesso.'));
         } else {
-            $this->Flash->error(__('The comissoes correco could not be deleted. Please, try again.'));
+            $this->Flash->error(__('Não foi possivel removido o registro.'));
         }
 
         return $this->redirect(['action' => 'index']);

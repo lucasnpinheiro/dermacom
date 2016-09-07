@@ -52,11 +52,11 @@ class NacionalidadesController extends AppController
         if ($this->request->is('post')) {
             $nacionalidade = $this->Nacionalidades->patchEntity($nacionalidade, $this->request->data);
             if ($this->Nacionalidades->save($nacionalidade)) {
-                $this->Flash->success(__('The nacionalidade has been saved.'));
+                $this->Flash->success(__('Registro salvo com sucesso.'));
 
                 return $this->redirect(['action' => 'index']);
             } else {
-                $this->Flash->error(__('The nacionalidade could not be saved. Please, try again.'));
+                $this->Flash->error(__('Não foi possivel salvar o registro.'));
             }
         }
         $this->set(compact('nacionalidade'));
@@ -78,11 +78,11 @@ class NacionalidadesController extends AppController
         if ($this->request->is(['patch', 'post', 'put'])) {
             $nacionalidade = $this->Nacionalidades->patchEntity($nacionalidade, $this->request->data);
             if ($this->Nacionalidades->save($nacionalidade)) {
-                $this->Flash->success(__('The nacionalidade has been saved.'));
+                $this->Flash->success(__('Registro salvo com sucesso.'));
 
                 return $this->redirect(['action' => 'index']);
             } else {
-                $this->Flash->error(__('The nacionalidade could not be saved. Please, try again.'));
+                $this->Flash->error(__('Não foi possivel salvar o registro.'));
             }
         }
         $this->set(compact('nacionalidade'));
@@ -101,9 +101,9 @@ class NacionalidadesController extends AppController
         $this->request->allowMethod(['post', 'delete']);
         $nacionalidade = $this->Nacionalidades->get($id);
         if ($this->Nacionalidades->delete($nacionalidade)) {
-            $this->Flash->success(__('The nacionalidade has been deleted.'));
+            $this->Flash->success(__('Registro removido com sucesso.'));
         } else {
-            $this->Flash->error(__('The nacionalidade could not be deleted. Please, try again.'));
+            $this->Flash->error(__('Não foi possivel removido o registro.'));
         }
 
         return $this->redirect(['action' => 'index']);

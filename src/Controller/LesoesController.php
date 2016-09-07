@@ -52,11 +52,11 @@ class LesoesController extends AppController
         if ($this->request->is('post')) {
             $leso = $this->Lesoes->patchEntity($leso, $this->request->data);
             if ($this->Lesoes->save($leso)) {
-                $this->Flash->success(__('The leso has been saved.'));
+                $this->Flash->success(__('Registro salvo com sucesso.'));
 
                 return $this->redirect(['action' => 'index']);
             } else {
-                $this->Flash->error(__('The leso could not be saved. Please, try again.'));
+                $this->Flash->error(__('Não foi possivel salvar o registro.'));
             }
         }
         $corporais = $this->Lesoes->Corporais->find('list', ['limit' => 200]);
@@ -79,11 +79,11 @@ class LesoesController extends AppController
         if ($this->request->is(['patch', 'post', 'put'])) {
             $leso = $this->Lesoes->patchEntity($leso, $this->request->data);
             if ($this->Lesoes->save($leso)) {
-                $this->Flash->success(__('The leso has been saved.'));
+                $this->Flash->success(__('Registro salvo com sucesso.'));
 
                 return $this->redirect(['action' => 'index']);
             } else {
-                $this->Flash->error(__('The leso could not be saved. Please, try again.'));
+                $this->Flash->error(__('Não foi possivel salvar o registro.'));
             }
         }
         $corporais = $this->Lesoes->Corporais->find('list', ['limit' => 200]);
@@ -103,9 +103,9 @@ class LesoesController extends AppController
         $this->request->allowMethod(['post', 'delete']);
         $leso = $this->Lesoes->get($id);
         if ($this->Lesoes->delete($leso)) {
-            $this->Flash->success(__('The leso has been deleted.'));
+            $this->Flash->success(__('Registro removido com sucesso.'));
         } else {
-            $this->Flash->error(__('The leso could not be deleted. Please, try again.'));
+            $this->Flash->error(__('Não foi possivel removido o registro.'));
         }
 
         return $this->redirect(['action' => 'index']);

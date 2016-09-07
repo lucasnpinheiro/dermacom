@@ -55,11 +55,11 @@ class CorporaisLesoesController extends AppController
         if ($this->request->is('post')) {
             $corporaisLeso = $this->CorporaisLesoes->patchEntity($corporaisLeso, $this->request->data);
             if ($this->CorporaisLesoes->save($corporaisLeso)) {
-                $this->Flash->success(__('The corporais leso has been saved.'));
+                $this->Flash->success(__('Registro salvo com sucesso.'));
 
                 return $this->redirect(['action' => 'index']);
             } else {
-                $this->Flash->error(__('The corporais leso could not be saved. Please, try again.'));
+                $this->Flash->error(__('Não foi possivel salvar o registro.'));
             }
         }
         $lesaos = $this->CorporaisLesoes->Lesaos->find('list', ['limit' => 200]);
@@ -83,11 +83,11 @@ class CorporaisLesoesController extends AppController
         if ($this->request->is(['patch', 'post', 'put'])) {
             $corporaisLeso = $this->CorporaisLesoes->patchEntity($corporaisLeso, $this->request->data);
             if ($this->CorporaisLesoes->save($corporaisLeso)) {
-                $this->Flash->success(__('The corporais leso has been saved.'));
+                $this->Flash->success(__('Registro salvo com sucesso.'));
 
                 return $this->redirect(['action' => 'index']);
             } else {
-                $this->Flash->error(__('The corporais leso could not be saved. Please, try again.'));
+                $this->Flash->error(__('Não foi possivel salvar o registro.'));
             }
         }
         $lesaos = $this->CorporaisLesoes->Lesaos->find('list', ['limit' => 200]);
@@ -108,9 +108,9 @@ class CorporaisLesoesController extends AppController
         $this->request->allowMethod(['post', 'delete']);
         $corporaisLeso = $this->CorporaisLesoes->get($id);
         if ($this->CorporaisLesoes->delete($corporaisLeso)) {
-            $this->Flash->success(__('The corporais leso has been deleted.'));
+            $this->Flash->success(__('Registro removido com sucesso.'));
         } else {
-            $this->Flash->error(__('The corporais leso could not be deleted. Please, try again.'));
+            $this->Flash->error(__('Não foi possivel removido o registro.'));
         }
 
         return $this->redirect(['action' => 'index']);

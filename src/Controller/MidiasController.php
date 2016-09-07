@@ -55,11 +55,11 @@ class MidiasController extends AppController
         if ($this->request->is('post')) {
             $midia = $this->Midias->patchEntity($midia, $this->request->data);
             if ($this->Midias->save($midia)) {
-                $this->Flash->success(__('The midia has been saved.'));
+                $this->Flash->success(__('Registro salvo com sucesso.'));
 
                 return $this->redirect(['action' => 'index']);
             } else {
-                $this->Flash->error(__('The midia could not be saved. Please, try again.'));
+                $this->Flash->error(__('Não foi possivel salvar o registro.'));
             }
         }
         $contatotipos = $this->Midias->Contatotipos->find('list', ['limit' => 200]);
@@ -83,11 +83,11 @@ class MidiasController extends AppController
         if ($this->request->is(['patch', 'post', 'put'])) {
             $midia = $this->Midias->patchEntity($midia, $this->request->data);
             if ($this->Midias->save($midia)) {
-                $this->Flash->success(__('The midia has been saved.'));
+                $this->Flash->success(__('Registro salvo com sucesso.'));
 
                 return $this->redirect(['action' => 'index']);
             } else {
-                $this->Flash->error(__('The midia could not be saved. Please, try again.'));
+                $this->Flash->error(__('Não foi possivel salvar o registro.'));
             }
         }
         $contatotipos = $this->Midias->Contatotipos->find('list', ['limit' => 200]);
@@ -108,9 +108,9 @@ class MidiasController extends AppController
         $this->request->allowMethod(['post', 'delete']);
         $midia = $this->Midias->get($id);
         if ($this->Midias->delete($midia)) {
-            $this->Flash->success(__('The midia has been deleted.'));
+            $this->Flash->success(__('Registro removido com sucesso.'));
         } else {
-            $this->Flash->error(__('The midia could not be deleted. Please, try again.'));
+            $this->Flash->error(__('Não foi possivel removido o registro.'));
         }
 
         return $this->redirect(['action' => 'index']);

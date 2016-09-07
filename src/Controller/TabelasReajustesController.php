@@ -55,11 +55,11 @@ class TabelasReajustesController extends AppController
         if ($this->request->is('post')) {
             $tabelasReajuste = $this->TabelasReajustes->patchEntity($tabelasReajuste, $this->request->data);
             if ($this->TabelasReajustes->save($tabelasReajuste)) {
-                $this->Flash->success(__('The tabelas reajuste has been saved.'));
+                $this->Flash->success(__('Registro salvo com sucesso.'));
 
                 return $this->redirect(['action' => 'index']);
             } else {
-                $this->Flash->error(__('The tabelas reajuste could not be saved. Please, try again.'));
+                $this->Flash->error(__('Não foi possivel salvar o registro.'));
             }
         }
         $tabelasValors = $this->TabelasReajustes->TabelasValors->find('list', ['limit' => 200]);
@@ -82,11 +82,11 @@ class TabelasReajustesController extends AppController
         if ($this->request->is(['patch', 'post', 'put'])) {
             $tabelasReajuste = $this->TabelasReajustes->patchEntity($tabelasReajuste, $this->request->data);
             if ($this->TabelasReajustes->save($tabelasReajuste)) {
-                $this->Flash->success(__('The tabelas reajuste has been saved.'));
+                $this->Flash->success(__('Registro salvo com sucesso.'));
 
                 return $this->redirect(['action' => 'index']);
             } else {
-                $this->Flash->error(__('The tabelas reajuste could not be saved. Please, try again.'));
+                $this->Flash->error(__('Não foi possivel salvar o registro.'));
             }
         }
         $tabelasValors = $this->TabelasReajustes->TabelasValors->find('list', ['limit' => 200]);
@@ -106,9 +106,9 @@ class TabelasReajustesController extends AppController
         $this->request->allowMethod(['post', 'delete']);
         $tabelasReajuste = $this->TabelasReajustes->get($id);
         if ($this->TabelasReajustes->delete($tabelasReajuste)) {
-            $this->Flash->success(__('The tabelas reajuste has been deleted.'));
+            $this->Flash->success(__('Registro removido com sucesso.'));
         } else {
-            $this->Flash->error(__('The tabelas reajuste could not be deleted. Please, try again.'));
+            $this->Flash->error(__('Não foi possivel removido o registro.'));
         }
 
         return $this->redirect(['action' => 'index']);

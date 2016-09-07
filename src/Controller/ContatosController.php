@@ -55,11 +55,11 @@ class ContatosController extends AppController
         if ($this->request->is('post')) {
             $contato = $this->Contatos->patchEntity($contato, $this->request->data);
             if ($this->Contatos->save($contato)) {
-                $this->Flash->success(__('The contato has been saved.'));
+                $this->Flash->success(__('Registro salvo com sucesso.'));
 
                 return $this->redirect(['action' => 'index']);
             } else {
-                $this->Flash->error(__('The contato could not be saved. Please, try again.'));
+                $this->Flash->error(__('Não foi possivel salvar o registro.'));
             }
         }
         $contatosTipos = $this->Contatos->ContatosTipos->find('list', ['limit' => 200]);
@@ -83,11 +83,11 @@ class ContatosController extends AppController
         if ($this->request->is(['patch', 'post', 'put'])) {
             $contato = $this->Contatos->patchEntity($contato, $this->request->data);
             if ($this->Contatos->save($contato)) {
-                $this->Flash->success(__('The contato has been saved.'));
+                $this->Flash->success(__('Registro salvo com sucesso.'));
 
                 return $this->redirect(['action' => 'index']);
             } else {
-                $this->Flash->error(__('The contato could not be saved. Please, try again.'));
+                $this->Flash->error(__('Não foi possivel salvar o registro.'));
             }
         }
         $contatosTipos = $this->Contatos->ContatosTipos->find('list', ['limit' => 200]);
@@ -108,9 +108,9 @@ class ContatosController extends AppController
         $this->request->allowMethod(['post', 'delete']);
         $contato = $this->Contatos->get($id);
         if ($this->Contatos->delete($contato)) {
-            $this->Flash->success(__('The contato has been deleted.'));
+            $this->Flash->success(__('Registro removido com sucesso.'));
         } else {
-            $this->Flash->error(__('The contato could not be deleted. Please, try again.'));
+            $this->Flash->error(__('Não foi possivel removido o registro.'));
         }
 
         return $this->redirect(['action' => 'index']);

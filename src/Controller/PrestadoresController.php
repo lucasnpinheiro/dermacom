@@ -55,11 +55,11 @@ class PrestadoresController extends AppController
         if ($this->request->is('post')) {
             $prestadore = $this->Prestadores->patchEntity($prestadore, $this->request->data);
             if ($this->Prestadores->save($prestadore)) {
-                $this->Flash->success(__('The prestadore has been saved.'));
+                $this->Flash->success(__('Registro salvo com sucesso.'));
 
                 return $this->redirect(['action' => 'index']);
             } else {
-                $this->Flash->error(__('The prestadore could not be saved. Please, try again.'));
+                $this->Flash->error(__('Não foi possivel salvar o registro.'));
             }
         }
         $especialidades = $this->Prestadores->Especialidades->find('list', ['limit' => 200]);
@@ -84,11 +84,11 @@ class PrestadoresController extends AppController
         if ($this->request->is(['patch', 'post', 'put'])) {
             $prestadore = $this->Prestadores->patchEntity($prestadore, $this->request->data);
             if ($this->Prestadores->save($prestadore)) {
-                $this->Flash->success(__('The prestadore has been saved.'));
+                $this->Flash->success(__('Registro salvo com sucesso.'));
 
                 return $this->redirect(['action' => 'index']);
             } else {
-                $this->Flash->error(__('The prestadore could not be saved. Please, try again.'));
+                $this->Flash->error(__('Não foi possivel salvar o registro.'));
             }
         }
         $especialidades = $this->Prestadores->Especialidades->find('list', ['limit' => 200]);
@@ -110,9 +110,9 @@ class PrestadoresController extends AppController
         $this->request->allowMethod(['post', 'delete']);
         $prestadore = $this->Prestadores->get($id);
         if ($this->Prestadores->delete($prestadore)) {
-            $this->Flash->success(__('The prestadore has been deleted.'));
+            $this->Flash->success(__('Registro removido com sucesso.'));
         } else {
-            $this->Flash->error(__('The prestadore could not be deleted. Please, try again.'));
+            $this->Flash->error(__('Não foi possivel removido o registro.'));
         }
 
         return $this->redirect(['action' => 'index']);

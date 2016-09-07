@@ -55,11 +55,11 @@ class ClassificacoesController extends AppController
         if ($this->request->is('post')) {
             $classificaco = $this->Classificacoes->patchEntity($classificaco, $this->request->data);
             if ($this->Classificacoes->save($classificaco)) {
-                $this->Flash->success(__('The classificaco has been saved.'));
+                $this->Flash->success(__('Registro salvo com sucesso.'));
 
                 return $this->redirect(['action' => 'index']);
             } else {
-                $this->Flash->error(__('The classificaco could not be saved. Please, try again.'));
+                $this->Flash->error(__('Não foi possivel salvar o registro.'));
             }
         }
         $lesaos = $this->Classificacoes->Lesaos->find('list', ['limit' => 200]);
@@ -82,11 +82,11 @@ class ClassificacoesController extends AppController
         if ($this->request->is(['patch', 'post', 'put'])) {
             $classificaco = $this->Classificacoes->patchEntity($classificaco, $this->request->data);
             if ($this->Classificacoes->save($classificaco)) {
-                $this->Flash->success(__('The classificaco has been saved.'));
+                $this->Flash->success(__('Registro salvo com sucesso.'));
 
                 return $this->redirect(['action' => 'index']);
             } else {
-                $this->Flash->error(__('The classificaco could not be saved. Please, try again.'));
+                $this->Flash->error(__('Não foi possivel salvar o registro.'));
             }
         }
         $lesaos = $this->Classificacoes->Lesaos->find('list', ['limit' => 200]);
@@ -106,9 +106,9 @@ class ClassificacoesController extends AppController
         $this->request->allowMethod(['post', 'delete']);
         $classificaco = $this->Classificacoes->get($id);
         if ($this->Classificacoes->delete($classificaco)) {
-            $this->Flash->success(__('The classificaco has been deleted.'));
+            $this->Flash->success(__('Registro removido com sucesso.'));
         } else {
-            $this->Flash->error(__('The classificaco could not be deleted. Please, try again.'));
+            $this->Flash->error(__('Não foi possivel removido o registro.'));
         }
 
         return $this->redirect(['action' => 'index']);

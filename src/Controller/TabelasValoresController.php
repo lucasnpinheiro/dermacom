@@ -55,11 +55,11 @@ class TabelasValoresController extends AppController
         if ($this->request->is('post')) {
             $tabelasValore = $this->TabelasValores->patchEntity($tabelasValore, $this->request->data);
             if ($this->TabelasValores->save($tabelasValore)) {
-                $this->Flash->success(__('The tabelas valore has been saved.'));
+                $this->Flash->success(__('Registro salvo com sucesso.'));
 
                 return $this->redirect(['action' => 'index']);
             } else {
-                $this->Flash->error(__('The tabelas valore could not be saved. Please, try again.'));
+                $this->Flash->error(__('Não foi possivel salvar o registro.'));
             }
         }
         $tabelasPrecos = $this->TabelasValores->TabelasPrecos->find('list', ['limit' => 200]);
@@ -83,11 +83,11 @@ class TabelasValoresController extends AppController
         if ($this->request->is(['patch', 'post', 'put'])) {
             $tabelasValore = $this->TabelasValores->patchEntity($tabelasValore, $this->request->data);
             if ($this->TabelasValores->save($tabelasValore)) {
-                $this->Flash->success(__('The tabelas valore has been saved.'));
+                $this->Flash->success(__('Registro salvo com sucesso.'));
 
                 return $this->redirect(['action' => 'index']);
             } else {
-                $this->Flash->error(__('The tabelas valore could not be saved. Please, try again.'));
+                $this->Flash->error(__('Não foi possivel salvar o registro.'));
             }
         }
         $tabelasPrecos = $this->TabelasValores->TabelasPrecos->find('list', ['limit' => 200]);
@@ -108,9 +108,9 @@ class TabelasValoresController extends AppController
         $this->request->allowMethod(['post', 'delete']);
         $tabelasValore = $this->TabelasValores->get($id);
         if ($this->TabelasValores->delete($tabelasValore)) {
-            $this->Flash->success(__('The tabelas valore has been deleted.'));
+            $this->Flash->success(__('Registro removido com sucesso.'));
         } else {
-            $this->Flash->error(__('The tabelas valore could not be deleted. Please, try again.'));
+            $this->Flash->error(__('Não foi possivel removido o registro.'));
         }
 
         return $this->redirect(['action' => 'index']);

@@ -52,11 +52,11 @@ class CoresController extends AppController
         if ($this->request->is('post')) {
             $core = $this->Cores->patchEntity($core, $this->request->data);
             if ($this->Cores->save($core)) {
-                $this->Flash->success(__('The core has been saved.'));
+                $this->Flash->success(__('Registro salvo com sucesso.'));
 
                 return $this->redirect(['action' => 'index']);
             } else {
-                $this->Flash->error(__('The core could not be saved. Please, try again.'));
+                $this->Flash->error(__('Não foi possivel salvar o registro.'));
             }
         }
         $this->set(compact('core'));
@@ -78,11 +78,11 @@ class CoresController extends AppController
         if ($this->request->is(['patch', 'post', 'put'])) {
             $core = $this->Cores->patchEntity($core, $this->request->data);
             if ($this->Cores->save($core)) {
-                $this->Flash->success(__('The core has been saved.'));
+                $this->Flash->success(__('Registro salvo com sucesso.'));
 
                 return $this->redirect(['action' => 'index']);
             } else {
-                $this->Flash->error(__('The core could not be saved. Please, try again.'));
+                $this->Flash->error(__('Não foi possivel salvar o registro.'));
             }
         }
         $this->set(compact('core'));
@@ -101,9 +101,9 @@ class CoresController extends AppController
         $this->request->allowMethod(['post', 'delete']);
         $core = $this->Cores->get($id);
         if ($this->Cores->delete($core)) {
-            $this->Flash->success(__('The core has been deleted.'));
+            $this->Flash->success(__('Registro removido com sucesso.'));
         } else {
-            $this->Flash->error(__('The core could not be deleted. Please, try again.'));
+            $this->Flash->error(__('Não foi possivel removido o registro.'));
         }
 
         return $this->redirect(['action' => 'index']);

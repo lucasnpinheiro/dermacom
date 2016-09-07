@@ -52,11 +52,11 @@ class ProfissoesController extends AppController
         if ($this->request->is('post')) {
             $profisso = $this->Profissoes->patchEntity($profisso, $this->request->data);
             if ($this->Profissoes->save($profisso)) {
-                $this->Flash->success(__('The profisso has been saved.'));
+                $this->Flash->success(__('Registro salvo com sucesso.'));
 
                 return $this->redirect(['action' => 'index']);
             } else {
-                $this->Flash->error(__('The profisso could not be saved. Please, try again.'));
+                $this->Flash->error(__('Não foi possivel salvar o registro.'));
             }
         }
         $this->set(compact('profisso'));
@@ -78,11 +78,11 @@ class ProfissoesController extends AppController
         if ($this->request->is(['patch', 'post', 'put'])) {
             $profisso = $this->Profissoes->patchEntity($profisso, $this->request->data);
             if ($this->Profissoes->save($profisso)) {
-                $this->Flash->success(__('The profisso has been saved.'));
+                $this->Flash->success(__('Registro salvo com sucesso.'));
 
                 return $this->redirect(['action' => 'index']);
             } else {
-                $this->Flash->error(__('The profisso could not be saved. Please, try again.'));
+                $this->Flash->error(__('Não foi possivel salvar o registro.'));
             }
         }
         $this->set(compact('profisso'));
@@ -101,9 +101,9 @@ class ProfissoesController extends AppController
         $this->request->allowMethod(['post', 'delete']);
         $profisso = $this->Profissoes->get($id);
         if ($this->Profissoes->delete($profisso)) {
-            $this->Flash->success(__('The profisso has been deleted.'));
+            $this->Flash->success(__('Registro removido com sucesso.'));
         } else {
-            $this->Flash->error(__('The profisso could not be deleted. Please, try again.'));
+            $this->Flash->error(__('Não foi possivel removido o registro.'));
         }
 
         return $this->redirect(['action' => 'index']);
