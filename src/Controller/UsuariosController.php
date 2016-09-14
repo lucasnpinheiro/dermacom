@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Controller;
 
 use App\Controller\AppController;
@@ -8,16 +9,42 @@ use App\Controller\AppController;
  *
  * @property \App\Model\Table\UsuariosTable $Usuarios
  */
-class UsuariosController extends AppController
-{
+class UsuariosController extends AppController {
+
+    public function __construct(\Cake\Network\Request $request = null, \Cake\Network\Response $response = null, $name = null, $eventManager = null, $components = null) {
+        parent::__construct($request, $response, $name, $eventManager, $components);
+        $this->set('title', 'Usuários');
+    }
 
     /**
      * Index method
      *
      * @return \Cake\Network\Response|null
      */
-    public function index()
-    {
+    public function login() {
+        $this->viewBuilder()->layout('login');
+        if ($this->request->is('post')) {
+            $user = $this->Auth->identify();
+            if ($user) {
+                $this->Auth->setUser($user);
+                return $this->redirect(['controller' => 'Usuarios', 'action' => 'index']);
+            }
+            $this->Flash->error(__('Usuário ou senha invalidos.'));
+        } else {
+            $this->Auth->logout();
+        }
+    }
+
+    public function logout() {
+        return $this->redirect($this->Auth->logout());
+    }
+
+    /**
+     * Index method
+     *
+     * @return \Cake\Network\Response|null
+     */
+    public function index() {
         $usuarios = $this->paginate($this->Usuarios);
 
         $this->set(compact('usuarios'));
@@ -31,8 +58,7 @@ class UsuariosController extends AppController
      * @return \Cake\Network\Response|null
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function view($id = null)
-    {
+    public function view($id = null) {
         $usuario = $this->Usuarios->get($id, [
             'contain' => []
         ]);
@@ -46,8 +72,7 @@ class UsuariosController extends AppController
      *
      * @return \Cake\Network\Response|void Redirects on successful add, renders view otherwise.
      */
-    public function add()
-    {
+    public function add() {
         $usuario = $this->Usuarios->newEntity();
         if ($this->request->is('post')) {
             $usuario = $this->Usuarios->patchEntity($usuario, $this->request->data);
@@ -70,8 +95,7 @@ class UsuariosController extends AppController
      * @return \Cake\Network\Response|void Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Network\Exception\NotFoundException When record not found.
      */
-    public function edit($id = null)
-    {
+    public function edit($id = null) {
         $usuario = $this->Usuarios->get($id, [
             'contain' => []
         ]);
@@ -96,8 +120,7 @@ class UsuariosController extends AppController
      * @return \Cake\Network\Response|null Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function delete($id = null)
-    {
+    public function delete($id = null) {
         $this->request->allowMethod(['post', 'delete']);
         $usuario = $this->Usuarios->get($id);
         if ($this->Usuarios->delete($usuario)) {
@@ -108,4 +131,5 @@ class UsuariosController extends AppController
 
         return $this->redirect(['action' => 'index']);
     }
+
 }

@@ -14,7 +14,10 @@
     "require-dev": {
         "psy/psysh": "@stable",
         "cakephp/debug_kit": "~3.2",
-        "cakephp/bake": "~1.1"
+        "cakephp/bake": "~1.1",
+        "friendsofcake/search": "~1.2",
+        "holt59/cakephp3-bootstrap-helpers": "~3.0",
+        "eventviva/php-image-resize": "1.5.*"
     },
     "suggest": {
         "markstory/asset_compress": "An asset compression plugin which provides file concatenation and a flexible filter system for preprocessing and minification.",

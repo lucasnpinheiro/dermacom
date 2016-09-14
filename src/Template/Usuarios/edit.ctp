@@ -1,26 +1,26 @@
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-        <li><?= $this->Form->postLink(
-                __('Delete'),
-                ['action' => 'delete', $usuario->id],
-                ['confirm' => __('Are you sure you want to delete # {0}?', $usuario->id)]
-            )
-        ?></li>
-        <li><?= $this->Html->link(__('List Usuarios'), ['action' => 'index']) ?></li>
-    </ul>
-</nav>
-<div class="usuarios form large-9 medium-8 columns content">
+<?php
+$this->Html->addCrumb(__('Index'), ['action' => 'index']);
+$this->Html->addCrumb(__('Edit'), null);
+
+$this->Html->addButton($this->Html->link('<i class="fa fa-plus-circle" aria-hidden="true"></i> ' . __('Add'), ['action' => 'add'], ['class' => 'btn btn-primary', 'escape' => false]));
+$this->Html->addButton($this->Html->link('<i class="fa fa-list" aria-hidden="true"></i> ' . __('Index'), ['action' => 'index'], ['class' => 'btn btn-success', 'escape' => false]));
+$this->Html->addButton($this->Form->postLink('<i class="fa fa-trash-o"></i> ' . __('Delete'), ['action' => 'delete', $usuario->id], ['confirm' => __('Are you sure you want to delete # {0}?', $usuario->id), 'escape' => false, 'class' => 'btn btn-danger']));
+?>
+<div class="panel">
+    <div class="panel-heading">
+        <h3 class="panel-title"><?= __('Alteração de Usuário') ?></h3>
+    </div>
     <?= $this->Form->create($usuario) ?>
-    <fieldset>
-        <legend><?= __('Edit Usuario') ?></legend>
+    <div class="panel-body">
         <?php
-            echo $this->Form->input('nome');
-            echo $this->Form->input('login');
-            echo $this->Form->input('senha');
-            echo $this->Form->input('status');
+        echo $this->Form->input('nome', ['div' => ['class' => 'col-xs-12 col-md-12']]);
+        echo $this->Form->input('login', ['div' => ['class' => 'col-xs-12 col-md-6']]);
+        echo $this->Form->input('senha', ['value' => '', 'type' => 'password', 'div' => ['class' => 'col-xs-12 col-md-4']]);
+        echo $this->Form->status('status', ['div' => ['class' => 'col-xs-12 col-md-2']]);
         ?>
-    </fieldset>
-    <?= $this->Form->button(__('Submit')) ?>
+    </div>
+    <div class="panel-footer text-right">
+        <?= $this->Form->button(__('Submit'), ['class' => "btn btn-success", 'type' => "submit"]) ?>
+    </div>
     <?= $this->Form->end() ?>
 </div>

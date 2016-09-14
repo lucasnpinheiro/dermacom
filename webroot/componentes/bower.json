@@ -33,6 +33,7 @@
     "datatables.net-scroller-bs": "^1.4.2",
     "datatables.net-select": "^1.2.0",
     "datatables.net-select-bs": "^1.2.0",
-    "components-font-awesome": "^4.6.3"
+    "components-font-awesome": "^4.6.3",
+    "vuetable": "^1.5.2"
   }
 }

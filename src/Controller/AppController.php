@@ -1,4 +1,5 @@
 <?php
+
 /**
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
  * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
@@ -12,10 +13,25 @@
  * @since     0.2.9
  * @license   http://www.opensource.org/licenses/mit-license.php MIT License
  */
+
 namespace App\Controller;
 
 use Cake\Controller\Controller;
 use Cake\Event\Event;
+use Cake\Database\Type;
+use Cake\I18n\I18n;
+use Cake\I18n\Time;
+use Cake\I18n\Number;
+
+I18n::locale('pt_BR');
+// Habilita o parseamento de datas localizadas
+Type::build('date')->useLocaleParser()->setLocaleFormat('dd/M/yyyy');
+Type::build('datetime')->useLocaleParser()->setLocaleFormat('dd/M/yyyy HH:ii:ss');
+Type::build('timestamp')->useLocaleParser()->setLocaleFormat('dd/M/yyyy HH:ii:ss');
+
+// Habilita o parseamento de decimal localizaddos
+Type::build('decimal')->useLocaleParser();
+Type::build('float')->useLocaleParser();
 
 /**
  * Application Controller
@@ -25,8 +41,14 @@ use Cake\Event\Event;
  *
  * @link http://book.cakephp.org/3.0/en/controllers.html#the-app-controller
  */
-class AppController extends Controller
-{
+class AppController extends Controller {
+
+    public $title = 'Não definido';
+
+    public function __construct(\Cake\Network\Request $request = null, \Cake\Network\Response $response = null, $name = null, $eventManager = null, $components = null) {
+        parent::__construct($request, $response, $name, $eventManager, $components);
+        $this->set('title', $this->title);
+    }
 
     /**
      * Initialization hook method.
@@ -37,12 +59,78 @@ class AppController extends Controller
      *
      * @return void
      */
-    public function initialize()
-    {
+    public function initialize() {
         parent::initialize();
 
         $this->loadComponent('RequestHandler');
         $this->loadComponent('Flash');
+
+        $this->helpers = [
+            'Flash' => [
+                'className' => 'MyFlash'
+            ],
+            'Form' => [
+                'className' => 'MyForm'
+            ],
+            'Html' => [
+                'className' => 'MyHtml'
+            ],
+            'Number' => [
+                'className' => 'MyNumber'
+            ],
+            'Paginator' => [
+                'className' => 'MyPaginator'
+            ],
+            'Rss' => [
+                'className' => 'MyRss'
+            ],
+            'Text' => [
+                'className' => 'MyText'
+            ],
+            'Time' => [
+                'className' => 'MyTime'
+            ],
+            'Url' => [
+                'className' => 'MyUrl'
+            ],
+            'Modal' => [
+                'className' => 'MyModal'
+            ],
+        ];
+
+
+        if ($this->request->action === 'index') {
+            $this->loadComponent('Search.Prg');
+        }
+        $this->loadComponent('Auth', [
+            'loginRedirect' => [
+                'controller' => 'Usuarios',
+                'action' => 'login',
+                'prefix' => false,
+                'plugin' => null
+            ],
+            'loginAction' => [
+                'controller' => 'Usuarios',
+                'action' => 'login',
+                'prefix' => false,
+                'plugin' => null
+            ],
+            'logoutRedirect' => '/',
+            'authorize' => 'Controller', //added this line
+            'authenticate' => [
+                'Form' => [
+                    'passwordHasher' => [
+                        'className' => 'Default',
+                    ],
+                    'fields' => ['username' => 'login', 'password' => 'senha'],
+                    'userModel' => 'Usuarios',
+                    'scope' => [
+                        'Usuarios.status' => 1
+                    ],
+                ],
+            ],
+            'storage' => 'Session'
+        ]);
     }
 
     /**
@@ -51,12 +139,32 @@ class AppController extends Controller
      * @param \Cake\Event\Event $event The beforeRender event.
      * @return void
      */
-    public function beforeRender(Event $event)
-    {
+    public function beforeRender(Event $event) {
         if (!array_key_exists('_serialize', $this->viewVars) &&
-            in_array($this->response->type(), ['application/json', 'application/xml'])
+                in_array($this->response->type(), ['application/json', 'application/xml'])
         ) {
             $this->set('_serialize', true);
         }
     }
+
+    public function isAuthorized($user) {
+        if (!empty($user)) {
+            return true;
+        }
+        return false;
+    }
+
+    public function beforeFilter(Event $event) {
+        parent::beforeFilter($event);
+        if (!empty($this->request->params['prefix']) AND $this->request->params['prefix'] === 'admin') {
+            if (!empty($this->Auth->user())) {
+                $this->Auth->allow();
+            } else {
+                $this->redirect('/logout');
+            }
+        } else {
+            $this->Auth->allow();
+        }
+    }
+
 }
