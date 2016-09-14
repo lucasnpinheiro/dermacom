@@ -70,8 +70,8 @@ class TabelasValoresHistoricosTable extends Table
             ->allowEmpty('valor_origem');
 
         $validator
-            ->numeric('valor repasse')
-            ->allowEmpty('valor repasse');
+            ->numeric('valor_repasse')
+            ->allowEmpty('valor_repasse');
 
         $validator
             ->date('data_inicio')

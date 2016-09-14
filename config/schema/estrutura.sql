@@ -584,7 +584,7 @@ CREATE TABLE IF NOT EXISTS `tabelas_valores_historicos` (
 `tabelas_preco_id` INTEGER(11) DEFAULT NULL,
 `status` INTEGER(11) DEFAULT NULL COMMENT '0 - Inativo | 1 - Ativo',
 `valor_origem` FLOAT(10,2) DEFAULT NULL,
-`valor repasse` FLOAT(10,2) DEFAULT NULL,
+`valor_repasse` FLOAT(10,2) DEFAULT NULL,
 `data_inicio` DATE DEFAULT NULL,
 `data_fim` DATE DEFAULT NULL,
 `reajuste_id` INTEGER(11) DEFAULT NULL,

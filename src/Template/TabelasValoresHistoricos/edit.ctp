@@ -20,7 +20,7 @@
             echo $this->Form->input('tabelas_preco_id', ['options' => $tabelasPrecos, 'empty' => true]);
             echo $this->Form->input('status');
             echo $this->Form->input('valor_origem');
-            echo $this->Form->input('valor repasse');
+            echo $this->Form->input('valor_repasse');
             echo $this->Form->input('data_inicio', ['empty' => true]);
             echo $this->Form->input('data_fim', ['empty' => true]);
             echo $this->Form->input('reajuste_id');

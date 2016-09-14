@@ -10,7 +10,7 @@ use Cake\ORM\Entity;
  * @property int $tabelas_preco_id
  * @property int $status
  * @property float $valor_origem
- * @property float $valor repasse
+ * @property float $valor_repasse
  * @property \Cake\I18n\Time $data_inicio
  * @property \Cake\I18n\Time $data_fim
  * @property int $reajuste_id

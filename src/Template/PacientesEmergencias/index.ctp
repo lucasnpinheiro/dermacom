@@ -1,53 +1,73 @@
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-        <li><?= $this->Html->link(__('New Pacientes Emergencia'), ['action' => 'add']) ?></li>
-        <li><?= $this->Html->link(__('List Pacientes'), ['controller' => 'Pacientes', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Paciente'), ['controller' => 'Pacientes', 'action' => 'add']) ?></li>
-        <li><?= $this->Html->link(__('List Parentescos'), ['controller' => 'Parentescos', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Parentesco'), ['controller' => 'Parentescos', 'action' => 'add']) ?></li>
-    </ul>
-</nav>
-<div class="pacientesEmergencias index large-9 medium-8 columns content">
-    <h3><?= __('Pacientes Emergencias') ?></h3>
-    <table cellpadding="0" cellspacing="0">
-        <thead>
-            <tr>
-                <th><?= $this->Paginator->sort('id') ?></th>
-                <th><?= $this->Paginator->sort('paciente_id') ?></th>
-                <th><?= $this->Paginator->sort('nome') ?></th>
-                <th><?= $this->Paginator->sort('parentesco_id') ?></th>
-                <th><?= $this->Paginator->sort('telefone') ?></th>
-                <th><?= $this->Paginator->sort('created') ?></th>
-                <th><?= $this->Paginator->sort('modified') ?></th>
-                <th class="actions"><?= __('Actions') ?></th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php foreach ($pacientesEmergencias as $pacientesEmergencia): ?>
-            <tr>
-                <td><?= $this->Number->format($pacientesEmergencia->id) ?></td>
-                <td><?= $pacientesEmergencia->has('paciente') ? $this->Html->link($pacientesEmergencia->paciente->id, ['controller' => 'Pacientes', 'action' => 'view', $pacientesEmergencia->paciente->id]) : '' ?></td>
-                <td><?= h($pacientesEmergencia->nome) ?></td>
-                <td><?= $pacientesEmergencia->has('parentesco') ? $this->Html->link($pacientesEmergencia->parentesco->id, ['controller' => 'Parentescos', 'action' => 'view', $pacientesEmergencia->parentesco->id]) : '' ?></td>
-                <td><?= h($pacientesEmergencia->telefone) ?></td>
-                <td><?= h($pacientesEmergencia->created) ?></td>
-                <td><?= h($pacientesEmergencia->modified) ?></td>
-                <td class="actions">
-                    <?= $this->Html->link(__('View'), ['action' => 'view', $pacientesEmergencia->id]) ?>
-                    <?= $this->Html->link(__('Edit'), ['action' => 'edit', $pacientesEmergencia->id]) ?>
-                    <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $pacientesEmergencia->id], ['confirm' => __('Are you sure you want to delete # {0}?', $pacientesEmergencia->id)]) ?>
-                </td>
-            </tr>
-            <?php endforeach; ?>
-        </tbody>
-    </table>
-    <div class="paginator">
-        <ul class="pagination">
-            <?= $this->Paginator->prev('< ' . __('previous')) ?>
-            <?= $this->Paginator->numbers() ?>
-            <?= $this->Paginator->next(__('next') . ' >') ?>
-        </ul>
-        <p><?= $this->Paginator->counter() ?></p>
+<?php
+$this->Html->addCrumb(__('Index'), null);
+
+$this->Html->addButton($this->Html->link('<i class="fa fa-plus-circle" aria-hidden="true"></i> ' . __('Add'), ['action' => 'add'], ['class' => 'btn btn-primary', 'escape' => false]));
+$this->Html->addButton($this->Html->link('<i class="fa fa-list" aria-hidden="true"></i> ' . __('Index'), ['action' => 'index'], ['class' => 'btn btn-success', 'escape' => false]));
+?>
+<div class="panel">
+    <div class="panel-heading">
+        <h3 class="panel-title"><?= __('Lista de Tabelas Valores Históricos') ?></h3>
+    </div>
+    <div class="panel-body">
+
+        <div class="bootstrap-table">
+            <div class="fixed-table-toolbar">
+                <?php
+                echo $this->Form->create(null, [
+                    'inline' => true,
+                    'label' => false
+                ]);
+                ?>
+                <div class="bars pull-left">
+                    <?php
+                    echo $this->Form->status('status', ['label' => false, 'placeholder' => __('Status')]);
+                    ?>
+                </div>
+                <div class="pull-right search">
+                    <?php
+                    echo $this->Form->button($this->Html->icon('search') . ' Consultar', ['escape' => false, 'type' => 'submit']);
+                    ?>
+                </div>
+                <?php
+                echo $this->Form->end();
+                ?>
+            </div>
+            <div class="fixed-table-container" style="padding-bottom: 0px;">
+                <div class="fixed-table-body">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th><?= $this->Paginator->sort('paciente_id') ?></th>
+                                <th><?= $this->Paginator->sort('nome') ?></th>
+                                <th><?= $this->Paginator->sort('parentesco_id') ?></th>
+                                <th><?= $this->Paginator->sort('telefone') ?></th>
+                                <th><?= $this->Paginator->sort('created') ?></th>
+                                <th><?= $this->Paginator->sort('modified') ?></th>
+                                <th class="actions text-right"><?= __('Actions') ?></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php foreach ($pacientesEmergencias as $pacientesEmergencia): ?>
+                                <tr>
+                                    <td><?= $pacientesEmergencia->has('paciente') ? $this->Html->link($pacientesEmergencia->paciente->id, ['controller' => 'Pacientes', 'action' => 'edit', $pacientesEmergencia->paciente->id]) : '' ?></td>
+                                    <td><?= h($pacientesEmergencia->nome) ?></td>
+                                    <td><?= $pacientesEmergencia->has('parentesco') ? $this->Html->link($pacientesEmergencia->parentesco->id, ['controller' => 'Parentescos', 'action' => 'edit', $pacientesEmergencia->parentesco->id]) : '' ?></td>
+                                    <td><?= h($pacientesEmergencia->telefone) ?></td>
+                                    <td><?= h($pacientesEmergencia->created) ?></td>
+                                    <td><?= h($pacientesEmergencia->modified) ?></td>
+                                    <td class="actions text-right">
+                                        <?= $this->Html->link(null, ['action' => 'edit', $pacientesEmergencia->id], ['title' => __('Edit'), 'class' => 'btn btn-primary btn-sm btn-rounded fa fa-pencil']) ?>
+                                        <?= $this->Form->postLink(null, ['action' => 'delete', $pacientesEmergencia->id], ['title' => __('Delete'), 'class' => 'btn btn-danger btn-sm btn-rounded fa fa-eraser', 'confirm' => __('Are you sure you want to delete # {0}?', $pacientesEmergencia->id)]) ?>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="panel-footer">
+        <?= $this->element('Pagination/paginator') ?>
     </div>
 </div>

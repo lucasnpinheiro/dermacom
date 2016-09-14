@@ -1,5 +1,12 @@
+.select select {
+    -webkit-appearance: inherit !important; 
+    -moz-appearance: inherit !important;
+    appearance: inherit !important;
+    padding: 6px 2.5em 6px 10px;
+}
+
 .select:before {
-    content: initial;
+    content: '';
     border-style: solid;
     border-width: 7px 5px 0 5px;
     border-left-color: transparent;
@@ -12,7 +19,9 @@
     vertical-align: middle;
     width: 0;
     position: absolute;
-    right: .7em;
-    top: 1em;
+    right: 1.5em;
+    bottom: 0.8em;
     z-index: 1;
+    top: inherit;
 }
+
