@@ -6,7 +6,7 @@ $this->Html->addButton($this->Html->link('<i class="fa fa-list" aria-hidden="tru
 ?>
 <div class="panel">
     <div class="panel-heading">
-        <h3 class="panel-title"><?= __('Lista de Tabelas Valores Históricos') ?></h3>
+        <h3 class="panel-title"><?= __($sub_title) ?></h3>
     </div>
     <div class="panel-body">
 

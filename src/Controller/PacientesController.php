@@ -19,7 +19,7 @@ class PacientesController extends AppController
     public function index()
     {
         $this->paginate = [
-            'contain' => ['Sexos', 'EstadosCivils', 'Escolaridades', 'Profissaos', 'Nacionalidades', 'Religiaos', 'Cors']
+            'contain' => ['Sexos', 'EstadosCivis', 'Escolaridades', 'Profissoes', 'Nacionalidades', 'Religioes', 'Cores']
         ];
         $pacientes = $this->paginate($this->Pacientes);
 
@@ -37,7 +37,7 @@ class PacientesController extends AppController
     public function view($id = null)
     {
         $paciente = $this->Pacientes->get($id, [
-            'contain' => ['Sexos', 'EstadosCivils', 'Escolaridades', 'Profissaos', 'Nacionalidades', 'Religiaos', 'Cors', 'Convenios', 'Midias', 'PacientesAcompanhamentos', 'PacientesEmergencias', 'PacientesServicos', 'PacientesSoube']
+            'contain' => ['Sexos', 'EstadosCivis', 'Escolaridades', 'Profissoes', 'Nacionalidades', 'Religioes', 'Cores', 'Convenios', 'Midias', 'PacientesAcompanhamentos', 'PacientesEmergencias', 'PacientesServicos', 'PacientesSoube']
         ]);
 
         $this->set('paciente', $paciente);
@@ -63,12 +63,12 @@ class PacientesController extends AppController
             }
         }
         $sexos = $this->Pacientes->Sexos->find('list', ['limit' => 200]);
-        $estadosCivils = $this->Pacientes->EstadosCivils->find('list', ['limit' => 200]);
+        $estadosCivils = $this->Pacientes->EstadosCivis->find('list', ['limit' => 200]);
         $escolaridades = $this->Pacientes->Escolaridades->find('list', ['limit' => 200]);
-        $profissaos = $this->Pacientes->Profissaos->find('list', ['limit' => 200]);
+        $profissaos = $this->Pacientes->Profissoes->find('list', ['limit' => 200]);
         $nacionalidades = $this->Pacientes->Nacionalidades->find('list', ['limit' => 200]);
-        $religiaos = $this->Pacientes->Religiaos->find('list', ['limit' => 200]);
-        $cors = $this->Pacientes->Cors->find('list', ['limit' => 200]);
+        $religiaos = $this->Pacientes->Religioes->find('list', ['limit' => 200]);
+        $cors = $this->Pacientes->Cores->find('list', ['limit' => 200]);
         $convenios = $this->Pacientes->Convenios->find('list', ['limit' => 200]);
         $midias = $this->Pacientes->Midias->find('list', ['limit' => 200]);
         $this->set(compact('paciente', 'sexos', 'estadosCivils', 'escolaridades', 'profissaos', 'nacionalidades', 'religiaos', 'cors', 'convenios', 'midias'));
@@ -98,12 +98,12 @@ class PacientesController extends AppController
             }
         }
         $sexos = $this->Pacientes->Sexos->find('list', ['limit' => 200]);
-        $estadosCivils = $this->Pacientes->EstadosCivils->find('list', ['limit' => 200]);
+        $estadosCivils = $this->Pacientes->EstadosCivis->find('list', ['limit' => 200]);
         $escolaridades = $this->Pacientes->Escolaridades->find('list', ['limit' => 200]);
-        $profissaos = $this->Pacientes->Profissaos->find('list', ['limit' => 200]);
+        $profissaos = $this->Pacientes->Profissoes->find('list', ['limit' => 200]);
         $nacionalidades = $this->Pacientes->Nacionalidades->find('list', ['limit' => 200]);
-        $religiaos = $this->Pacientes->Religiaos->find('list', ['limit' => 200]);
-        $cors = $this->Pacientes->Cors->find('list', ['limit' => 200]);
+        $religiaos = $this->Pacientes->Religioes->find('list', ['limit' => 200]);
+        $cors = $this->Pacientes->Cores->find('list', ['limit' => 200]);
         $convenios = $this->Pacientes->Convenios->find('list', ['limit' => 200]);
         $midias = $this->Pacientes->Midias->find('list', ['limit' => 200]);
         $this->set(compact('paciente', 'sexos', 'estadosCivils', 'escolaridades', 'profissaos', 'nacionalidades', 'religiaos', 'cors', 'convenios', 'midias'));

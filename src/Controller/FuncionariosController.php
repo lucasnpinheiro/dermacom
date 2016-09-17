@@ -19,7 +19,7 @@ class FuncionariosController extends AppController
     public function index()
     {
         $this->paginate = [
-            'contain' => ['Conselhos', 'Cargos', 'CargosSalarios', 'Comissaos']
+            'contain' => ['Conselhos',  'Comissoes']
         ];
         $funcionarios = $this->paginate($this->Funcionarios);
 
@@ -37,7 +37,7 @@ class FuncionariosController extends AppController
     public function view($id = null)
     {
         $funcionario = $this->Funcionarios->get($id, [
-            'contain' => ['Conselhos', 'Cargos', 'CargosSalarios', 'Comissaos']
+            'contain' => ['Conselhos',  'Comissoes']
         ]);
 
         $this->set('funcionario', $funcionario);
@@ -65,7 +65,7 @@ class FuncionariosController extends AppController
         $conselhos = $this->Funcionarios->Conselhos->find('list', ['limit' => 200]);
         $cargos = $this->Funcionarios->Cargos->find('list', ['limit' => 200]);
         $cargosSalarios = $this->Funcionarios->CargosSalarios->find('list', ['limit' => 200]);
-        $comissaos = $this->Funcionarios->Comissaos->find('list', ['limit' => 200]);
+        $comissaos = $this->Funcionarios->Comissoes->find('list', ['limit' => 200]);
         $this->set(compact('funcionario', 'conselhos', 'cargos', 'cargosSalarios', 'comissaos'));
         $this->set('_serialize', ['funcionario']);
     }
@@ -95,7 +95,7 @@ class FuncionariosController extends AppController
         $conselhos = $this->Funcionarios->Conselhos->find('list', ['limit' => 200]);
         $cargos = $this->Funcionarios->Cargos->find('list', ['limit' => 200]);
         $cargosSalarios = $this->Funcionarios->CargosSalarios->find('list', ['limit' => 200]);
-        $comissaos = $this->Funcionarios->Comissaos->find('list', ['limit' => 200]);
+        $comissaos = $this->Funcionarios->Comissoes->find('list', ['limit' => 200]);
         $this->set(compact('funcionario', 'conselhos', 'cargos', 'cargosSalarios', 'comissaos'));
         $this->set('_serialize', ['funcionario']);
     }

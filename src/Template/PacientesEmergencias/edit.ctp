@@ -1,30 +1,28 @@
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-        <li><?= $this->Form->postLink(
-                __('Delete'),
-                ['action' => 'delete', $pacientesEmergencia->id],
-                ['confirm' => __('Are you sure you want to delete # {0}?', $pacientesEmergencia->id)]
-            )
-        ?></li>
-        <li><?= $this->Html->link(__('List Pacientes Emergencias'), ['action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('List Pacientes'), ['controller' => 'Pacientes', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Paciente'), ['controller' => 'Pacientes', 'action' => 'add']) ?></li>
-        <li><?= $this->Html->link(__('List Parentescos'), ['controller' => 'Parentescos', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Parentesco'), ['controller' => 'Parentescos', 'action' => 'add']) ?></li>
-    </ul>
-</nav>
-<div class="pacientesEmergencias form large-9 medium-8 columns content">
+<?php
+$this->Html->addCrumb(__('Index'), ['action' => 'index']);
+$this->Html->addCrumb(__($this->request->params['action']), null);
+
+$this->Html->addButton($this->Html->link('<i class="fa fa-plus-circle" aria-hidden="true"></i> ' . __('Add'), ['action' => 'add'], ['class' => 'btn btn-primary', 'escape' => false]));
+$this->Html->addButton($this->Html->link('<i class="fa fa-list" aria-hidden="true"></i> ' . __('Index'), ['action' => 'index'], ['class' => 'btn btn-success', 'escape' => false]));
+$this->Html->addButton($this->Form->postLink('<i class="fa fa-trash-o"></i> ' . __('Delete'), ['action' => 'delete', $pacientesEmergencia->id], ['confirm' => __('Are you sure you want to delete # {0}?', $pacientesEmergencia->id), 'escape' => false, 'class' => 'btn btn-danger']));
+?>
+<div class="panel">
+    <div class="panel-heading">
+        <h3 class="panel-title"><?= __($sub_title) ?></h3>
+    </div>
     <?= $this->Form->create($pacientesEmergencia) ?>
-    <fieldset>
-        <legend><?= __('Edit Pacientes Emergencia') ?></legend>
+    <div class="panel-body">
         <?php
-            echo $this->Form->input('paciente_id', ['options' => $pacientes, 'empty' => true]);
-            echo $this->Form->input('nome');
-            echo $this->Form->input('parentesco_id', ['options' => $parentescos, 'empty' => true]);
-            echo $this->Form->input('telefone');
+        echo $this->Form->input('paciente_id', ['options' => $pacientes, 'empty' => true]);
+        echo $this->Form->input('nome');
+        echo $this->Form->input('parentesco_id', ['options' => $parentescos, 'empty' => true]);
+        echo $this->Form->input('telefone');
         ?>
-    </fieldset>
-    <?= $this->Form->button(__('Submit')) ?>
+    </div>
+    <div class="panel-footer text-right">
+        <?= $this->Form->button(__('Submit'), ['class' => "btn btn-success", 'type' => "submit"]) ?>
+    </div>
     <?= $this->Form->end() ?>
 </div>
+
+

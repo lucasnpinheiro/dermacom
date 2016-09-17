@@ -19,7 +19,7 @@ class MidiasController extends AppController
     public function index()
     {
         $this->paginate = [
-            'contain' => ['Contatotipos']
+            'contain' => ['ContatosTipos']
         ];
         $midias = $this->paginate($this->Midias);
 
@@ -37,7 +37,7 @@ class MidiasController extends AppController
     public function view($id = null)
     {
         $midia = $this->Midias->get($id, [
-            'contain' => ['Contatotipos', 'Pacientes']
+            'contain' => ['ContatosTipos', 'Pacientes']
         ]);
 
         $this->set('midia', $midia);
@@ -62,7 +62,7 @@ class MidiasController extends AppController
                 $this->Flash->error(__('Não foi possivel salvar o registro.'));
             }
         }
-        $contatotipos = $this->Midias->Contatotipos->find('list', ['limit' => 200]);
+        $contatotipos = $this->Midias->ContatosTipos->find('list', ['limit' => 200]);
         $pacientes = $this->Midias->Pacientes->find('list', ['limit' => 200]);
         $this->set(compact('midia', 'contatotipos', 'pacientes'));
         $this->set('_serialize', ['midia']);
@@ -90,7 +90,7 @@ class MidiasController extends AppController
                 $this->Flash->error(__('Não foi possivel salvar o registro.'));
             }
         }
-        $contatotipos = $this->Midias->Contatotipos->find('list', ['limit' => 200]);
+        $contatotipos = $this->Midias->ContatosTipos->find('list', ['limit' => 200]);
         $pacientes = $this->Midias->Pacientes->find('list', ['limit' => 200]);
         $this->set(compact('midia', 'contatotipos', 'pacientes'));
         $this->set('_serialize', ['midia']);

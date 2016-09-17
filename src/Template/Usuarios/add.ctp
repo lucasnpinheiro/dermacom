@@ -1,13 +1,13 @@
 <?php
 $this->Html->addCrumb(__('Index'), ['action' => 'index']);
-$this->Html->addCrumb(__('Add'), null);
+$this->Html->addCrumb(__($this->request->params['action']), null);
 
 $this->Html->addButton($this->Html->link('<i class="fa fa-plus-circle" aria-hidden="true"></i> ' . __('Add'), ['action' => 'add'], ['class' => 'btn btn-primary', 'escape' => false]));
 $this->Html->addButton($this->Html->link('<i class="fa fa-list" aria-hidden="true"></i> ' . __('Index'), ['action' => 'index'], ['class' => 'btn btn-success', 'escape' => false]));
 ?>
 <div class="panel">
     <div class="panel-heading">
-        <h3 class="panel-title"><?= __('Cadastro de Usuário') ?></h3>
+        <h3 class="panel-title"><?= __($sub_title) ?></h3>
     </div>
     <?= $this->Form->create($usuario) ?>
     <div class="panel-body">

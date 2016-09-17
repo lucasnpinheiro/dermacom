@@ -19,7 +19,7 @@ class EstagiosController extends AppController
     public function index()
     {
         $this->paginate = [
-            'contain' => ['Lesaos', 'Classificacaos']
+            'contain' => ['Lesoes', 'Classificacoes']
         ];
         $estagios = $this->paginate($this->Estagios);
 
@@ -37,7 +37,7 @@ class EstagiosController extends AppController
     public function view($id = null)
     {
         $estagio = $this->Estagios->get($id, [
-            'contain' => ['Lesaos', 'Classificacaos']
+            'contain' => ['Lesoes', 'Classificacoes']
         ]);
 
         $this->set('estagio', $estagio);
@@ -62,8 +62,8 @@ class EstagiosController extends AppController
                 $this->Flash->error(__('Não foi possivel salvar o registro.'));
             }
         }
-        $lesaos = $this->Estagios->Lesaos->find('list', ['limit' => 200]);
-        $classificacaos = $this->Estagios->Classificacaos->find('list', ['limit' => 200]);
+        $lesaos = $this->Estagios->Lesoes->find('list', ['limit' => 200]);
+        $classificacaos = $this->Estagios->Classificacoes->find('list', ['limit' => 200]);
         $this->set(compact('estagio', 'lesaos', 'classificacaos'));
         $this->set('_serialize', ['estagio']);
     }
@@ -90,8 +90,8 @@ class EstagiosController extends AppController
                 $this->Flash->error(__('Não foi possivel salvar o registro.'));
             }
         }
-        $lesaos = $this->Estagios->Lesaos->find('list', ['limit' => 200]);
-        $classificacaos = $this->Estagios->Classificacaos->find('list', ['limit' => 200]);
+        $lesaos = $this->Estagios->Lesoes->find('list', ['limit' => 200]);
+        $classificacaos = $this->Estagios->Classificacoes->find('list', ['limit' => 200]);
         $this->set(compact('estagio', 'lesaos', 'classificacaos'));
         $this->set('_serialize', ['estagio']);
     }

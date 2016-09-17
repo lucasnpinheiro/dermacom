@@ -9,7 +9,7 @@ use Cake\Validation\Validator;
 /**
  * ComissoesCorrecoes Model
  *
- * @property \Cake\ORM\Association\BelongsTo $Comissaos
+ * @property \Cake\ORM\Association\BelongsTo $Comissoes
  *
  * @method \App\Model\Entity\ComissoesCorreco get($primaryKey, $options = [])
  * @method \App\Model\Entity\ComissoesCorreco newEntity($data = null, array $options = [])
@@ -40,7 +40,7 @@ class ComissoesCorrecoesTable extends Table
 
         $this->addBehavior('Timestamp');
 
-        $this->belongsTo('Comissaos', [
+        $this->belongsTo('Comissoes', [
             'foreignKey' => 'comissao_id'
         ]);
     }
@@ -80,7 +80,7 @@ class ComissoesCorrecoesTable extends Table
      */
     public function buildRules(RulesChecker $rules)
     {
-        $rules->add($rules->existsIn(['comissao_id'], 'Comissaos'));
+        $rules->add($rules->existsIn(['comissao_id'], 'Comissoes'));
 
         return $rules;
     }

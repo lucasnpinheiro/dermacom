@@ -9,7 +9,7 @@ use Cake\Validation\Validator;
 /**
  * Midias Model
  *
- * @property \Cake\ORM\Association\BelongsTo $Contatotipos
+ * @property \Cake\ORM\Association\BelongsTo $ContatosTipos
  * @property \Cake\ORM\Association\BelongsToMany $Pacientes
  *
  * @method \App\Model\Entity\Midia get($primaryKey, $options = [])
@@ -41,7 +41,7 @@ class MidiasTable extends Table
 
         $this->addBehavior('Timestamp');
 
-        $this->belongsTo('Contatotipos', [
+        $this->belongsTo('ContatosTipos', [
             'foreignKey' => 'contatotipo_id'
         ]);
         $this->belongsToMany('Pacientes', [
@@ -78,7 +78,7 @@ class MidiasTable extends Table
      */
     public function buildRules(RulesChecker $rules)
     {
-        $rules->add($rules->existsIn(['contatotipo_id'], 'Contatotipos'));
+        $rules->add($rules->existsIn(['contatotipo_id'], 'ContatosTipos'));
 
         return $rules;
     }

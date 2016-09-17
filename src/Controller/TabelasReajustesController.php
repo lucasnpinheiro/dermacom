@@ -19,7 +19,7 @@ class TabelasReajustesController extends AppController
     public function index()
     {
         $this->paginate = [
-            'contain' => ['TabelasValors']
+            'contain' => ['TabelasValores']
         ];
         $tabelasReajustes = $this->paginate($this->TabelasReajustes);
 
@@ -37,7 +37,7 @@ class TabelasReajustesController extends AppController
     public function view($id = null)
     {
         $tabelasReajuste = $this->TabelasReajustes->get($id, [
-            'contain' => ['TabelasValors']
+            'contain' => ['TabelasValores']
         ]);
 
         $this->set('tabelasReajuste', $tabelasReajuste);
@@ -62,7 +62,7 @@ class TabelasReajustesController extends AppController
                 $this->Flash->error(__('Não foi possivel salvar o registro.'));
             }
         }
-        $tabelasValors = $this->TabelasReajustes->TabelasValors->find('list', ['limit' => 200]);
+        $tabelasValors = $this->TabelasReajustes->TabelasValores->find('list', ['limit' => 200]);
         $this->set(compact('tabelasReajuste', 'tabelasValors'));
         $this->set('_serialize', ['tabelasReajuste']);
     }
@@ -89,7 +89,7 @@ class TabelasReajustesController extends AppController
                 $this->Flash->error(__('Não foi possivel salvar o registro.'));
             }
         }
-        $tabelasValors = $this->TabelasReajustes->TabelasValors->find('list', ['limit' => 200]);
+        $tabelasValors = $this->TabelasReajustes->TabelasValores->find('list', ['limit' => 200]);
         $this->set(compact('tabelasReajuste', 'tabelasValors'));
         $this->set('_serialize', ['tabelasReajuste']);
     }

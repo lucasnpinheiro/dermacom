@@ -10,12 +10,12 @@ use Cake\Validation\Validator;
  * Pacientes Model
  *
  * @property \Cake\ORM\Association\BelongsTo $Sexos
- * @property \Cake\ORM\Association\BelongsTo $EstadosCivils
+ * @property \Cake\ORM\Association\BelongsTo $EstadosCivis
  * @property \Cake\ORM\Association\BelongsTo $Escolaridades
- * @property \Cake\ORM\Association\BelongsTo $Profissaos
+ * @property \Cake\ORM\Association\BelongsTo $Profissoes
  * @property \Cake\ORM\Association\BelongsTo $Nacionalidades
- * @property \Cake\ORM\Association\BelongsTo $Religiaos
- * @property \Cake\ORM\Association\BelongsTo $Cors
+ * @property \Cake\ORM\Association\BelongsTo $Religioes
+ * @property \Cake\ORM\Association\BelongsTo $Cores
  * @property \Cake\ORM\Association\HasMany $PacientesAcompanhamentos
  * @property \Cake\ORM\Association\HasMany $PacientesEmergencias
  * @property \Cake\ORM\Association\HasMany $PacientesServicos
@@ -55,22 +55,22 @@ class PacientesTable extends Table
         $this->belongsTo('Sexos', [
             'foreignKey' => 'sexo_id'
         ]);
-        $this->belongsTo('EstadosCivils', [
+        $this->belongsTo('EstadosCivis', [
             'foreignKey' => 'estados_civil_id'
         ]);
         $this->belongsTo('Escolaridades', [
             'foreignKey' => 'escolaridade_id'
         ]);
-        $this->belongsTo('Profissaos', [
+        $this->belongsTo('Profissoes', [
             'foreignKey' => 'profissao_id'
         ]);
         $this->belongsTo('Nacionalidades', [
             'foreignKey' => 'nacionalidade_id'
         ]);
-        $this->belongsTo('Religiaos', [
+        $this->belongsTo('Religioes', [
             'foreignKey' => 'religiao_id'
         ]);
-        $this->belongsTo('Cors', [
+        $this->belongsTo('Cores', [
             'foreignKey' => 'cor_id'
         ]);
         $this->hasMany('PacientesAcompanhamentos', [
@@ -172,12 +172,12 @@ class PacientesTable extends Table
     public function buildRules(RulesChecker $rules)
     {
         $rules->add($rules->existsIn(['sexo_id'], 'Sexos'));
-        $rules->add($rules->existsIn(['estados_civil_id'], 'EstadosCivils'));
+        $rules->add($rules->existsIn(['estados_civil_id'], 'EstadosCivis'));
         $rules->add($rules->existsIn(['escolaridade_id'], 'Escolaridades'));
-        $rules->add($rules->existsIn(['profissao_id'], 'Profissaos'));
+        $rules->add($rules->existsIn(['profissao_id'], 'Profissoes'));
         $rules->add($rules->existsIn(['nacionalidade_id'], 'Nacionalidades'));
-        $rules->add($rules->existsIn(['religiao_id'], 'Religiaos'));
-        $rules->add($rules->existsIn(['cor_id'], 'Cors'));
+        $rules->add($rules->existsIn(['religiao_id'], 'Religioes'));
+        $rules->add($rules->existsIn(['cor_id'], 'Cores'));
 
         return $rules;
     }

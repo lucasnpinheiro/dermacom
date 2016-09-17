@@ -1,17 +1,23 @@
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-        <li><?= $this->Html->link(__('List Religioes'), ['action' => 'index']) ?></li>
-    </ul>
-</nav>
-<div class="religioes form large-9 medium-8 columns content">
+<?php
+$this->Html->addCrumb(__('Index'), ['action' => 'index']);
+$this->Html->addCrumb(__($this->request->params['action']), null);
+
+$this->Html->addButton($this->Html->link('<i class="fa fa-plus-circle" aria-hidden="true"></i> ' . __('Add'), ['action' => 'add'], ['class' => 'btn btn-primary', 'escape' => false]));
+$this->Html->addButton($this->Html->link('<i class="fa fa-list" aria-hidden="true"></i> ' . __('Index'), ['action' => 'index'], ['class' => 'btn btn-success', 'escape' => false]));
+?>
+<div class="panel">
+    <div class="panel-heading">
+        <h3 class="panel-title"><?= __($sub_title) ?></h3>
+    </div>
     <?= $this->Form->create($religio) ?>
-    <fieldset>
-        <legend><?= __('Add Religio') ?></legend>
+    <div class="panel-body">
         <?php
-            echo $this->Form->input('nome');
+        echo $this->Form->input('nome');
         ?>
-    </fieldset>
-    <?= $this->Form->button(__('Submit')) ?>
+    </div>
+    <div class="panel-footer text-right">
+        <?= $this->Form->button(__('Submit'), ['class' => "btn btn-success", 'type' => "submit"]) ?>
+    </div>
     <?= $this->Form->end() ?>
 </div>
+

@@ -268,6 +268,25 @@ PRIMARY KEY (`id`)
 -- Fim das estrutura da tabela `lesoes` --
 
 
+-- Inicio das estrutura da tabela `menus` --
+/* !40101 SET character_set_client = utf8 */;
+DROP TABLE IF EXISTS `menus`;
+CREATE TABLE IF NOT EXISTS `menus` (
+`id` INTEGER(11) NOT NULL AUTO_INCREMENT,
+`titulo` VARCHAR(255) COLLATE utf8_general_ci DEFAULT NULL,
+`path` VARCHAR(255) COLLATE utf8_general_ci DEFAULT NULL,
+`controller` VARCHAR(255) COLLATE utf8_general_ci DEFAULT NULL,
+`action` VARCHAR(255) COLLATE utf8_general_ci DEFAULT NULL,
+`status` INTEGER(1) DEFAULT NULL,
+`item_menu` INTEGER(1) DEFAULT NULL,
+`icon` VARCHAR(255) COLLATE utf8_general_ci DEFAULT NULL,
+`created` DATETIME DEFAULT NULL,
+`modified` DATETIME DEFAULT NULL,
+PRIMARY KEY (`id`)
+) ENGINE=InnoDB;
+-- Fim das estrutura da tabela `menus` --
+
+
 -- Inicio das estrutura da tabela `midias` --
 /* !40101 SET character_set_client = utf8 */;
 DROP TABLE IF EXISTS `midias`;
@@ -584,7 +603,7 @@ CREATE TABLE IF NOT EXISTS `tabelas_valores_historicos` (
 `tabelas_preco_id` INTEGER(11) DEFAULT NULL,
 `status` INTEGER(11) DEFAULT NULL COMMENT '0 - Inativo | 1 - Ativo',
 `valor_origem` FLOAT(10,2) DEFAULT NULL,
-`valor_repasse` FLOAT(10,2) DEFAULT NULL,
+`valor repasse` FLOAT(10,2) DEFAULT NULL,
 `data_inicio` DATE DEFAULT NULL,
 `data_fim` DATE DEFAULT NULL,
 `reajuste_id` INTEGER(11) DEFAULT NULL,

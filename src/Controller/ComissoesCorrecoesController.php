@@ -19,7 +19,7 @@ class ComissoesCorrecoesController extends AppController
     public function index()
     {
         $this->paginate = [
-            'contain' => ['Comissaos']
+            'contain' => ['Comissoes']
         ];
         $comissoesCorrecoes = $this->paginate($this->ComissoesCorrecoes);
 
@@ -37,7 +37,7 @@ class ComissoesCorrecoesController extends AppController
     public function view($id = null)
     {
         $comissoesCorreco = $this->ComissoesCorrecoes->get($id, [
-            'contain' => ['Comissaos']
+            'contain' => ['Comissoes']
         ]);
 
         $this->set('comissoesCorreco', $comissoesCorreco);
@@ -62,7 +62,7 @@ class ComissoesCorrecoesController extends AppController
                 $this->Flash->error(__('Não foi possivel salvar o registro.'));
             }
         }
-        $comissaos = $this->ComissoesCorrecoes->Comissaos->find('list', ['limit' => 200]);
+        $comissaos = $this->ComissoesCorrecoes->Comissoes->find('list', ['limit' => 200]);
         $this->set(compact('comissoesCorreco', 'comissaos'));
         $this->set('_serialize', ['comissoesCorreco']);
     }
@@ -89,7 +89,7 @@ class ComissoesCorrecoesController extends AppController
                 $this->Flash->error(__('Não foi possivel salvar o registro.'));
             }
         }
-        $comissaos = $this->ComissoesCorrecoes->Comissaos->find('list', ['limit' => 200]);
+        $comissaos = $this->ComissoesCorrecoes->Comissoes->find('list', ['limit' => 200]);
         $this->set(compact('comissoesCorreco', 'comissaos'));
         $this->set('_serialize', ['comissoesCorreco']);
     }

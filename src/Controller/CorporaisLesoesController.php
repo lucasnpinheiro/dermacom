@@ -19,7 +19,7 @@ class CorporaisLesoesController extends AppController
     public function index()
     {
         $this->paginate = [
-            'contain' => ['Lesaos', 'Corporals']
+            'contain' => ['Lesoes', 'Corporais']
         ];
         $corporaisLesoes = $this->paginate($this->CorporaisLesoes);
 
@@ -37,7 +37,7 @@ class CorporaisLesoesController extends AppController
     public function view($id = null)
     {
         $corporaisLeso = $this->CorporaisLesoes->get($id, [
-            'contain' => ['Lesaos', 'Corporals']
+            'contain' => ['Lesoes', 'Corporais']
         ]);
 
         $this->set('corporaisLeso', $corporaisLeso);
@@ -62,8 +62,8 @@ class CorporaisLesoesController extends AppController
                 $this->Flash->error(__('Não foi possivel salvar o registro.'));
             }
         }
-        $lesaos = $this->CorporaisLesoes->Lesaos->find('list', ['limit' => 200]);
-        $corporals = $this->CorporaisLesoes->Corporals->find('list', ['limit' => 200]);
+        $lesaos = $this->CorporaisLesoes->Lesoes->find('list', ['limit' => 200]);
+        $corporals = $this->CorporaisLesoes->Corporais->find('list', ['limit' => 200]);
         $this->set(compact('corporaisLeso', 'lesaos', 'corporals'));
         $this->set('_serialize', ['corporaisLeso']);
     }
@@ -90,8 +90,8 @@ class CorporaisLesoesController extends AppController
                 $this->Flash->error(__('Não foi possivel salvar o registro.'));
             }
         }
-        $lesaos = $this->CorporaisLesoes->Lesaos->find('list', ['limit' => 200]);
-        $corporals = $this->CorporaisLesoes->Corporals->find('list', ['limit' => 200]);
+        $lesaos = $this->CorporaisLesoes->Lesoes->find('list', ['limit' => 200]);
+        $corporals = $this->CorporaisLesoes->Corporais->find('list', ['limit' => 200]);
         $this->set(compact('corporaisLeso', 'lesaos', 'corporals'));
         $this->set('_serialize', ['corporaisLeso']);
     }

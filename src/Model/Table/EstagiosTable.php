@@ -9,8 +9,8 @@ use Cake\Validation\Validator;
 /**
  * Estagios Model
  *
- * @property \Cake\ORM\Association\BelongsTo $Lesaos
- * @property \Cake\ORM\Association\BelongsTo $Classificacaos
+ * @property \Cake\ORM\Association\BelongsTo $Lesoes
+ * @property \Cake\ORM\Association\BelongsTo $Classificacoes
  *
  * @method \App\Model\Entity\Estagio get($primaryKey, $options = [])
  * @method \App\Model\Entity\Estagio newEntity($data = null, array $options = [])
@@ -41,10 +41,10 @@ class EstagiosTable extends Table
 
         $this->addBehavior('Timestamp');
 
-        $this->belongsTo('Lesaos', [
+        $this->belongsTo('Lesoes', [
             'foreignKey' => 'lesao_id'
         ]);
-        $this->belongsTo('Classificacaos', [
+        $this->belongsTo('Classificacoes', [
             'foreignKey' => 'classificacao_id'
         ]);
     }
@@ -83,8 +83,8 @@ class EstagiosTable extends Table
      */
     public function buildRules(RulesChecker $rules)
     {
-        $rules->add($rules->existsIn(['lesao_id'], 'Lesaos'));
-        $rules->add($rules->existsIn(['classificacao_id'], 'Classificacaos'));
+        $rules->add($rules->existsIn(['lesao_id'], 'Lesoes'));
+        $rules->add($rules->existsIn(['classificacao_id'], 'Classificacoes'));
 
         return $rules;
     }

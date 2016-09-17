@@ -9,8 +9,8 @@ use Cake\Validation\Validator;
 /**
  * CorporaisLesoes Model
  *
- * @property \Cake\ORM\Association\BelongsTo $Lesaos
- * @property \Cake\ORM\Association\BelongsTo $Corporals
+ * @property \Cake\ORM\Association\BelongsTo $Lesoes
+ * @property \Cake\ORM\Association\BelongsTo $Corporais
  *
  * @method \App\Model\Entity\CorporaisLeso get($primaryKey, $options = [])
  * @method \App\Model\Entity\CorporaisLeso newEntity($data = null, array $options = [])
@@ -41,10 +41,10 @@ class CorporaisLesoesTable extends Table
 
         $this->addBehavior('Timestamp');
 
-        $this->belongsTo('Lesaos', [
+        $this->belongsTo('Lesoes', [
             'foreignKey' => 'lesao_id'
         ]);
-        $this->belongsTo('Corporals', [
+        $this->belongsTo('Corporais', [
             'foreignKey' => 'corporal_id'
         ]);
     }
@@ -73,8 +73,8 @@ class CorporaisLesoesTable extends Table
      */
     public function buildRules(RulesChecker $rules)
     {
-        $rules->add($rules->existsIn(['lesao_id'], 'Lesaos'));
-        $rules->add($rules->existsIn(['corporal_id'], 'Corporals'));
+        $rules->add($rules->existsIn(['lesao_id'], 'Lesoes'));
+        $rules->add($rules->existsIn(['corporal_id'], 'Corporais'));
 
         return $rules;
     }

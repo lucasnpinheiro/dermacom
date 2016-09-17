@@ -12,7 +12,7 @@ use Cake\Validation\Validator;
  * @property \Cake\ORM\Association\BelongsTo $Conselhos
  * @property \Cake\ORM\Association\BelongsTo $Cargos
  * @property \Cake\ORM\Association\BelongsTo $CargosSalarios
- * @property \Cake\ORM\Association\BelongsTo $Comissaos
+ * @property \Cake\ORM\Association\BelongsTo $Comissoes
  *
  * @method \App\Model\Entity\Funcionario get($primaryKey, $options = [])
  * @method \App\Model\Entity\Funcionario newEntity($data = null, array $options = [])
@@ -46,13 +46,7 @@ class FuncionariosTable extends Table
         $this->belongsTo('Conselhos', [
             'foreignKey' => 'conselho_id'
         ]);
-        $this->belongsTo('Cargos', [
-            'foreignKey' => 'cargo_id'
-        ]);
-        $this->belongsTo('CargosSalarios', [
-            'foreignKey' => 'cargos_salario_id'
-        ]);
-        $this->belongsTo('Comissaos', [
+        $this->belongsTo('Comissoes', [
             'foreignKey' => 'comissao_id'
         ]);
     }
@@ -148,7 +142,7 @@ class FuncionariosTable extends Table
         $rules->add($rules->existsIn(['conselho_id'], 'Conselhos'));
         $rules->add($rules->existsIn(['cargo_id'], 'Cargos'));
         $rules->add($rules->existsIn(['cargos_salario_id'], 'CargosSalarios'));
-        $rules->add($rules->existsIn(['comissao_id'], 'Comissaos'));
+        $rules->add($rules->existsIn(['comissao_id'], 'Comissoes'));
 
         return $rules;
     }

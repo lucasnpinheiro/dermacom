@@ -9,7 +9,7 @@ use Cake\Validation\Validator;
 /**
  * TabelasReajustes Model
  *
- * @property \Cake\ORM\Association\BelongsTo $TabelasValors
+ * @property \Cake\ORM\Association\BelongsTo $TabelasValores
  *
  * @method \App\Model\Entity\TabelasReajuste get($primaryKey, $options = [])
  * @method \App\Model\Entity\TabelasReajuste newEntity($data = null, array $options = [])
@@ -40,7 +40,7 @@ class TabelasReajustesTable extends Table
 
         $this->addBehavior('Timestamp');
 
-        $this->belongsTo('TabelasValors', [
+        $this->belongsTo('TabelasValores', [
             'foreignKey' => 'tabelas_valor_id'
         ]);
     }
@@ -88,7 +88,7 @@ class TabelasReajustesTable extends Table
      */
     public function buildRules(RulesChecker $rules)
     {
-        $rules->add($rules->existsIn(['tabelas_valor_id'], 'TabelasValors'));
+        $rules->add($rules->existsIn(['tabelas_valor_id'], 'TabelasValores'));
 
         return $rules;
     }

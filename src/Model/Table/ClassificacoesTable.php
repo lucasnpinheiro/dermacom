@@ -9,7 +9,7 @@ use Cake\Validation\Validator;
 /**
  * Classificacoes Model
  *
- * @property \Cake\ORM\Association\BelongsTo $Lesaos
+ * @property \Cake\ORM\Association\BelongsTo $Lesoes
  *
  * @method \App\Model\Entity\Classificaco get($primaryKey, $options = [])
  * @method \App\Model\Entity\Classificaco newEntity($data = null, array $options = [])
@@ -40,7 +40,7 @@ class ClassificacoesTable extends Table
 
         $this->addBehavior('Timestamp');
 
-        $this->belongsTo('Lesaos', [
+        $this->belongsTo('Lesoes', [
             'foreignKey' => 'lesao_id'
         ]);
     }
@@ -72,7 +72,7 @@ class ClassificacoesTable extends Table
      */
     public function buildRules(RulesChecker $rules)
     {
-        $rules->add($rules->existsIn(['lesao_id'], 'Lesaos'));
+        $rules->add($rules->existsIn(['lesao_id'], 'Lesoes'));
 
         return $rules;
     }

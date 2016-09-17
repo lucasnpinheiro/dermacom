@@ -19,7 +19,7 @@ class ClassificacoesController extends AppController
     public function index()
     {
         $this->paginate = [
-            'contain' => ['Lesaos']
+            'contain' => ['Lesoes']
         ];
         $classificacoes = $this->paginate($this->Classificacoes);
 
@@ -37,7 +37,7 @@ class ClassificacoesController extends AppController
     public function view($id = null)
     {
         $classificaco = $this->Classificacoes->get($id, [
-            'contain' => ['Lesaos']
+            'contain' => ['Lesoes']
         ]);
 
         $this->set('classificaco', $classificaco);
@@ -62,7 +62,7 @@ class ClassificacoesController extends AppController
                 $this->Flash->error(__('Não foi possivel salvar o registro.'));
             }
         }
-        $lesaos = $this->Classificacoes->Lesaos->find('list', ['limit' => 200]);
+        $lesaos = $this->Classificacoes->Lesoes->find('list', ['limit' => 200]);
         $this->set(compact('classificaco', 'lesaos'));
         $this->set('_serialize', ['classificaco']);
     }
@@ -89,7 +89,7 @@ class ClassificacoesController extends AppController
                 $this->Flash->error(__('Não foi possivel salvar o registro.'));
             }
         }
-        $lesaos = $this->Classificacoes->Lesaos->find('list', ['limit' => 200]);
+        $lesaos = $this->Classificacoes->Lesoes->find('list', ['limit' => 200]);
         $this->set(compact('classificaco', 'lesaos'));
         $this->set('_serialize', ['classificaco']);
     }

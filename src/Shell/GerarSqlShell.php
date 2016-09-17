@@ -101,6 +101,7 @@ class GerarSqlShell extends Shell {
         $sql = $this->findDados('religioes', $sql, [], 'INSERT IGNORE');
         $sql = $this->findDados('servicos_clinicas', $sql, [], 'INSERT IGNORE');
         $sql = $this->findDados('sexos', $sql, [], 'INSERT IGNORE');
+        $sql = $this->findDados('menus', $sql, [], 'INSERT IGNORE');
         $sql = $this->findDados('usuarios', $sql, [], 'INSERT IGNORE');
         $this->save('dados.sql', $sql);
     }

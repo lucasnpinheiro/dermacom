@@ -44,10 +44,12 @@ Type::build('float')->useLocaleParser();
 class AppController extends Controller {
 
     public $title = 'Não definido';
+    public $sub_title = 'Não definido';
 
     public function __construct(\Cake\Network\Request $request = null, \Cake\Network\Response $response = null, $name = null, $eventManager = null, $components = null) {
         parent::__construct($request, $response, $name, $eventManager, $components);
         $this->set('title', $this->title);
+        $this->set('sub_title', $this->sub_title);
     }
 
     /**
