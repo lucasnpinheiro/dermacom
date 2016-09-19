@@ -625,6 +625,7 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
 `status` INTEGER(1) DEFAULT NULL COMMENT '0 - Inativo | 1 - Ativo | 9 - Excluir',
 `created` DATETIME DEFAULT NULL,
 `modified` DATETIME DEFAULT NULL,
+`root` INTEGER(1) DEFAULT NULL COMMENT '0 - Não | 1 - Sim',
 PRIMARY KEY (`id`)
 ) ENGINE=InnoDB;
 -- Fim das estrutura da tabela `usuarios` --
