@@ -26,7 +26,7 @@ use Search\Manager;
 class ComissoesCorrecoesTable extends Table {
 
     use \App\Model\Traits\FuncoesTraits,
-        Search\Model\Behavior\SearchBehavior;
+        \App\Model\Traits\SearchTraits;
 
     /**
      * Initialize method

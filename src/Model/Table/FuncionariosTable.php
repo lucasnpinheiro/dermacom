@@ -29,7 +29,7 @@ use Search\Manager;
 class FuncionariosTable extends Table {
 
     use \App\Model\Traits\FuncoesTraits,
-        Search\Model\Behavior\SearchBehavior;
+        \App\Model\Traits\SearchTraits;
 
     /**
      * Initialize method

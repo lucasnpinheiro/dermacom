@@ -9,13 +9,13 @@
         "cakephp/cakephp": "3.3.*",
         "mobiledetect/mobiledetectlib": "2.*",
         "cakephp/migrations": "~1.0",
-        "cakephp/plugin-installer": "*"
+        "cakephp/plugin-installer": "*",
+        "friendsofcake/search": "^2.2"
     },
     "require-dev": {
         "psy/psysh": "@stable",
         "cakephp/debug_kit": "~3.2",
         "cakephp/bake": "~1.1",
-        "friendsofcake/search": "~1.2",
         "holt59/cakephp3-bootstrap-helpers": "~3.0",
         "eventviva/php-image-resize": "1.5.*"
     },

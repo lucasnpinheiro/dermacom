@@ -222,4 +222,6 @@ if (Configure::read('debug')) {
     Plugin::load('DebugKit', ['bootstrap' => true]);
 }
 
+Plugin::loadAll();
 Plugin::load('Migrations');
+Plugin::load('Search');

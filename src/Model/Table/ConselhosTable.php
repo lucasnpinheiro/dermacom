@@ -27,7 +27,7 @@ use Search\Manager;
 class ConselhosTable extends Table {
 
     use \App\Model\Traits\FuncoesTraits,
-        Search\Model\Behavior\SearchBehavior;
+        \App\Model\Traits\SearchTraits;
 
     /**
      * Initialize method

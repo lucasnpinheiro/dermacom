@@ -26,7 +26,7 @@ use Search\Manager;
 class TabelasReajustesTable extends Table {
 
     use \App\Model\Traits\FuncoesTraits,
-        Search\Model\Behavior\SearchBehavior;
+        \App\Model\Traits\SearchTraits;
 
     /**
      * Initialize method
