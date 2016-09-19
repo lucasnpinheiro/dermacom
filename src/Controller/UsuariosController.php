@@ -45,9 +45,8 @@ class UsuariosController extends AppController {
      * @return \Cake\Network\Response|null
      */
     public function index() {
-        $usuarios = $this->paginate($this->Usuarios);
-
-        $this->set(compact('usuarios'));
+        $query = $this->{$this->modelClass}->find('search', $this->{$this->modelClass}->filterParams($this->request->query));
+        $this->set('usuarios', $this->paginate($query));
         $this->set('_serialize', ['usuarios']);
     }
 

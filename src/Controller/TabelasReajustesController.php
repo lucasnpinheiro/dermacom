@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Controller;
 
 use App\Controller\AppController;
@@ -8,22 +9,16 @@ use App\Controller\AppController;
  *
  * @property \App\Model\Table\TabelasReajustesTable $TabelasReajustes
  */
-class TabelasReajustesController extends AppController
-{
+class TabelasReajustesController extends AppController {
 
     /**
      * Index method
      *
      * @return \Cake\Network\Response|null
      */
-    public function index()
-    {
-        $this->paginate = [
-            'contain' => ['TabelasValores']
-        ];
-        $tabelasReajustes = $this->paginate($this->TabelasReajustes);
-
-        $this->set(compact('tabelasReajustes'));
+    public function index() {
+        $query = $this->{$this->modelClass}->find('search', $this->{$this->modelClass}->filterParams($this->request->query));
+        $this->set('tabelasReajustes', $this->paginate($query));
         $this->set('_serialize', ['tabelasReajustes']);
     }
 
@@ -34,8 +29,7 @@ class TabelasReajustesController extends AppController
      * @return \Cake\Network\Response|null
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function view($id = null)
-    {
+    public function view($id = null) {
         $tabelasReajuste = $this->TabelasReajustes->get($id, [
             'contain' => ['TabelasValores']
         ]);
@@ -49,8 +43,7 @@ class TabelasReajustesController extends AppController
      *
      * @return \Cake\Network\Response|void Redirects on successful add, renders view otherwise.
      */
-    public function add()
-    {
+    public function add() {
         $tabelasReajuste = $this->TabelasReajustes->newEntity();
         if ($this->request->is('post')) {
             $tabelasReajuste = $this->TabelasReajustes->patchEntity($tabelasReajuste, $this->request->data);
@@ -74,8 +67,7 @@ class TabelasReajustesController extends AppController
      * @return \Cake\Network\Response|void Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Network\Exception\NotFoundException When record not found.
      */
-    public function edit($id = null)
-    {
+    public function edit($id = null) {
         $tabelasReajuste = $this->TabelasReajustes->get($id, [
             'contain' => []
         ]);
@@ -101,8 +93,7 @@ class TabelasReajustesController extends AppController
      * @return \Cake\Network\Response|null Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function delete($id = null)
-    {
+    public function delete($id = null) {
         $this->request->allowMethod(['post', 'delete']);
         $tabelasReajuste = $this->TabelasReajustes->get($id);
         if ($this->TabelasReajustes->delete($tabelasReajuste)) {
@@ -113,4 +104,5 @@ class TabelasReajustesController extends AppController
 
         return $this->redirect(['action' => 'index']);
     }
+
 }

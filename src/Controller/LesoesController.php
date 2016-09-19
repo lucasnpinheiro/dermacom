@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Controller;
 
 use App\Controller\AppController;
@@ -8,19 +9,16 @@ use App\Controller\AppController;
  *
  * @property \App\Model\Table\LesoesTable $Lesoes
  */
-class LesoesController extends AppController
-{
+class LesoesController extends AppController {
 
     /**
      * Index method
      *
      * @return \Cake\Network\Response|null
      */
-    public function index()
-    {
-        $lesoes = $this->paginate($this->Lesoes);
-
-        $this->set(compact('lesoes'));
+    public function index() {
+        $query = $this->{$this->modelClass}->find('search', $this->{$this->modelClass}->filterParams($this->request->query));
+        $this->set('lesoes', $this->paginate($query));
         $this->set('_serialize', ['lesoes']);
     }
 
@@ -31,8 +29,7 @@ class LesoesController extends AppController
      * @return \Cake\Network\Response|null
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function view($id = null)
-    {
+    public function view($id = null) {
         $leso = $this->Lesoes->get($id, [
             'contain' => ['Corporais']
         ]);
@@ -46,8 +43,7 @@ class LesoesController extends AppController
      *
      * @return \Cake\Network\Response|void Redirects on successful add, renders view otherwise.
      */
-    public function add()
-    {
+    public function add() {
         $leso = $this->Lesoes->newEntity();
         if ($this->request->is('post')) {
             $leso = $this->Lesoes->patchEntity($leso, $this->request->data);
@@ -71,8 +67,7 @@ class LesoesController extends AppController
      * @return \Cake\Network\Response|void Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Network\Exception\NotFoundException When record not found.
      */
-    public function edit($id = null)
-    {
+    public function edit($id = null) {
         $leso = $this->Lesoes->get($id, [
             'contain' => ['Corporais']
         ]);
@@ -98,8 +93,7 @@ class LesoesController extends AppController
      * @return \Cake\Network\Response|null Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function delete($id = null)
-    {
+    public function delete($id = null) {
         $this->request->allowMethod(['post', 'delete']);
         $leso = $this->Lesoes->get($id);
         if ($this->Lesoes->delete($leso)) {
@@ -110,4 +104,5 @@ class LesoesController extends AppController
 
         return $this->redirect(['action' => 'index']);
     }
+
 }

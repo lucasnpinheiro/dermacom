@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Controller;
 
 use App\Controller\AppController;
@@ -8,22 +9,16 @@ use App\Controller\AppController;
  *
  * @property \App\Model\Table\TabelasValoresHistoricosTable $TabelasValoresHistoricos
  */
-class TabelasValoresHistoricosController extends AppController
-{
+class TabelasValoresHistoricosController extends AppController {
 
     /**
      * Index method
      *
      * @return \Cake\Network\Response|null
      */
-    public function index()
-    {
-        $this->paginate = [
-            'contain' => ['TabelasPrecos', 'TabelasReajustes']
-        ];
-        $tabelasValoresHistoricos = $this->paginate($this->TabelasValoresHistoricos);
-
-        $this->set(compact('tabelasValoresHistoricos'));
+    public function index() {
+        $query = $this->{$this->modelClass}->find('search', $this->{$this->modelClass}->filterParams($this->request->query))->contain(['TabelasPrecos', 'TabelasReajustes']);
+        $this->set('tabelasValoresHistoricos', $this->paginate($query));
         $this->set('_serialize', ['tabelasValoresHistoricos']);
     }
 
@@ -34,8 +29,7 @@ class TabelasValoresHistoricosController extends AppController
      * @return \Cake\Network\Response|null
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function view($id = null)
-    {
+    public function view($id = null) {
         $tabelasValoresHistorico = $this->TabelasValoresHistoricos->get($id, [
             'contain' => ['TabelasPrecos', 'TabelasReajustes']
         ]);
@@ -49,8 +43,7 @@ class TabelasValoresHistoricosController extends AppController
      *
      * @return \Cake\Network\Response|void Redirects on successful add, renders view otherwise.
      */
-    public function add()
-    {
+    public function add() {
         $tabelasValoresHistorico = $this->TabelasValoresHistoricos->newEntity();
         if ($this->request->is('post')) {
             $tabelasValoresHistorico = $this->TabelasValoresHistoricos->patchEntity($tabelasValoresHistorico, $this->request->data);
@@ -75,8 +68,7 @@ class TabelasValoresHistoricosController extends AppController
      * @return \Cake\Network\Response|void Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Network\Exception\NotFoundException When record not found.
      */
-    public function edit($id = null)
-    {
+    public function edit($id = null) {
         $tabelasValoresHistorico = $this->TabelasValoresHistoricos->get($id, [
             'contain' => []
         ]);
@@ -103,8 +95,7 @@ class TabelasValoresHistoricosController extends AppController
      * @return \Cake\Network\Response|null Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function delete($id = null)
-    {
+    public function delete($id = null) {
         $this->request->allowMethod(['post', 'delete']);
         $tabelasValoresHistorico = $this->TabelasValoresHistoricos->get($id);
         if ($this->TabelasValoresHistoricos->delete($tabelasValoresHistorico)) {
@@ -115,4 +106,5 @@ class TabelasValoresHistoricosController extends AppController
 
         return $this->redirect(['action' => 'index']);
     }
+
 }

@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Controller;
 
 use App\Controller\AppController;
@@ -8,22 +9,16 @@ use App\Controller\AppController;
  *
  * @property \App\Model\Table\PacientesServicosTable $PacientesServicos
  */
-class PacientesServicosController extends AppController
-{
+class PacientesServicosController extends AppController {
 
     /**
      * Index method
      *
      * @return \Cake\Network\Response|null
      */
-    public function index()
-    {
-        $this->paginate = [
-            'contain' => ['Pacientes', 'ServicosClinicas']
-        ];
-        $pacientesServicos = $this->paginate($this->PacientesServicos);
-
-        $this->set(compact('pacientesServicos'));
+    public function index() {
+        $query = $this->{$this->modelClass}->find('search', $this->{$this->modelClass}->filterParams($this->request->query))->contain(['Pacientes', 'ServicosClinicas']);
+        $this->set('pacientesServicos', $this->paginate($query));
         $this->set('_serialize', ['pacientesServicos']);
     }
 
@@ -34,8 +29,7 @@ class PacientesServicosController extends AppController
      * @return \Cake\Network\Response|null
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function view($id = null)
-    {
+    public function view($id = null) {
         $pacientesServico = $this->PacientesServicos->get($id, [
             'contain' => ['Pacientes', 'ServicosClinicas']
         ]);
@@ -49,8 +43,7 @@ class PacientesServicosController extends AppController
      *
      * @return \Cake\Network\Response|void Redirects on successful add, renders view otherwise.
      */
-    public function add()
-    {
+    public function add() {
         $pacientesServico = $this->PacientesServicos->newEntity();
         if ($this->request->is('post')) {
             $pacientesServico = $this->PacientesServicos->patchEntity($pacientesServico, $this->request->data);
@@ -75,8 +68,7 @@ class PacientesServicosController extends AppController
      * @return \Cake\Network\Response|void Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Network\Exception\NotFoundException When record not found.
      */
-    public function edit($id = null)
-    {
+    public function edit($id = null) {
         $pacientesServico = $this->PacientesServicos->get($id, [
             'contain' => []
         ]);
@@ -103,8 +95,7 @@ class PacientesServicosController extends AppController
      * @return \Cake\Network\Response|null Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function delete($id = null)
-    {
+    public function delete($id = null) {
         $this->request->allowMethod(['post', 'delete']);
         $pacientesServico = $this->PacientesServicos->get($id);
         if ($this->PacientesServicos->delete($pacientesServico)) {
@@ -115,4 +106,5 @@ class PacientesServicosController extends AppController
 
         return $this->redirect(['action' => 'index']);
     }
+
 }

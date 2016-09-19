@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Controller;
 
 use App\Controller\AppController;
@@ -8,22 +9,16 @@ use App\Controller\AppController;
  *
  * @property \App\Model\Table\PrestadoresTable $Prestadores
  */
-class PrestadoresController extends AppController
-{
+class PrestadoresController extends AppController {
 
     /**
      * Index method
      *
      * @return \Cake\Network\Response|null
      */
-    public function index()
-    {
-        $this->paginate = [
-            'contain' => ['Especialidades', 'TabelasPrecos', 'Conselhos']
-        ];
-        $prestadores = $this->paginate($this->Prestadores);
-
-        $this->set(compact('prestadores'));
+    public function index() {
+        $query = $this->{$this->modelClass}->find('search', $this->{$this->modelClass}->filterParams($this->request->query))->contain(['Especialidades', 'TabelasPrecos', 'Conselhos']);
+        $this->set('prestadores', $this->paginate($query));
         $this->set('_serialize', ['prestadores']);
     }
 
@@ -34,8 +29,7 @@ class PrestadoresController extends AppController
      * @return \Cake\Network\Response|null
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function view($id = null)
-    {
+    public function view($id = null) {
         $prestadore = $this->Prestadores->get($id, [
             'contain' => ['Especialidades', 'TabelasPrecos', 'Conselhos']
         ]);
@@ -49,8 +43,7 @@ class PrestadoresController extends AppController
      *
      * @return \Cake\Network\Response|void Redirects on successful add, renders view otherwise.
      */
-    public function add()
-    {
+    public function add() {
         $prestadore = $this->Prestadores->newEntity();
         if ($this->request->is('post')) {
             $prestadore = $this->Prestadores->patchEntity($prestadore, $this->request->data);
@@ -76,8 +69,7 @@ class PrestadoresController extends AppController
      * @return \Cake\Network\Response|void Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Network\Exception\NotFoundException When record not found.
      */
-    public function edit($id = null)
-    {
+    public function edit($id = null) {
         $prestadore = $this->Prestadores->get($id, [
             'contain' => []
         ]);
@@ -105,8 +97,7 @@ class PrestadoresController extends AppController
      * @return \Cake\Network\Response|null Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function delete($id = null)
-    {
+    public function delete($id = null) {
         $this->request->allowMethod(['post', 'delete']);
         $prestadore = $this->Prestadores->get($id);
         if ($this->Prestadores->delete($prestadore)) {
@@ -117,4 +108,5 @@ class PrestadoresController extends AppController
 
         return $this->redirect(['action' => 'index']);
     }
+
 }

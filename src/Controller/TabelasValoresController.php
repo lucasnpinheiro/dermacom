@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Controller;
 
 use App\Controller\AppController;
@@ -8,22 +9,16 @@ use App\Controller\AppController;
  *
  * @property \App\Model\Table\TabelasValoresTable $TabelasValores
  */
-class TabelasValoresController extends AppController
-{
+class TabelasValoresController extends AppController {
 
     /**
      * Index method
      *
      * @return \Cake\Network\Response|null
      */
-    public function index()
-    {
-        $this->paginate = [
-            'contain' => ['TabelasPrecos', 'TabelasReajustes']
-        ];
-        $tabelasValores = $this->paginate($this->TabelasValores);
-
-        $this->set(compact('tabelasValores'));
+    public function index() {
+        $query = $this->{$this->modelClass}->find('search', $this->{$this->modelClass}->filterParams($this->request->query))->contain(['TabelasPrecos', 'TabelasReajustes']);
+        $this->set('tabelasValores', $this->paginate($query));
         $this->set('_serialize', ['tabelasValores']);
     }
 
@@ -34,8 +29,7 @@ class TabelasValoresController extends AppController
      * @return \Cake\Network\Response|null
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function view($id = null)
-    {
+    public function view($id = null) {
         $tabelasValore = $this->TabelasValores->get($id, [
             'contain' => ['TabelasPrecos', 'TabelasReajustes']
         ]);
@@ -49,8 +43,7 @@ class TabelasValoresController extends AppController
      *
      * @return \Cake\Network\Response|void Redirects on successful add, renders view otherwise.
      */
-    public function add()
-    {
+    public function add() {
         $tabelasValore = $this->TabelasValores->newEntity();
         if ($this->request->is('post')) {
             $tabelasValore = $this->TabelasValores->patchEntity($tabelasValore, $this->request->data);
@@ -75,8 +68,7 @@ class TabelasValoresController extends AppController
      * @return \Cake\Network\Response|void Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Network\Exception\NotFoundException When record not found.
      */
-    public function edit($id = null)
-    {
+    public function edit($id = null) {
         $tabelasValore = $this->TabelasValores->get($id, [
             'contain' => []
         ]);
@@ -103,8 +95,7 @@ class TabelasValoresController extends AppController
      * @return \Cake\Network\Response|null Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function delete($id = null)
-    {
+    public function delete($id = null) {
         $this->request->allowMethod(['post', 'delete']);
         $tabelasValore = $this->TabelasValores->get($id);
         if ($this->TabelasValores->delete($tabelasValore)) {
@@ -115,4 +106,5 @@ class TabelasValoresController extends AppController
 
         return $this->redirect(['action' => 'index']);
     }
+
 }

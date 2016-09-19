@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Controller;
 
 use App\Controller\AppController;
@@ -8,19 +9,16 @@ use App\Controller\AppController;
  *
  * @property \App\Model\Table\ReligioesTable $Religioes
  */
-class ReligioesController extends AppController
-{
+class ReligioesController extends AppController {
 
     /**
      * Index method
      *
      * @return \Cake\Network\Response|null
      */
-    public function index()
-    {
-        $religioes = $this->paginate($this->Religioes);
-
-        $this->set(compact('religioes'));
+    public function index() {
+        $query = $this->{$this->modelClass}->find('search', $this->{$this->modelClass}->filterParams($this->request->query));
+        $this->set('religioes', $this->paginate($query));
         $this->set('_serialize', ['religioes']);
     }
 
@@ -31,8 +29,7 @@ class ReligioesController extends AppController
      * @return \Cake\Network\Response|null
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function view($id = null)
-    {
+    public function view($id = null) {
         $religio = $this->Religioes->get($id, [
             'contain' => []
         ]);
@@ -46,8 +43,7 @@ class ReligioesController extends AppController
      *
      * @return \Cake\Network\Response|void Redirects on successful add, renders view otherwise.
      */
-    public function add()
-    {
+    public function add() {
         $religio = $this->Religioes->newEntity();
         if ($this->request->is('post')) {
             $religio = $this->Religioes->patchEntity($religio, $this->request->data);
@@ -70,8 +66,7 @@ class ReligioesController extends AppController
      * @return \Cake\Network\Response|void Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Network\Exception\NotFoundException When record not found.
      */
-    public function edit($id = null)
-    {
+    public function edit($id = null) {
         $religio = $this->Religioes->get($id, [
             'contain' => []
         ]);
@@ -96,8 +91,7 @@ class ReligioesController extends AppController
      * @return \Cake\Network\Response|null Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function delete($id = null)
-    {
+    public function delete($id = null) {
         $this->request->allowMethod(['post', 'delete']);
         $religio = $this->Religioes->get($id);
         if ($this->Religioes->delete($religio)) {
@@ -108,4 +102,5 @@ class ReligioesController extends AppController
 
         return $this->redirect(['action' => 'index']);
     }
+
 }

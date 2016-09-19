@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Controller;
 
 use App\Controller\AppController;
@@ -8,19 +9,16 @@ use App\Controller\AppController;
  *
  * @property \App\Model\Table\NacionalidadesTable $Nacionalidades
  */
-class NacionalidadesController extends AppController
-{
+class NacionalidadesController extends AppController {
 
     /**
      * Index method
      *
      * @return \Cake\Network\Response|null
      */
-    public function index()
-    {
-        $nacionalidades = $this->paginate($this->Nacionalidades);
-
-        $this->set(compact('nacionalidades'));
+    public function index() {
+        $query = $this->{$this->modelClass}->find('search', $this->{$this->modelClass}->filterParams($this->request->query));
+        $this->set('nacionalidades', $this->paginate($query));
         $this->set('_serialize', ['nacionalidades']);
     }
 
@@ -31,8 +29,7 @@ class NacionalidadesController extends AppController
      * @return \Cake\Network\Response|null
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function view($id = null)
-    {
+    public function view($id = null) {
         $nacionalidade = $this->Nacionalidades->get($id, [
             'contain' => ['Pacientes']
         ]);
@@ -46,8 +43,7 @@ class NacionalidadesController extends AppController
      *
      * @return \Cake\Network\Response|void Redirects on successful add, renders view otherwise.
      */
-    public function add()
-    {
+    public function add() {
         $nacionalidade = $this->Nacionalidades->newEntity();
         if ($this->request->is('post')) {
             $nacionalidade = $this->Nacionalidades->patchEntity($nacionalidade, $this->request->data);
@@ -70,8 +66,7 @@ class NacionalidadesController extends AppController
      * @return \Cake\Network\Response|void Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Network\Exception\NotFoundException When record not found.
      */
-    public function edit($id = null)
-    {
+    public function edit($id = null) {
         $nacionalidade = $this->Nacionalidades->get($id, [
             'contain' => []
         ]);
@@ -96,8 +91,7 @@ class NacionalidadesController extends AppController
      * @return \Cake\Network\Response|null Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function delete($id = null)
-    {
+    public function delete($id = null) {
         $this->request->allowMethod(['post', 'delete']);
         $nacionalidade = $this->Nacionalidades->get($id);
         if ($this->Nacionalidades->delete($nacionalidade)) {
@@ -108,4 +102,5 @@ class NacionalidadesController extends AppController
 
         return $this->redirect(['action' => 'index']);
     }
+
 }

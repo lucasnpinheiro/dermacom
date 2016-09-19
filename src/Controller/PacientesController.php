@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Controller;
 
 use App\Controller\AppController;
@@ -8,22 +9,16 @@ use App\Controller\AppController;
  *
  * @property \App\Model\Table\PacientesTable $Pacientes
  */
-class PacientesController extends AppController
-{
+class PacientesController extends AppController {
 
     /**
      * Index method
      *
      * @return \Cake\Network\Response|null
      */
-    public function index()
-    {
-        $this->paginate = [
-            'contain' => ['Sexos', 'EstadosCivis', 'Escolaridades', 'Profissoes', 'Nacionalidades', 'Religioes', 'Cores']
-        ];
-        $pacientes = $this->paginate($this->Pacientes);
-
-        $this->set(compact('pacientes'));
+    public function index() {
+        $query = $this->{$this->modelClass}->find('search', $this->{$this->modelClass}->filterParams($this->request->query))->contain(['Sexos', 'EstadosCivis', 'Escolaridades', 'Profissoes', 'Nacionalidades', 'Religioes', 'Cores']);
+        $this->set('pacientes', $this->paginate($query));
         $this->set('_serialize', ['pacientes']);
     }
 
@@ -34,8 +29,7 @@ class PacientesController extends AppController
      * @return \Cake\Network\Response|null
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function view($id = null)
-    {
+    public function view($id = null) {
         $paciente = $this->Pacientes->get($id, [
             'contain' => ['Sexos', 'EstadosCivis', 'Escolaridades', 'Profissoes', 'Nacionalidades', 'Religioes', 'Cores', 'Convenios', 'Midias', 'PacientesAcompanhamentos', 'PacientesEmergencias', 'PacientesServicos', 'PacientesSoube']
         ]);
@@ -49,8 +43,7 @@ class PacientesController extends AppController
      *
      * @return \Cake\Network\Response|void Redirects on successful add, renders view otherwise.
      */
-    public function add()
-    {
+    public function add() {
         $paciente = $this->Pacientes->newEntity();
         if ($this->request->is('post')) {
             $paciente = $this->Pacientes->patchEntity($paciente, $this->request->data);
@@ -82,8 +75,7 @@ class PacientesController extends AppController
      * @return \Cake\Network\Response|void Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Network\Exception\NotFoundException When record not found.
      */
-    public function edit($id = null)
-    {
+    public function edit($id = null) {
         $paciente = $this->Pacientes->get($id, [
             'contain' => ['Convenios', 'Midias']
         ]);
@@ -117,8 +109,7 @@ class PacientesController extends AppController
      * @return \Cake\Network\Response|null Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function delete($id = null)
-    {
+    public function delete($id = null) {
         $this->request->allowMethod(['post', 'delete']);
         $paciente = $this->Pacientes->get($id);
         if ($this->Pacientes->delete($paciente)) {
@@ -129,4 +120,5 @@ class PacientesController extends AppController
 
         return $this->redirect(['action' => 'index']);
     }
+
 }

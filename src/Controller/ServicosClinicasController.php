@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Controller;
 
 use App\Controller\AppController;
@@ -8,19 +9,16 @@ use App\Controller\AppController;
  *
  * @property \App\Model\Table\ServicosClinicasTable $ServicosClinicas
  */
-class ServicosClinicasController extends AppController
-{
+class ServicosClinicasController extends AppController {
 
     /**
      * Index method
      *
      * @return \Cake\Network\Response|null
      */
-    public function index()
-    {
-        $servicosClinicas = $this->paginate($this->ServicosClinicas);
-
-        $this->set(compact('servicosClinicas'));
+    public function index() {
+        $query = $this->{$this->modelClass}->find('search', $this->{$this->modelClass}->filterParams($this->request->query));
+        $this->set('servicosClinicas', $this->paginate($query));
         $this->set('_serialize', ['servicosClinicas']);
     }
 
@@ -31,8 +29,7 @@ class ServicosClinicasController extends AppController
      * @return \Cake\Network\Response|null
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function view($id = null)
-    {
+    public function view($id = null) {
         $servicosClinica = $this->ServicosClinicas->get($id, [
             'contain' => []
         ]);
@@ -46,8 +43,7 @@ class ServicosClinicasController extends AppController
      *
      * @return \Cake\Network\Response|void Redirects on successful add, renders view otherwise.
      */
-    public function add()
-    {
+    public function add() {
         $servicosClinica = $this->ServicosClinicas->newEntity();
         if ($this->request->is('post')) {
             $servicosClinica = $this->ServicosClinicas->patchEntity($servicosClinica, $this->request->data);
@@ -70,8 +66,7 @@ class ServicosClinicasController extends AppController
      * @return \Cake\Network\Response|void Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Network\Exception\NotFoundException When record not found.
      */
-    public function edit($id = null)
-    {
+    public function edit($id = null) {
         $servicosClinica = $this->ServicosClinicas->get($id, [
             'contain' => []
         ]);
@@ -96,8 +91,7 @@ class ServicosClinicasController extends AppController
      * @return \Cake\Network\Response|null Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function delete($id = null)
-    {
+    public function delete($id = null) {
         $this->request->allowMethod(['post', 'delete']);
         $servicosClinica = $this->ServicosClinicas->get($id);
         if ($this->ServicosClinicas->delete($servicosClinica)) {
@@ -108,4 +102,5 @@ class ServicosClinicasController extends AppController
 
         return $this->redirect(['action' => 'index']);
     }
+
 }
