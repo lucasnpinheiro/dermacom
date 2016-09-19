@@ -53,7 +53,7 @@ $this->Html->addButton($this->Html->link('<i class="fa fa-list" aria-hidden="tru
                             <?php foreach ($tabelasValores as $tabelasValore): ?>
                                 <tr>
                                     <td><?= $tabelasValore->has('tabelas_preco') ? $this->Html->link($tabelasValore->tabelas_preco->id, ['controller' => 'TabelasPrecos', 'action' => 'edit', $tabelasValore->tabelas_preco->id]) : '' ?></td>
-                                    <td><?= $this->Number->format($tabelasValore->status) ?></td>
+                                    <td><?= $this->Number->status($tabelasValore->status) ?></td>
                                     <td><?= $this->Number->format($tabelasValore->valor_origem) ?></td>
                                     <td><?= $this->Number->format($tabelasValore->valor_repasse) ?></td>
                                     <td><?= h($tabelasValore->data_inicio) ?></td>

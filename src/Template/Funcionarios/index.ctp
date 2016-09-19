@@ -70,7 +70,7 @@ $this->Html->addButton($this->Html->link('<i class="fa fa-list" aria-hidden="tru
                             <?php foreach ($funcionarios as $funcionario): ?>
                                 <tr>
                                     <td><?= h($funcionario->nome) ?></td>
-                                    <td><?= $this->Number->format($funcionario->status) ?></td>
+                                    <td><?= $this->Number->status($funcionario->status) ?></td>
                                     <td><?= h($funcionario->cep) ?></td>
                                     <td><?= h($funcionario->endereco) ?></td>
                                     <td><?= h($funcionario->numero) ?></td>

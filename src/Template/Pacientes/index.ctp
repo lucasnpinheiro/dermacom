@@ -69,7 +69,7 @@ $this->Html->addButton($this->Html->link('<i class="fa fa-list" aria-hidden="tru
                             <?php foreach ($pacientes as $paciente): ?>
                                 <tr>
                                     <td><?= h($paciente->nome) ?></td>
-                                    <td><?= $this->Number->format($paciente->status) ?></td>
+                                    <td><?= $this->Number->status($paciente->status) ?></td>
                                     <td><?= h($paciente->cep) ?></td>
                                     <td><?= h($paciente->endereco) ?></td>
                                     <td><?= h($paciente->numero) ?></td>

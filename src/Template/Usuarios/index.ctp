@@ -52,7 +52,7 @@ $this->Html->addButton($this->Html->link('<i class="fa fa-list" aria-hidden="tru
                                 <tr>
                                     <td><?= h($usuario->nome) ?></td>
                                     <td><?= h($usuario->login) ?></td>
-                                    <td><?= $this->Number->format($usuario->status) ?></td>
+                                    <td><?= $this->Number->status($usuario->status) ?></td>
                                     <td><?= h($usuario->created) ?></td>
                                     <td><?= h($usuario->modified) ?></td>
                                     <td class="actions text-right">

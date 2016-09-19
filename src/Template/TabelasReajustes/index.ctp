@@ -52,7 +52,7 @@ $this->Html->addButton($this->Html->link('<i class="fa fa-list" aria-hidden="tru
                             <?php foreach ($tabelasReajustes as $tabelasReajuste): ?>
                                 <tr>
                                     <td><?= $this->Number->format($tabelasReajuste->tabelas_valor_id) ?></td>
-                                    <td><?= $this->Number->format($tabelasReajuste->status) ?></td>
+                                    <td><?= $this->Number->status($tabelasReajuste->status) ?></td>
                                     <td><?= $this->Number->format($tabelasReajuste->anto) ?></td>
                                     <td><?= h($tabelasReajuste->mes) ?></td>
                                     <td><?= $this->Number->format($tabelasReajuste->tipo_calculo) ?></td>

@@ -59,7 +59,7 @@ $this->Html->addButton($this->Html->link('<i class="fa fa-list" aria-hidden="tru
                             <?php foreach ($convenios as $convenio): ?>
                                 <tr>
                                     <td><?= h($convenio->nome) ?></td>
-                                    <td><?= $this->Number->format($convenio->status) ?></td>
+                                    <td><?= $this->Number->status($convenio->status) ?></td>
                                     <td><?= h($convenio->razao_social) ?></td>
                                     <td><?= h($convenio->cep) ?></td>
                                     <td><?= h($convenio->endereco) ?></td>

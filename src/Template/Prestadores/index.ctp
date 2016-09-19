@@ -71,7 +71,7 @@ $this->Html->addButton($this->Html->link('<i class="fa fa-list" aria-hidden="tru
                                 <tr>
                                     <td><?= h($prestadore->nome) ?></td>
                                     <td><?= h($prestadore->razao_social) ?></td>
-                                    <td><?= $this->Number->format($prestadore->status) ?></td>
+                                    <td><?= $this->Number->status($prestadore->status) ?></td>
                                     <td><?= $prestadore->has('especialidade') ? $this->Html->link($prestadore->especialidade->id, ['controller' => 'Especialidades', 'action' => 'edit', $prestadore->especialidade->id]) : '' ?></td>
                                     <td><?= h($prestadore->cep) ?></td>
                                     <td><?= h($prestadore->endereco) ?></td>

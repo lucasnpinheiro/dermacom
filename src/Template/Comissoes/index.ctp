@@ -52,7 +52,7 @@ $this->Html->addButton($this->Html->link('<i class="fa fa-list" aria-hidden="tru
                                     <td><?= h($comisso->nome) ?></td>
                                     <td><?= $this->Number->format($comisso->valor_maximo) ?></td>
                                     <td><?= $this->Number->format($comisso->comissao) ?></td>
-                                    <td><?= $this->Number->format($comisso->status) ?></td>
+                                    <td><?= $this->Number->status($comisso->status) ?></td>
                                     <td><?= h($comisso->Created) ?></td>
                                     <td><?= h($comisso->modified) ?></td>
                                     <td class="actions text-right">
