@@ -113,7 +113,7 @@ class GerarSqlShell extends Shell {
         $sql[] = '/* !40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;';
         $sql[] = '/* !40111 SET SQL_NOTES=@OLD_SQL_NOTES */;';
         $sql[] = "\n";
-        $sql[] = '--Dump completed on '.date('Y-m-d H:i:s');
+        $sql[] = '-- Dump completed on '.date('Y-m-d H:i:s');
 
         $this->save('dados.sql', $sql);
     }
