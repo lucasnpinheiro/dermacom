@@ -36,7 +36,7 @@ class EstagiosTable extends Table
         parent::initialize($config);
 
         $this->table('estagios');
-        $this->displayField('id');
+        $this->displayField('nome');
         $this->primaryKey('id');
 
         $this->addBehavior('Timestamp');

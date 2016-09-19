@@ -44,8 +44,8 @@ class TabelasValoresTable extends Table
         $this->belongsTo('TabelasPrecos', [
             'foreignKey' => 'tabelas_preco_id'
         ]);
-        $this->belongsTo('Reajustes', [
-            'foreignKey' => 'reajuste_id'
+        $this->belongsTo('TabelasReajustes', [
+            'foreignKey' => 'tabelas_reajuste_id'
         ]);
     }
 
@@ -94,7 +94,7 @@ class TabelasValoresTable extends Table
     public function buildRules(RulesChecker $rules)
     {
         $rules->add($rules->existsIn(['tabelas_preco_id'], 'TabelasPrecos'));
-        $rules->add($rules->existsIn(['reajuste_id'], 'Reajustes'));
+        $rules->add($rules->existsIn(['tabelas_reajuste_id'], 'TabelasReajustes'));
 
         return $rules;
     }

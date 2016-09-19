@@ -11,7 +11,7 @@ use Cake\ORM\Entity;
  * @property float $valor_maximo
  * @property float $comissao
  * @property int $status
- * @property \Cake\I18n\Time $crated
+ * @property \Cake\I18n\Time $Created
  * @property \Cake\I18n\Time $modified
  */
 class Comisso extends Entity

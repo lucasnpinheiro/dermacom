@@ -33,7 +33,7 @@ class ComissoesTable extends Table
         parent::initialize($config);
 
         $this->table('comissoes');
-        $this->displayField('id');
+        $this->displayField('nome');
         $this->primaryKey('id');
 
         $this->addBehavior('Timestamp');
@@ -65,10 +65,6 @@ class ComissoesTable extends Table
         $validator
             ->integer('status')
             ->allowEmpty('status');
-
-        $validator
-            ->dateTime('crated')
-            ->allowEmpty('crated');
 
         return $validator;
     }

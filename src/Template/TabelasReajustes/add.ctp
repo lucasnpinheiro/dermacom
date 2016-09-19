@@ -12,12 +12,12 @@ $this->Html->addButton($this->Html->link('<i class="fa fa-list" aria-hidden="tru
     <?= $this->Form->create($tabelasReajuste) ?>
     <div class="panel-body">
         <?php
-        echo $this->Form->input('tabelas_valor_id');
-        echo $this->Form->input('status');
-        echo $this->Form->input('anto');
-        echo $this->Form->input('mes');
-        echo $this->Form->input('tipo_calculo');
-        echo $this->Form->input('valor');
+        echo $this->Form->hidden('tabelas_valor_id');
+        echo $this->Form->status('status', ['div' => ['class' => 'col-xs-12 col-md-4']]);
+        echo $this->Form->input('anto', ['div' => ['class' => 'col-xs-12 col-md-4']]);
+        echo $this->Form->input('mes', ['div' => ['class' => 'col-xs-12 col-md-4']]);
+        echo $this->Form->input('tipo_calculo', ['div' => ['class' => 'col-xs-12 col-md-6']]);
+        echo $this->Form->input('valor', ['div' => ['class' => 'col-xs-12 col-md-6']]);
         ?>
     </div>
     <div class="panel-footer text-right">

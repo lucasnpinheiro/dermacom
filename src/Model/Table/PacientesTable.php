@@ -47,7 +47,7 @@ class PacientesTable extends Table
         parent::initialize($config);
 
         $this->table('pacientes');
-        $this->displayField('id');
+        $this->displayField('nome');
         $this->primaryKey('id');
 
         $this->addBehavior('Timestamp');

@@ -419,7 +419,7 @@ DROP TABLE IF EXISTS `pacientes_servicos`;
 CREATE TABLE IF NOT EXISTS `pacientes_servicos` (
 `id` INTEGER(11) NOT NULL AUTO_INCREMENT,
 `paciente_id` INTEGER(11) DEFAULT NULL,
-`servico_id` INTEGER(11) DEFAULT NULL,
+`servicos_clinica_id` INTEGER(11) DEFAULT NULL,
 `created` DATETIME DEFAULT NULL,
 `modified` DATETIME DEFAULT NULL,
 PRIMARY KEY (`id`)
@@ -587,7 +587,7 @@ CREATE TABLE IF NOT EXISTS `tabelas_valores` (
 `valor_repasse` FLOAT(11,2) DEFAULT NULL,
 `data_inicio` DATE DEFAULT NULL,
 `data_fim` DATE DEFAULT NULL,
-`reajuste_id` INTEGER(11) DEFAULT NULL,
+`tabelas_reajuste_id` INTEGER(11) DEFAULT NULL,
 `created` DATETIME DEFAULT NULL,
 `modified` DATETIME DEFAULT NULL,
 PRIMARY KEY (`id`)
@@ -603,11 +603,11 @@ CREATE TABLE IF NOT EXISTS `tabelas_valores_historicos` (
 `tabelas_preco_id` INTEGER(11) DEFAULT NULL,
 `status` INTEGER(11) DEFAULT NULL COMMENT '0 - Inativo | 1 - Ativo',
 `valor_origem` FLOAT(10,2) DEFAULT NULL,
-`valor repasse` FLOAT(10,2) DEFAULT NULL,
+`valor_repasse` FLOAT(10,2) DEFAULT NULL,
 `data_inicio` DATE DEFAULT NULL,
 `data_fim` DATE DEFAULT NULL,
-`reajuste_id` INTEGER(11) DEFAULT NULL,
-`reated` DATETIME DEFAULT NULL,
+`tabelas_reajuste_id` INTEGER(11) DEFAULT NULL,
+`created` DATETIME DEFAULT NULL,
 `modified` DATETIME DEFAULT NULL,
 PRIMARY KEY (`id`)
 ) ENGINE=InnoDB;

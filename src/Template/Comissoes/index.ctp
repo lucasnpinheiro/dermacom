@@ -41,7 +41,7 @@ $this->Html->addButton($this->Html->link('<i class="fa fa-list" aria-hidden="tru
                                 <th><?= $this->Paginator->sort('valor_maximo') ?></th>
                                 <th><?= $this->Paginator->sort('comissao') ?></th>
                                 <th><?= $this->Paginator->sort('status') ?></th>
-                                <th><?= $this->Paginator->sort('crated') ?></th>
+                                <th><?= $this->Paginator->sort('Created') ?></th>
                                 <th><?= $this->Paginator->sort('modified') ?></th>
                                 <th class="actions text-right"><?= __('Actions') ?></th>
                             </tr>
@@ -53,7 +53,7 @@ $this->Html->addButton($this->Html->link('<i class="fa fa-list" aria-hidden="tru
                                     <td><?= $this->Number->format($comisso->valor_maximo) ?></td>
                                     <td><?= $this->Number->format($comisso->comissao) ?></td>
                                     <td><?= $this->Number->format($comisso->status) ?></td>
-                                    <td><?= h($comisso->crated) ?></td>
+                                    <td><?= h($comisso->Created) ?></td>
                                     <td><?= h($comisso->modified) ?></td>
                                     <td class="actions text-right">
                                         <?= $this->Html->link(null, ['action' => 'edit', $comisso->id], ['title' => __('Edit'), 'class' => 'btn btn-primary btn-sm btn-rounded fa fa-pencil']) ?>

@@ -13,11 +13,11 @@ $this->Html->addButton($this->Form->postLink('<i class="fa fa-trash-o"></i> ' . 
     <?= $this->Form->create($estagio) ?>
     <div class="panel-body">
         <?php
-        echo $this->Form->input('codigo');
-        echo $this->Form->input('nome');
-        echo $this->Form->input('peso');
-        echo $this->Form->input('lesao_id');
-        echo $this->Form->input('classificacao_id');
+        echo $this->Form->input('codigo', ['div' => ['class' => 'col-xs-12 col-md-6']]);
+        echo $this->Form->input('nome', ['div' => ['class' => 'col-xs-12 col-md-6']]);
+        echo $this->Form->input('peso', ['div' => ['class' => 'col-xs-12 col-md-6']]);
+        echo $this->Form->input('lesao_id', ['div' => ['class' => 'col-xs-12 col-md-6']]);
+        echo $this->Form->input('classificacao_id', ['div' => ['class' => 'col-xs-12 col-md-6']]);
         ?>
     </div>
     <div class="panel-footer text-right">

@@ -53,8 +53,8 @@ $this->Html->addButton($this->Html->link('<i class="fa fa-list" aria-hidden="tru
                                     <td><?= h($estagio->codigo) ?></td>
                                     <td><?= h($estagio->nome) ?></td>
                                     <td><?= $this->Number->format($estagio->peso) ?></td>
-                                    <td><?= $this->Number->format($estagio->lesao_id) ?></td>
-                                    <td><?= $this->Number->format($estagio->classificacao_id) ?></td>
+                                    <td><?= h($estagio->leso->nome) ?></td>
+                                    <td><?= h($estagio->classificaco->nome) ?></td>
                                     <td><?= h($estagio->created) ?></td>
                                     <td><?= h($estagio->modified) ?></td>
                                     <td class="actions text-right">

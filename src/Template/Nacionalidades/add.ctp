@@ -12,8 +12,8 @@ $this->Html->addButton($this->Html->link('<i class="fa fa-list" aria-hidden="tru
     <?= $this->Form->create($nacionalidade) ?>
     <div class="panel-body">
         <?php
-        echo $this->Form->input('nome');
-        echo $this->Form->input('pais');
+        echo $this->Form->input('nome', ['div' => ['class' => 'col-xs-12 col-md-6']]);
+        echo $this->Form->input('pais', ['div' => ['class' => 'col-xs-12 col-md-6']]);
         ?>
     </div>
     <div class="panel-footer text-right">

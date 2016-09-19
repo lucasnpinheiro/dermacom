@@ -36,7 +36,7 @@ class MidiasTable extends Table
         parent::initialize($config);
 
         $this->table('midias');
-        $this->displayField('id');
+        $this->displayField('nome');
         $this->primaryKey('id');
 
         $this->addBehavior('Timestamp');

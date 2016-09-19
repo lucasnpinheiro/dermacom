@@ -12,13 +12,13 @@ $this->Html->addButton($this->Html->link('<i class="fa fa-list" aria-hidden="tru
     <?= $this->Form->create($tabelasValore) ?>
     <div class="panel-body">
         <?php
-        echo $this->Form->input('tabelas_preco_id', ['options' => $tabelasPrecos, 'empty' => true]);
-        echo $this->Form->input('status');
-        echo $this->Form->input('valor_origem');
-        echo $this->Form->input('valor_repasse');
-        echo $this->Form->input('data_inicio', ['empty' => true]);
-        echo $this->Form->input('data_fim', ['empty' => true]);
-        echo $this->Form->input('reajuste_id');
+        echo $this->Form->hidden('tabelas_preco_id');
+        echo $this->Form->status('status', ['div' => ['class' => 'col-xs-12 col-md-4']]);
+        echo $this->Form->input('valor_origem', ['div' => ['class' => 'col-xs-12 col-md-4']]);
+        echo $this->Form->input('valor_repasse', ['div' => ['class' => 'col-xs-12 col-md-4']]);
+        echo $this->Form->data('data_inicio', ['empty' => true, 'div' => ['class' => 'col-xs-12 col-md-4']]);
+        echo $this->Form->data('data_fim', ['empty' => true, 'div' => ['class' => 'col-xs-12 col-md-4']]);
+        echo $this->Form->input('reajuste_id', ['div' => ['class' => 'col-xs-12 col-md-4']]);
         ?>
     </div>
     <div class="panel-footer text-right">

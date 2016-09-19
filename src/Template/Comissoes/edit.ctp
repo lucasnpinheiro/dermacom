@@ -13,11 +13,10 @@ $this->Html->addButton($this->Form->postLink('<i class="fa fa-trash-o"></i> ' . 
     <?= $this->Form->create($comisso) ?>
     <div class="panel-body">
         <?php
-        echo $this->Form->input('nome');
-        echo $this->Form->input('valor_maximo');
-        echo $this->Form->input('comissao');
-        echo $this->Form->input('status');
-        echo $this->Form->input('crated', ['empty' => true]);
+        echo $this->Form->input('nome', ['div' => ['class' => 'col-xs-12 col-md-12']]);
+        echo $this->Form->input('valor_maximo', ['div' => ['class' => 'col-xs-12 col-md-12']]);
+        echo $this->Form->input('comissao', ['div' => ['class' => 'col-xs-12 col-md-12']]);
+        echo $this->Form->status('status', ['div' => ['class' => 'col-xs-12 col-md-12']]);
         ?>
     </div>
     <div class="panel-footer text-right">

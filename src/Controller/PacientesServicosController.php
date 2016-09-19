@@ -19,7 +19,7 @@ class PacientesServicosController extends AppController
     public function index()
     {
         $this->paginate = [
-            'contain' => ['Pacientes', 'Servicos']
+            'contain' => ['Pacientes', 'ServicosClinicas']
         ];
         $pacientesServicos = $this->paginate($this->PacientesServicos);
 
@@ -37,7 +37,7 @@ class PacientesServicosController extends AppController
     public function view($id = null)
     {
         $pacientesServico = $this->PacientesServicos->get($id, [
-            'contain' => ['Pacientes', 'Servicos']
+            'contain' => ['Pacientes', 'ServicosClinicas']
         ]);
 
         $this->set('pacientesServico', $pacientesServico);
@@ -63,7 +63,7 @@ class PacientesServicosController extends AppController
             }
         }
         $pacientes = $this->PacientesServicos->Pacientes->find('list', ['limit' => 200]);
-        $servicos = $this->PacientesServicos->Servicos->find('list', ['limit' => 200]);
+        $servicos = $this->PacientesServicos->ServicosClinicas->find('list', ['limit' => 200]);
         $this->set(compact('pacientesServico', 'pacientes', 'servicos'));
         $this->set('_serialize', ['pacientesServico']);
     }
@@ -91,7 +91,7 @@ class PacientesServicosController extends AppController
             }
         }
         $pacientes = $this->PacientesServicos->Pacientes->find('list', ['limit' => 200]);
-        $servicos = $this->PacientesServicos->Servicos->find('list', ['limit' => 200]);
+        $servicos = $this->PacientesServicos->ServicosClinicas->find('list', ['limit' => 200]);
         $this->set(compact('pacientesServico', 'pacientes', 'servicos'));
         $this->set('_serialize', ['pacientesServico']);
     }

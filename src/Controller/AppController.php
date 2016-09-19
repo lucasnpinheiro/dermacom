@@ -50,6 +50,7 @@ class AppController extends Controller {
         parent::__construct($request, $response, $name, $eventManager, $components);
         $this->set('title', $this->title);
         $this->set('sub_title', $this->sub_title);
+        $this->definedTitles();
     }
 
     /**
@@ -118,7 +119,7 @@ class AppController extends Controller {
                 'plugin' => null
             ],
             'logoutRedirect' => '/',
-            'authorize' => 'Controller', //added this line
+            'authorize' => ['Controller'], // Added this line
             'authenticate' => [
                 'Form' => [
                     'passwordHasher' => [
@@ -158,14 +159,22 @@ class AppController extends Controller {
 
     public function beforeFilter(Event $event) {
         parent::beforeFilter($event);
-        if (!empty($this->request->params['prefix']) AND $this->request->params['prefix'] === 'admin') {
+        if ($this->request->params['controller'] != 'Usuarios' AND $this->request->params['action'] != 'login') {
             if (!empty($this->Auth->user())) {
                 $this->Auth->allow();
-            } else {
-                $this->redirect('/logout');
             }
-        } else {
-            $this->Auth->allow();
+        }
+    }
+
+    protected function definedTitles() {
+        $this->loadModel('Menus');
+        $find = $this->Menus->find()->where(['Menus.controller' => $this->request->params['controller'], 'Menus.action' => 'index'])->cache(false)->first();
+        if (!empty($find)) {
+            $this->set('title', __($find->titulo));
+        }
+        $find = $this->Menus->find()->where(['Menus.controller' => $this->request->params['controller'], 'Menus.action' => $this->request->params['action']])->cache(false)->first();
+        if (!empty($find)) {
+            $this->set('sub_title', __($find->titulo) . ' Registro');
         }
     }
 

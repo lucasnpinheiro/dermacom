@@ -35,7 +35,7 @@ class ClassificacoesTable extends Table
         parent::initialize($config);
 
         $this->table('classificacoes');
-        $this->displayField('id');
+        $this->displayField('nome');
         $this->primaryKey('id');
 
         $this->addBehavior('Timestamp');

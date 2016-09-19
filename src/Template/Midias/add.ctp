@@ -12,9 +12,9 @@ $this->Html->addButton($this->Html->link('<i class="fa fa-list" aria-hidden="tru
     <?= $this->Form->create($midia) ?>
     <div class="panel-body">
         <?php
-        echo $this->Form->input('nome');
-        echo $this->Form->input('contatotipo_id');
-        echo $this->Form->input('pacientes._ids', ['options' => $pacientes]);
+        echo $this->Form->input('nome', ['div' => ['class' => 'col-xs-12 col-md-12']]);
+        echo $this->Form->input('contatotipo_id', ['div' => ['class' => 'col-xs-12 col-md-12']]);
+        echo $this->Form->input('pacientes._ids', ['options' => $pacientes, 'div' => ['class' => 'col-xs-12 col-md-12']]);
         ?>
     </div>
     <div class="panel-footer text-right">

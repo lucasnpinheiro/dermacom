@@ -12,31 +12,31 @@ $this->Html->addButton($this->Html->link('<i class="fa fa-list" aria-hidden="tru
     <?= $this->Form->create($paciente) ?>
     <div class="panel-body">
         <?php
-        echo $this->Form->input('nome');
-        echo $this->Form->input('status');
-        echo $this->Form->input('cep');
-        echo $this->Form->input('endereco');
-        echo $this->Form->input('numero');
-        echo $this->Form->input('complemento');
-        echo $this->Form->input('bairro');
-        echo $this->Form->input('cidade');
-        echo $this->Form->input('estado');
-        echo $this->Form->input('cpf');
-        echo $this->Form->input('rg');
-        echo $this->Form->input('data_nascimento', ['empty' => true]);
-        echo $this->Form->input('sexo_id', ['options' => $sexos, 'empty' => true]);
-        echo $this->Form->input('foto');
-        echo $this->Form->input('casrtao_sus');
-        echo $this->Form->input('estados_civil_id');
-        echo $this->Form->input('escolaridade_id', ['options' => $escolaridades, 'empty' => true]);
-        echo $this->Form->input('profissao_id');
-        echo $this->Form->input('naturalidade');
-        echo $this->Form->input('nacionalidade_id', ['options' => $nacionalidades, 'empty' => true]);
-        echo $this->Form->input('religiao_id');
-        echo $this->Form->input('cor_id');
-        echo $this->Form->input('centro_custo');
-        echo $this->Form->input('convenios._ids', ['options' => $convenios]);
-        echo $this->Form->input('midias._ids', ['options' => $midias]);
+        echo $this->Form->input('nome', ['div' => ['class' => 'col-xs-12 col-md-12']]);
+        echo $this->Form->status('status', ['div' => ['class' => 'col-xs-12 col-md-6']]);
+        echo $this->Form->input('cep', ['div' => ['class' => 'col-xs-12 col-md-6']]);
+        echo $this->Form->input('endereco', ['div' => ['class' => 'col-xs-12 col-md-10']]);
+        echo $this->Form->input('numero', ['div' => ['class' => 'col-xs-12 col-md-2']]);
+        echo $this->Form->input('complemento', ['div' => ['class' => 'col-xs-12 col-md-3']]);
+        echo $this->Form->input('bairro', ['div' => ['class' => 'col-xs-12 col-md-3']]);
+        echo $this->Form->input('cidade', ['div' => ['class' => 'col-xs-12 col-md-3']]);
+        echo $this->Form->input('estado', ['div' => ['class' => 'col-xs-12 col-md-3']]);
+        echo $this->Form->input('cpf', ['div' => ['class' => 'col-xs-12 col-md-6']]);
+        echo $this->Form->input('rg', ['div' => ['class' => 'col-xs-12 col-md-6']]);
+        echo $this->Form->data('data_nascimento', ['empty' => true, 'div' => ['class' => 'col-xs-12 col-md-4']]);
+        echo $this->Form->input('sexo_id', ['options' => $sexos, 'empty' => true, 'div' => ['class' => 'col-xs-12 col-md-4']]);
+        echo $this->Form->input('foto', ['div' => ['class' => 'col-xs-12 col-md-4']]);
+        echo $this->Form->input('casrtao_sus', ['div' => ['class' => 'col-xs-12 col-md-4']]);
+        echo $this->Form->input('estados_civil_id', ['div' => ['class' => 'col-xs-12 col-md-4']]);
+        echo $this->Form->input('escolaridade_id', ['options' => $escolaridades, 'empty' => true, 'div' => ['class' => 'col-xs-12 col-md-4']]);
+        echo $this->Form->input('profissao_id', ['div' => ['class' => 'col-xs-12 col-md-4']]);
+        echo $this->Form->input('naturalidade', ['div' => ['class' => 'col-xs-12 col-md-4']]);
+        echo $this->Form->input('nacionalidade_id', ['options' => $nacionalidades, 'empty' => true, 'div' => ['class' => 'col-xs-12 col-md-4']]);
+        echo $this->Form->input('religiao_id', ['div' => ['class' => 'col-xs-12 col-md-4']]);
+        echo $this->Form->input('cor_id', ['div' => ['class' => 'col-xs-12 col-md-4']]);
+        echo $this->Form->input('centro_custo', ['div' => ['class' => 'col-xs-12 col-md-4']]);
+        echo $this->Form->input('convenios._ids', ['options' => $convenios, 'div' => ['class' => 'col-xs-12 col-md-6']]);
+        echo $this->Form->input('midias._ids', ['options' => $midias, 'div' => ['class' => 'col-xs-12 col-md-6']]);
         ?>
     </div>
     <div class="panel-footer text-right">

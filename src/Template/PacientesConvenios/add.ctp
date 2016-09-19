@@ -12,11 +12,11 @@ $this->Html->addButton($this->Html->link('<i class="fa fa-list" aria-hidden="tru
     <?= $this->Form->create($pacientesConvenio) ?>
     <div class="panel-body">
         <?php
-        echo $this->Form->input('paciente_id', ['options' => $pacientes, 'empty' => true]);
-        echo $this->Form->input('convenio_id', ['options' => $convenios, 'empty' => true]);
-        echo $this->Form->input('plano');
-        echo $this->Form->input('matricula');
-        echo $this->Form->input('titular');
+        echo $this->Form->hidden('paciente_id');
+        echo $this->Form->input('convenio_id', ['options' => $convenios, 'empty' => true, 'div' => ['class' => 'col-xs-12 col-md-6']]);
+        echo $this->Form->input('plano', ['div' => ['class' => 'col-xs-12 col-md-6']]);
+        echo $this->Form->input('matricula', ['div' => ['class' => 'col-xs-12 col-md-6']]);
+        echo $this->Form->input('titular', ['div' => ['class' => 'col-xs-12 col-md-6']]);
         ?>
     </div>
     <div class="panel-footer text-right">

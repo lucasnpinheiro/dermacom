@@ -380,6 +380,9 @@
         echo $this->Html->script('/componentes/bower_components/jquery/dist/jquery.min.js');
         echo $this->Html->script('/componentes/bower_components/bootstrap/dist/js/bootstrap.min.js');
         echo $this->Html->script('/js/nifty.min.js');
+        echo $this->Html->script('/js/masked-input/jquery.maskedinput.min.js');
+        echo $this->Html->script('/js/mask-money/jquery.maskMoney.min.js');
+        echo $this->Html->script('/js/funcoes.js');
         ?>
         <?= $this->fetch('script') ?>
 

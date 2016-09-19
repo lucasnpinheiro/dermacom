@@ -1,0 +1,86 @@
+msgid "Index"
+msgstr "Listar"
+
+msgid "index"
+msgstr "listar"
+
+msgid "Add"
+msgstr "Novo"
+
+msgid "add"
+msgstr "Novo"
+
+msgid "Edit"
+msgstr "Alterar"
+
+msgid "edit"
+msgstr "Alterar"
+
+msgid "Delete"
+msgstr "Excluir"
+
+msgid "delete"
+msgstr "Excluir"
+
+msgid "Created"
+msgstr "Criação"
+
+msgid "created"
+msgstr "Criação"
+
+msgid "Modified"
+msgstr "Modificação"
+
+msgid "modified"
+msgstr "Modificação"
+
+msgid "Actions"
+msgstr "Ações"
+
+msgid "actions"
+msgstr "Ações"
+
+msgid "Lesao"
+msgstr "Lesão"
+
+msgid "Status"
+msgstr "Situação"
+
+msgid "status"
+msgstr "Situação"
+
+msgid "Numero"
+msgstr "Número"
+
+msgid "numero"
+msgstr "Número"
+
+msgid "Inscricao"
+msgstr "Inscrição"
+
+msgid "inscricao"
+msgstr "Inscrição"
+
+msgid "Cnpj"
+msgstr "CNPJ"
+
+msgid "cnpj"
+msgstr "CNPJ"
+
+msgid "Cpf"
+msgstr "CPF"
+
+msgid "cpf"
+msgstr "CPF"
+
+msgid "Razao Social"
+msgstr "Razão Social"
+
+msgid "razao social"
+msgstr "Razão Social"
+
+msgid "Lesoes"
+msgstr "Lesões"
+
+msgid "lesoes"
+msgstr "Lesões"

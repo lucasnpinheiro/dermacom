@@ -81,39 +81,59 @@ class GerarSqlShell extends Shell {
     }
 
     public function dados() {
+        $db = ConnectionManager::get('default');
+        $collection = $db->schemaCollection();
+        $tables = $collection->listTables();
         $sql = [];
-        $sql = $this->findDados('classificacoes', $sql, [], 'INSERT IGNORE');
-        $sql = $this->findDados('conselhos', $sql, [], 'INSERT IGNORE');
-        $sql = $this->findDados('contatos_tipos', $sql, [], 'INSERT IGNORE');
-        $sql = $this->findDados('convenios', $sql, [], 'INSERT IGNORE');
-        $sql = $this->findDados('cores', $sql, [], 'INSERT IGNORE');
-        $sql = $this->findDados('corporais', $sql, [], 'INSERT IGNORE');
-        $sql = $this->findDados('corporais_lesoes', $sql, [], 'INSERT IGNORE');
-        $sql = $this->findDados('escolaridades', $sql, [], 'INSERT IGNORE');
-        $sql = $this->findDados('especialidades', $sql, [], 'INSERT IGNORE');
-        $sql = $this->findDados('estados_civis', $sql, [], 'INSERT IGNORE');
-        $sql = $this->findDados('estagios', $sql, [], 'INSERT IGNORE');
-        $sql = $this->findDados('lesoes', $sql, [], 'INSERT IGNORE');
-        $sql = $this->findDados('midias', $sql, [], 'INSERT IGNORE');
-        $sql = $this->findDados('nacionalidades', $sql, [], 'INSERT IGNORE');
-        $sql = $this->findDados('parentescos', $sql, [], 'INSERT IGNORE');
-        $sql = $this->findDados('profissoes', $sql, [], 'INSERT IGNORE');
-        $sql = $this->findDados('religioes', $sql, [], 'INSERT IGNORE');
-        $sql = $this->findDados('servicos_clinicas', $sql, [], 'INSERT IGNORE');
-        $sql = $this->findDados('sexos', $sql, [], 'INSERT IGNORE');
-        $sql = $this->findDados('menus', $sql, [], 'INSERT IGNORE');
-        $sql = $this->findDados('usuarios', $sql, [], 'INSERT IGNORE');
+        
+        $sql[] = '/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;';
+        $sql[] = '/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;';
+        $sql[] = '/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;';
+        $sql[] = '/*!40101 SET NAMES utf8 */;';
+        $sql[] = '/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;';
+        $sql[] = '/*!40103 SET TIME_ZONE=\'+00:00\' */;';
+        $sql[] = '/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;';
+        $sql[] = '/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;';
+        $sql[] = '/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE=\'NO_AUTO_VALUE_ON_ZERO\' */;';
+        $sql[] = '/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;';
+        
+        if (count($tables) > 0) {
+            foreach ($tables as $key => $value) {
+                $sql[$value] = implode("\n ", $this->findDados($value, [], 'INSERT IGNORE'));
+            }
+        }
+
+        $sql[] = '/* !40103 SET TIME_ZONE=@OLD_TIME_ZONE */;';
+        $sql[] = "\n";
+        $sql[] = '/* !40101 SET SQL_MODE=@OLD_SQL_MODE */;';
+        $sql[] = '/* !40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;';
+        $sql[] = '/* !40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;';
+        $sql[] = '/* !40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;';
+        $sql[] = '/* !40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;';
+        $sql[] = '/* !40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;';
+        $sql[] = '/* !40111 SET SQL_NOTES=@OLD_SQL_NOTES */;';
+        $sql[] = "\n";
+        $sql[] = '--Dump completed on '.date('Y-m-d H:i:s');
+
         $this->save('dados.sql', $sql);
     }
 
-    public function findDados($table, $sql, $options = array(), $tipo = 'INSERT IGNORE') {
-        debug($table);
+    public function findDados($table, $options = array(), $tipo = 'INSERT IGNORE') {
+        $sql = [];
+        $sql[] = "\n";
+        $sql[] = '--';
+        $sql[] = '-- Dumping data for table `' . $table . '`';
+        $sql[] = '--';
+        $sql[] = "\n";
+
+        $sql[] = 'LOCK TABLES `' . $table . '` WRITE;';
+        $sql[] = '/*!40000 ALTER TABLE `' . $table . '` DISABLE KEYS */;';
+
         $find = TableRegistry::get($table)->find('all', $options)->autoFields(true)->hydrate(false)->toArray();
         $find = json_decode(json_encode($find), true);
+
         if (count($find) > 0) {
-            $sql[] = '-- Inicio dos daddos da tabela `' . $table . '` --';
-            $sql[] = 'LOCK TABLES `' . $table . '` WRITE;';
-            $sql[] = '/*!40000 ALTER TABLE `' . $table . '` DISABLE KEYS */;';
+
             foreach ($find as $key => $value) {
                 $c = $v = '';
                 foreach ($value as $ke => $va) {
@@ -144,11 +164,10 @@ class GerarSqlShell extends Shell {
                 }
                 $sql[] = $tipo . ' INTO `' . $table . '` (' . $c . ') VALUES  (' . $v . ');';
             }
-            $sql[] = '/*!40000 ALTER TABLE `' . $table . '` ENABLE KEYS */;';
-            $sql[] = 'UNLOCK TABLES;';
-            $sql[] = '-- Fim dos daddos da tabela `' . $table . '` --';
-            $sql[] = "\n";
         }
+        $sql[] = '/*!40000 ALTER TABLE `' . $table . '` ENABLE KEYS */;';
+        $sql[] = 'UNLOCK TABLES;';
+        $sql[] = "\n";
         return $sql;
     }
 

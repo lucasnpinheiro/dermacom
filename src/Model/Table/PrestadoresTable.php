@@ -37,7 +37,7 @@ class PrestadoresTable extends Table
         parent::initialize($config);
 
         $this->table('prestadores');
-        $this->displayField('id');
+        $this->displayField('nome');
         $this->primaryKey('id');
 
         $this->addBehavior('Timestamp');

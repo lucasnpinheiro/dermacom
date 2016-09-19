@@ -33,7 +33,7 @@ class ReligioesTable extends Table
         parent::initialize($config);
 
         $this->table('religioes');
-        $this->displayField('id');
+        $this->displayField('nome');
         $this->primaryKey('id');
 
         $this->addBehavior('Timestamp');

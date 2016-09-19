@@ -19,7 +19,7 @@ class TabelasValoresController extends AppController
     public function index()
     {
         $this->paginate = [
-            'contain' => ['TabelasPrecos', 'Reajustes']
+            'contain' => ['TabelasPrecos', 'TabelasReajustes']
         ];
         $tabelasValores = $this->paginate($this->TabelasValores);
 
@@ -37,7 +37,7 @@ class TabelasValoresController extends AppController
     public function view($id = null)
     {
         $tabelasValore = $this->TabelasValores->get($id, [
-            'contain' => ['TabelasPrecos', 'Reajustes']
+            'contain' => ['TabelasPrecos', 'TabelasReajustes']
         ]);
 
         $this->set('tabelasValore', $tabelasValore);
@@ -63,7 +63,7 @@ class TabelasValoresController extends AppController
             }
         }
         $tabelasPrecos = $this->TabelasValores->TabelasPrecos->find('list', ['limit' => 200]);
-        $reajustes = $this->TabelasValores->Reajustes->find('list', ['limit' => 200]);
+        $reajustes = $this->TabelasValores->TabelasReajustes->find('list', ['limit' => 200]);
         $this->set(compact('tabelasValore', 'tabelasPrecos', 'reajustes'));
         $this->set('_serialize', ['tabelasValore']);
     }
@@ -91,7 +91,7 @@ class TabelasValoresController extends AppController
             }
         }
         $tabelasPrecos = $this->TabelasValores->TabelasPrecos->find('list', ['limit' => 200]);
-        $reajustes = $this->TabelasValores->Reajustes->find('list', ['limit' => 200]);
+        $reajustes = $this->TabelasValores->TabelasReajustes->find('list', ['limit' => 200]);
         $this->set(compact('tabelasValore', 'tabelasPrecos', 'reajustes'));
         $this->set('_serialize', ['tabelasValore']);
     }

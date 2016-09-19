@@ -12,10 +12,10 @@ $this->Html->addButton($this->Html->link('<i class="fa fa-list" aria-hidden="tru
     <?= $this->Form->create($contato) ?>
     <div class="panel-body">
         <?php
-        echo $this->Form->input('contatos_tipo_id', ['options' => $contatos, 'empty' => true]);
-        echo $this->Form->input('valor');
-        echo $this->Form->input('parentesco_id', ['options' => $parentescos, 'empty' => true]);
-        echo $this->Form->input('tabela');
+        echo $this->Form->input('contatos_tipo_id', ['options' => $contatosTipos, 'empty' => true, 'div' => ['class' => 'col-xs-12 col-md-6']]);
+        echo $this->Form->input('valor', ['div' => ['class' => 'col-xs-12 col-md-6']]);
+        echo $this->Form->input('parentesco_id', ['options' => $parentescos, 'empty' => true, 'div' => ['class' => 'col-xs-12 col-md-6']]);
+        echo $this->Form->input('tabela', ['div' => ['class' => 'col-xs-12 col-md-6']]);
         ?>
     </div>
     <div class="panel-footer text-right">

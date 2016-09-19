@@ -37,7 +37,7 @@ class EspecialidadesTable extends Table
         parent::initialize($config);
 
         $this->table('especialidades');
-        $this->displayField('id');
+        $this->displayField('nome');
         $this->primaryKey('id');
 
         $this->addBehavior('Timestamp');

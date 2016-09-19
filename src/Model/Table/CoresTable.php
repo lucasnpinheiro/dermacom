@@ -33,7 +33,7 @@ class CoresTable extends Table
         parent::initialize($config);
 
         $this->table('cores');
-        $this->displayField('id');
+        $this->displayField('nome');
         $this->primaryKey('id');
 
         $this->addBehavior('Timestamp');

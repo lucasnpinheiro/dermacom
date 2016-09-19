@@ -38,7 +38,7 @@ class FuncionariosTable extends Table
         parent::initialize($config);
 
         $this->table('funcionarios');
-        $this->displayField('id');
+        $this->displayField('nome');
         $this->primaryKey('id');
 
         $this->addBehavior('Timestamp');
@@ -49,6 +49,7 @@ class FuncionariosTable extends Table
         $this->belongsTo('Comissoes', [
             'foreignKey' => 'comissao_id'
         ]);
+        
     }
 
     /**

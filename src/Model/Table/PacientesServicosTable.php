@@ -10,7 +10,7 @@ use Cake\Validation\Validator;
  * PacientesServicos Model
  *
  * @property \Cake\ORM\Association\BelongsTo $Pacientes
- * @property \Cake\ORM\Association\BelongsTo $Servicos
+ * @property \Cake\ORM\Association\BelongsTo $ServicosClinicas
  *
  * @method \App\Model\Entity\PacientesServico get($primaryKey, $options = [])
  * @method \App\Model\Entity\PacientesServico newEntity($data = null, array $options = [])
@@ -44,8 +44,8 @@ class PacientesServicosTable extends Table
         $this->belongsTo('Pacientes', [
             'foreignKey' => 'paciente_id'
         ]);
-        $this->belongsTo('Servicos', [
-            'foreignKey' => 'servico_id'
+        $this->belongsTo('ServicosClinicas', [
+            'foreignKey' => 'servicos_clinica_id'
         ]);
     }
 
@@ -74,7 +74,7 @@ class PacientesServicosTable extends Table
     public function buildRules(RulesChecker $rules)
     {
         $rules->add($rules->existsIn(['paciente_id'], 'Pacientes'));
-        $rules->add($rules->existsIn(['servico_id'], 'Servicos'));
+        $rules->add($rules->existsIn(['servicos_clinica_id'], 'ServicosClinicas'));
 
         return $rules;
     }

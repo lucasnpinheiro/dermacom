@@ -36,7 +36,7 @@ class ParentescosTable extends Table
         parent::initialize($config);
 
         $this->table('parentescos');
-        $this->displayField('id');
+        $this->displayField('nome');
         $this->primaryKey('id');
 
         $this->addBehavior('Timestamp');

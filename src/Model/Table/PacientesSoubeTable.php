@@ -36,7 +36,7 @@ class PacientesSoubeTable extends Table
         parent::initialize($config);
 
         $this->table('pacientes_soube');
-        $this->displayField('id');
+        $this->displayField('nome');
         $this->primaryKey('id');
 
         $this->addBehavior('Timestamp');

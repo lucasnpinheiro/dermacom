@@ -35,7 +35,7 @@ class EscolaridadesTable extends Table
         parent::initialize($config);
 
         $this->table('escolaridades');
-        $this->displayField('id');
+        $this->displayField('nome');
         $this->primaryKey('id');
 
         $this->addBehavior('Timestamp');

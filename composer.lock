@@ -918,16 +918,16 @@
         },
         {
             "name": "cakephp/debug_kit",
-            "version": "3.3.2",
+            "version": "3.3.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/cakephp/debug_kit.git",
-                "reference": "6902a58633d763f85d8f627efe0993b19d9c4b1b"
+                "reference": "7e806572be46795664fe97478a0dc1b22bdf1a2d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cakephp/debug_kit/zipball/6902a58633d763f85d8f627efe0993b19d9c4b1b",
-                "reference": "6902a58633d763f85d8f627efe0993b19d9c4b1b",
+                "url": "https://api.github.com/repos/cakephp/debug_kit/zipball/7e806572be46795664fe97478a0dc1b22bdf1a2d",
+                "reference": "7e806572be46795664fe97478a0dc1b22bdf1a2d",
                 "shasum": ""
             },
             "require": {
@@ -971,7 +971,7 @@
                 "debug",
                 "kit"
             ],
-            "time": "2016-09-02 00:51:04"
+            "time": "2016-09-17 01:43:23"
         },
         {
             "name": "dnoegel/php-xdg-base-dir",
@@ -1276,16 +1276,16 @@
         },
         {
             "name": "nikic/php-parser",
-            "version": "v2.1.0",
+            "version": "v2.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nikic/PHP-Parser.git",
-                "reference": "47b254ea51f1d6d5dc04b9b299e88346bf2369e3"
+                "reference": "4dd659edadffdc2143e4753df655d866dbfeedf0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/47b254ea51f1d6d5dc04b9b299e88346bf2369e3",
-                "reference": "47b254ea51f1d6d5dc04b9b299e88346bf2369e3",
+                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/4dd659edadffdc2143e4753df655d866dbfeedf0",
+                "reference": "4dd659edadffdc2143e4753df655d866dbfeedf0",
                 "shasum": ""
             },
             "require": {
@@ -1323,7 +1323,7 @@
                 "parser",
                 "php"
             ],
-            "time": "2016-04-19 13:41:41"
+            "time": "2016-09-16 12:04:44"
         },
         {
             "name": "psy/psysh",

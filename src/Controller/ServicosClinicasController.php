@@ -27,7 +27,7 @@ class ServicosClinicasController extends AppController
     /**
      * View method
      *
-     * @param string|null $id Servicos Clinica id.
+     * @param string|null $id ServicosClinicas Clinica id.
      * @return \Cake\Network\Response|null
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
@@ -66,7 +66,7 @@ class ServicosClinicasController extends AppController
     /**
      * Edit method
      *
-     * @param string|null $id Servicos Clinica id.
+     * @param string|null $id ServicosClinicas Clinica id.
      * @return \Cake\Network\Response|void Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Network\Exception\NotFoundException When record not found.
      */
@@ -92,7 +92,7 @@ class ServicosClinicasController extends AppController
     /**
      * Delete method
      *
-     * @param string|null $id Servicos Clinica id.
+     * @param string|null $id ServicosClinicas Clinica id.
      * @return \Cake\Network\Response|null Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */

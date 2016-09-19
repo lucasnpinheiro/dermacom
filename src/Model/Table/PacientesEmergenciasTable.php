@@ -36,7 +36,7 @@ class PacientesEmergenciasTable extends Table
         parent::initialize($config);
 
         $this->table('pacientes_emergencias');
-        $this->displayField('id');
+        $this->displayField('nome');
         $this->primaryKey('id');
 
         $this->addBehavior('Timestamp');

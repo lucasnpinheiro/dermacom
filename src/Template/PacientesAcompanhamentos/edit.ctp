@@ -13,10 +13,10 @@ $this->Html->addButton($this->Form->postLink('<i class="fa fa-trash-o"></i> ' . 
     <?= $this->Form->create($pacientesAcompanhamento) ?>
     <div class="panel-body">
         <?php
-        echo $this->Form->input('paciente_id', ['options' => $pacientes, 'empty' => true]);
-        echo $this->Form->input('especialidade_id', ['options' => $especialidades, 'empty' => true]);
-        echo $this->Form->input('medico');
-        echo $this->Form->input('telefone');
+        echo $this->Form->hidden('paciente_id');
+        echo $this->Form->input('especialidade_id', ['options' => $especialidades, 'empty' => true], ['div' => ['class' => 'col-xs-12 col-md-4']]);
+        echo $this->Form->input('medico', ['div' => ['class' => 'col-xs-12 col-md-4']]);
+        echo $this->Form->input('telefone', ['div' => ['class' => 'col-xs-12 col-md-4']]);
         ?>
     </div>
     <div class="panel-footer text-right">

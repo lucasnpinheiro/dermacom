@@ -12,8 +12,8 @@ $this->Html->addButton($this->Html->link('<i class="fa fa-list" aria-hidden="tru
     <?= $this->Form->create($pacientesServico) ?>
     <div class="panel-body">
         <?php
-        echo $this->Form->input('paciente_id', ['options' => $pacientes, 'empty' => true]);
-        echo $this->Form->input('servico_id');
+        echo $this->Form->hidden('paciente_id');
+        echo $this->Form->input('servico_id', ['div' => ['class' => 'col-xs-12 col-md-12']]);
         ?>
     </div>
     <div class="panel-footer text-right">

@@ -22,7 +22,7 @@ class ComissoesFixture extends TestFixture
         'valor_maximo' => ['type' => 'float', 'length' => 10, 'precision' => 2, 'unsigned' => false, 'null' => true, 'default' => null, 'comment' => ''],
         'comissao' => ['type' => 'float', 'length' => 5, 'precision' => 2, 'unsigned' => false, 'null' => true, 'default' => null, 'comment' => ''],
         'status' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => true, 'default' => null, 'comment' => '0 - Inativo | 1 - Ativo | 9 - Excluido', 'precision' => null, 'autoIncrement' => null],
-        'crated' => ['type' => 'datetime', 'length' => null, 'null' => true, 'default' => null, 'comment' => '', 'precision' => null],
+        'Created' => ['type' => 'datetime', 'length' => null, 'null' => true, 'default' => null, 'comment' => '', 'precision' => null],
         'modified' => ['type' => 'datetime', 'length' => null, 'null' => true, 'default' => null, 'comment' => '', 'precision' => null],
         '_constraints' => [
             'primary' => ['type' => 'primary', 'columns' => ['id'], 'length' => []],
@@ -46,7 +46,7 @@ class ComissoesFixture extends TestFixture
             'valor_maximo' => 1,
             'comissao' => 1,
             'status' => 1,
-            'crated' => '2016-09-07 13:55:56',
+            'Created' => '2016-09-07 13:55:56',
             'modified' => '2016-09-07 13:55:56'
         ],
     ];

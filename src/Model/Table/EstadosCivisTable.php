@@ -33,7 +33,7 @@ class EstadosCivisTable extends Table
         parent::initialize($config);
 
         $this->table('estados_civis');
-        $this->displayField('id');
+        $this->displayField('nome');
         $this->primaryKey('id');
 
         $this->addBehavior('Timestamp');

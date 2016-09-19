@@ -13,8 +13,8 @@ $this->Html->addButton($this->Form->postLink('<i class="fa fa-trash-o"></i> ' . 
     <?= $this->Form->create($corporai) ?>
     <div class="panel-body">
         <?php
-        echo $this->Form->input('nome');
-        echo $this->Form->input('lesoes._ids', ['options' => $lesoes]);
+        echo $this->Form->input('nome', ['div' => ['class' => 'col-xs-12 col-md-12']]);
+        echo $this->Form->input('lesoes._ids', ['options' => $lesoes, 'div' => ['class' => 'col-xs-12 col-md-12']]);
         ?>
     </div>
     <div class="panel-footer text-right">

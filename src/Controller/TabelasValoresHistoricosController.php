@@ -19,7 +19,7 @@ class TabelasValoresHistoricosController extends AppController
     public function index()
     {
         $this->paginate = [
-            'contain' => ['TabelasPrecos', 'Reajustes']
+            'contain' => ['TabelasPrecos', 'TabelasReajustes']
         ];
         $tabelasValoresHistoricos = $this->paginate($this->TabelasValoresHistoricos);
 
@@ -37,7 +37,7 @@ class TabelasValoresHistoricosController extends AppController
     public function view($id = null)
     {
         $tabelasValoresHistorico = $this->TabelasValoresHistoricos->get($id, [
-            'contain' => ['TabelasPrecos', 'Reajustes']
+            'contain' => ['TabelasPrecos', 'TabelasReajustes']
         ]);
 
         $this->set('tabelasValoresHistorico', $tabelasValoresHistorico);
@@ -63,7 +63,7 @@ class TabelasValoresHistoricosController extends AppController
             }
         }
         $tabelasPrecos = $this->TabelasValoresHistoricos->TabelasPrecos->find('list', ['limit' => 200]);
-        $reajustes = $this->TabelasValoresHistoricos->Reajustes->find('list', ['limit' => 200]);
+        $reajustes = $this->TabelasValoresHistoricos->TabelasReajustes->find('list', ['limit' => 200]);
         $this->set(compact('tabelasValoresHistorico', 'tabelasPrecos', 'reajustes'));
         $this->set('_serialize', ['tabelasValoresHistorico']);
     }
@@ -91,7 +91,7 @@ class TabelasValoresHistoricosController extends AppController
             }
         }
         $tabelasPrecos = $this->TabelasValoresHistoricos->TabelasPrecos->find('list', ['limit' => 200]);
-        $reajustes = $this->TabelasValoresHistoricos->Reajustes->find('list', ['limit' => 200]);
+        $reajustes = $this->TabelasValoresHistoricos->TabelasReajustes->find('list', ['limit' => 200]);
         $this->set(compact('tabelasValoresHistorico', 'tabelasPrecos', 'reajustes'));
         $this->set('_serialize', ['tabelasValoresHistorico']);
     }

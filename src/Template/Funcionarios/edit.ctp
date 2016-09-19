@@ -13,30 +13,30 @@ $this->Html->addButton($this->Form->postLink('<i class="fa fa-trash-o"></i> ' . 
     <?= $this->Form->create($funcionario) ?>
     <div class="panel-body">
         <?php
-        echo $this->Form->input('nome');
-        echo $this->Form->input('status');
-        echo $this->Form->input('cep');
-        echo $this->Form->input('endereco');
-        echo $this->Form->input('numero');
-        echo $this->Form->input('complemento');
-        echo $this->Form->input('bairro');
-        echo $this->Form->input('cidade');
-        echo $this->Form->input('estado');
-        echo $this->Form->input('cpf');
-        echo $this->Form->input('rg');
-        echo $this->Form->input('data_nascimento', ['empty' => true]);
-        echo $this->Form->input('conselho_id', ['options' => $conselhos, 'empty' => true]);
-        echo $this->Form->input('numero_conselho');
-        echo $this->Form->input('estado_conselho');
-        echo $this->Form->input('data_admissao', ['empty' => true]);
-        echo $this->Form->input('cargo_id');
-        echo $this->Form->input('recebe_comissao');
-        echo $this->Form->input('cargos_salario_id');
-        echo $this->Form->input('comissao_id');
-        echo $this->Form->input('banco');
-        echo $this->Form->input('agencia');
-        echo $this->Form->input('conta');
-        echo $this->Form->input('centro_custo');
+        echo $this->Form->input('nome', ['div' => ['class' => 'col-xs-12 col-md-12']]);
+        echo $this->Form->status('status', ['div' => ['class' => 'col-xs-12 col-md-6']]);
+        echo $this->Form->input('cep', ['div' => ['class' => 'col-xs-12 col-md-6']]);
+        echo $this->Form->input('endereco', ['div' => ['class' => 'col-xs-12 col-md-10']]);
+        echo $this->Form->input('numero', ['div' => ['class' => 'col-xs-12 col-md-2']]);
+        echo $this->Form->input('complemento', ['div' => ['class' => 'col-xs-12 col-md-3']]);
+        echo $this->Form->input('bairro', ['div' => ['class' => 'col-xs-12 col-md-3']]);
+        echo $this->Form->input('cidade', ['div' => ['class' => 'col-xs-12 col-md-3']]);
+        echo $this->Form->input('estado', ['div' => ['class' => 'col-xs-12 col-md-3']]);
+        echo $this->Form->input('cpf', ['div' => ['class' => 'col-xs-12 col-md-6']]);
+        echo $this->Form->input('rg', ['div' => ['class' => 'col-xs-12 col-md-6']]);
+        echo $this->Form->data('data_nascimento', ['empty' => true, 'div' => ['class' => 'col-xs-12 col-md-6']]);
+        echo $this->Form->input('conselho_id', ['options' => $conselhos, 'empty' => true, 'div' => ['class' => 'col-xs-12 col-md-6']]);
+        echo $this->Form->input('numero_conselho', ['div' => ['class' => 'col-xs-12 col-md-6']]);
+        echo $this->Form->input('estado_conselho', ['div' => ['class' => 'col-xs-12 col-md-6']]);
+        echo $this->Form->data('data_admissao', ['empty' => true, 'div' => ['class' => 'col-xs-12 col-md-6']]);
+        echo $this->Form->input('cargo_id', ['div' => ['class' => 'col-xs-12 col-md-6']]);
+        echo $this->Form->input('recebe_comissao', ['div' => ['class' => 'col-xs-12 col-md-6']]);
+        echo $this->Form->input('cargos_salario_id', ['div' => ['class' => 'col-xs-12 col-md-6']]);
+        echo $this->Form->input('comissao_id', ['div' => ['class' => 'col-xs-12 col-md-6']]);
+        echo $this->Form->input('banco', ['div' => ['class' => 'col-xs-12 col-md-6']]);
+        echo $this->Form->input('agencia', ['div' => ['class' => 'col-xs-12 col-md-6']]);
+        echo $this->Form->input('conta', ['div' => ['class' => 'col-xs-12 col-md-6']]);
+        echo $this->Form->input('centro_custo', ['div' => ['class' => 'col-xs-12 col-md-6']]);
         ?>
     </div>
     <div class="panel-footer text-right">

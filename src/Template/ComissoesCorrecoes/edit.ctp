@@ -13,10 +13,10 @@ $this->Html->addButton($this->Form->postLink('<i class="fa fa-trash-o"></i> ' . 
     <?= $this->Form->create($comissoesCorreco) ?>
     <div class="panel-body">
         <?php
-        echo $this->Form->input('comissao_id');
-        echo $this->Form->input('ano');
-        echo $this->Form->input('mes');
-        echo $this->Form->input('percentual');
+        echo $this->Form->input('comissao_id', ['div' => ['class' => 'col-xs-12 col-md-12']]);
+        echo $this->Form->input('ano', ['div' => ['class' => 'col-xs-12 col-md-12']]);
+        echo $this->Form->input('mes', ['div' => ['class' => 'col-xs-12 col-md-12']]);
+        echo $this->Form->input('percentual', ['div' => ['class' => 'col-xs-12 col-md-12']]);
         ?>
     </div>
     <div class="panel-footer text-right">
