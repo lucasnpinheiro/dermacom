@@ -1,55 +1,73 @@
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-        <li><?= $this->Html->link(__('New Menu'), ['action' => 'add']) ?></li>
-    </ul>
-</nav>
-<div class="menus index large-9 medium-8 columns content">
-    <h3><?= __('Menus') ?></h3>
-    <table cellpadding="0" cellspacing="0">
-        <thead>
-            <tr>
-                <th scope="col"><?= $this->Paginator->sort('id') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('titulo') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('path') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('controller') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('action') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('status') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('item_menu') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('icon') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('created') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('modified') ?></th>
-                <th scope="col" class="actions"><?= __('Actions') ?></th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php foreach ($menus as $menu): ?>
-            <tr>
-                <td><?= $this->Number->format($menu->id) ?></td>
-                <td><?= h($menu->titulo) ?></td>
-                <td><?= h($menu->path) ?></td>
-                <td><?= h($menu->controller) ?></td>
-                <td><?= h($menu->action) ?></td>
-                <td><?= $this->Number->format($menu->status) ?></td>
-                <td><?= $this->Number->format($menu->item_menu) ?></td>
-                <td><?= h($menu->icon) ?></td>
-                <td><?= h($menu->created) ?></td>
-                <td><?= h($menu->modified) ?></td>
-                <td class="actions">
-                    <?= $this->Html->link(__('View'), ['action' => 'view', $menu->id]) ?>
-                    <?= $this->Html->link(__('Edit'), ['action' => 'edit', $menu->id]) ?>
-                    <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $menu->id], ['confirm' => __('Are you sure you want to delete # {0}?', $menu->id)]) ?>
-                </td>
-            </tr>
-            <?php endforeach; ?>
-        </tbody>
-    </table>
-    <div class="paginator">
-        <ul class="pagination">
-            <?= $this->Paginator->prev('< ' . __('previous')) ?>
-            <?= $this->Paginator->numbers() ?>
-            <?= $this->Paginator->next(__('next') . ' >') ?>
-        </ul>
-        <p><?= $this->Paginator->counter() ?></p>
+<?php
+$this->Html->addCrumb(__('Index'), null);
+
+$this->Html->addButton($this->Html->link('<i class="fa fa-list" aria-hidden="true"></i> ' . __('Index'), ['action' => 'index'], ['class' => 'btn btn-success', 'escape' => false]));
+?>
+<div class="panel">
+    <div class="panel-heading">
+        <h3 class="panel-title"><?= __($sub_title) ?></h3>
+    </div>
+    <div class="panel-body">
+
+        <div class="bootstrap-table">
+            <div class="fixed-table-toolbar">
+                <?php
+                echo $this->Form->create(null, [
+                    'inline' => true,
+                    'label' => false
+                ]);
+                ?>
+                <div class="bars pull-left">
+                    <?php
+                    echo $this->Form->input('titulo', ['label' => false, 'placeholder' => __('Titulo')]);
+                    echo $this->Form->status('status', ['label' => false, 'placeholder' => __('Status')]);
+                    echo $this->Form->simNao('item_menu', ['label' => false, 'placeholder' => __('Item de Menu')]);
+                    ?>
+                </div>
+                <div class="pull-right search">
+                    <?php
+                    echo $this->Form->button($this->Html->icon('search') . ' Consultar', ['escape' => false, 'type' => 'submit']);
+                    ?>
+                </div>
+                <?php
+                echo $this->Form->end();
+                ?>
+            </div>
+            <div class="fixed-table-container" style="padding-bottom: 0px;">
+                <div class="fixed-table-body">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th><?= $this->Paginator->sort('titulo') ?></th>
+                                <th><?= $this->Paginator->sort('controller') ?></th>
+                                <th><?= $this->Paginator->sort('action') ?></th>
+                                <th><?= $this->Paginator->sort('status') ?></th>
+                                <th><?= $this->Paginator->sort('item_menu') ?></th>
+                                <th><?= $this->Paginator->sort('created') ?></th>
+                                <th class="actions text-right"><?= __('Actions') ?></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php foreach ($menus as $menu): ?>
+                                <tr>
+                                    <td><?= h($menu->titulo) ?></td>
+                                    <td><?= h($menu->controller) ?></td>
+                                    <td><?= h($menu->action) ?></td>
+                                    <td><?= $this->Number->status($menu->status) ?></td>
+                                    <td><?= $this->Number->simNao($menu->item_menu) ?></td>
+                                    <td><?= h($menu->created) ?></td>
+                                    <td class="actions text-right">
+                                        <?= $this->Html->link(null, ['action' => 'edit', $menu->id], ['title' => __('Edit'), 'class' => 'btn btn-primary btn-sm btn-rounded fa fa-pencil']) ?>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="panel-footer">
+        <?= $this->element('Pagination/paginator') ?>
     </div>
 </div>

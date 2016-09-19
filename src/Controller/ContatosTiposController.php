@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Controller;
 
 use App\Controller\AppController;
@@ -8,19 +9,16 @@ use App\Controller\AppController;
  *
  * @property \App\Model\Table\ContatosTiposTable $ContatosTipos
  */
-class ContatosTiposController extends AppController
-{
+class ContatosTiposController extends AppController {
 
     /**
      * Index method
      *
      * @return \Cake\Network\Response|null
      */
-    public function index()
-    {
-        $contatosTipos = $this->paginate($this->ContatosTipos);
-
-        $this->set(compact('contatosTipos'));
+    public function index() {
+        $query = $this->{$this->modelClass}->find('search', $this->{$this->modelClass}->filterParams($this->request->query));
+        $this->set('contatosTipos', $this->paginate($query));
         $this->set('_serialize', ['contatosTipos']);
     }
 
@@ -31,8 +29,7 @@ class ContatosTiposController extends AppController
      * @return \Cake\Network\Response|null
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function view($id = null)
-    {
+    public function view($id = null) {
         $contatosTipo = $this->ContatosTipos->get($id, [
             'contain' => ['Contatos']
         ]);
@@ -46,8 +43,7 @@ class ContatosTiposController extends AppController
      *
      * @return \Cake\Network\Response|void Redirects on successful add, renders view otherwise.
      */
-    public function add()
-    {
+    public function add() {
         $contatosTipo = $this->ContatosTipos->newEntity();
         if ($this->request->is('post')) {
             $contatosTipo = $this->ContatosTipos->patchEntity($contatosTipo, $this->request->data);
@@ -70,8 +66,7 @@ class ContatosTiposController extends AppController
      * @return \Cake\Network\Response|void Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Network\Exception\NotFoundException When record not found.
      */
-    public function edit($id = null)
-    {
+    public function edit($id = null) {
         $contatosTipo = $this->ContatosTipos->get($id, [
             'contain' => []
         ]);
@@ -96,8 +91,7 @@ class ContatosTiposController extends AppController
      * @return \Cake\Network\Response|null Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function delete($id = null)
-    {
+    public function delete($id = null) {
         $this->request->allowMethod(['post', 'delete']);
         $contatosTipo = $this->ContatosTipos->get($id);
         if ($this->ContatosTipos->delete($contatosTipo)) {
@@ -108,4 +102,5 @@ class ContatosTiposController extends AppController
 
         return $this->redirect(['action' => 'index']);
     }
+
 }

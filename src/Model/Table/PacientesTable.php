@@ -1,10 +1,12 @@
 <?php
+
 namespace App\Model\Table;
 
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
+use Search\Manager;
 
 /**
  * Pacientes Model
@@ -33,8 +35,10 @@ use Cake\Validation\Validator;
  *
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
  */
-class PacientesTable extends Table
-{
+class PacientesTable extends Table {
+
+    use \App\Model\Traits\FuncoesTraits,
+        Search\Model\Behavior\SearchBehavior;
 
     /**
      * Initialize method
@@ -42,8 +46,7 @@ class PacientesTable extends Table
      * @param array $config The configuration for the Table.
      * @return void
      */
-    public function initialize(array $config)
-    {
+    public function initialize(array $config) {
         parent::initialize($config);
 
         $this->table('pacientes');
@@ -95,6 +98,16 @@ class PacientesTable extends Table
             'targetForeignKey' => 'midia_id',
             'joinTable' => 'pacientes_midias'
         ]);
+        $this->addBehavior('Search.Search');
+    }
+
+    public function searchConfiguration() {
+        return $this->searchConfigurationDynamic();
+    }
+
+    private function searchConfigurationDynamic() {
+        $search = $this->_searchConfigurationDynamic(new Manager($this));
+        return $search;
     }
 
     /**
@@ -103,61 +116,60 @@ class PacientesTable extends Table
      * @param \Cake\Validation\Validator $validator Validator instance.
      * @return \Cake\Validation\Validator
      */
-    public function validationDefault(Validator $validator)
-    {
+    public function validationDefault(Validator $validator) {
         $validator
-            ->integer('id')
-            ->allowEmpty('id', 'create');
+                ->integer('id')
+                ->allowEmpty('id', 'create');
 
         $validator
-            ->allowEmpty('nome');
+                ->allowEmpty('nome');
 
         $validator
-            ->integer('status')
-            ->allowEmpty('status');
+                ->integer('status')
+                ->allowEmpty('status');
 
         $validator
-            ->allowEmpty('cep');
+                ->allowEmpty('cep');
 
         $validator
-            ->allowEmpty('endereco');
+                ->allowEmpty('endereco');
 
         $validator
-            ->allowEmpty('numero');
+                ->allowEmpty('numero');
 
         $validator
-            ->allowEmpty('complemento');
+                ->allowEmpty('complemento');
 
         $validator
-            ->allowEmpty('bairro');
+                ->allowEmpty('bairro');
 
         $validator
-            ->allowEmpty('cidade');
+                ->allowEmpty('cidade');
 
         $validator
-            ->allowEmpty('estado');
+                ->allowEmpty('estado');
 
         $validator
-            ->allowEmpty('cpf');
+                ->allowEmpty('cpf');
 
         $validator
-            ->allowEmpty('rg');
+                ->allowEmpty('rg');
 
         $validator
-            ->date('data_nascimento')
-            ->allowEmpty('data_nascimento');
+                ->date('data_nascimento')
+                ->allowEmpty('data_nascimento');
 
         $validator
-            ->allowEmpty('foto');
+                ->allowEmpty('foto');
 
         $validator
-            ->allowEmpty('casrtao_sus');
+                ->allowEmpty('casrtao_sus');
 
         $validator
-            ->allowEmpty('naturalidade');
+                ->allowEmpty('naturalidade');
 
         $validator
-            ->allowEmpty('centro_custo');
+                ->allowEmpty('centro_custo');
 
         return $validator;
     }
@@ -169,8 +181,7 @@ class PacientesTable extends Table
      * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
      * @return \Cake\ORM\RulesChecker
      */
-    public function buildRules(RulesChecker $rules)
-    {
+    public function buildRules(RulesChecker $rules) {
         $rules->add($rules->existsIn(['sexo_id'], 'Sexos'));
         $rules->add($rules->existsIn(['estados_civil_id'], 'EstadosCivis'));
         $rules->add($rules->existsIn(['escolaridade_id'], 'Escolaridades'));
@@ -181,4 +192,5 @@ class PacientesTable extends Table
 
         return $rules;
     }
+
 }

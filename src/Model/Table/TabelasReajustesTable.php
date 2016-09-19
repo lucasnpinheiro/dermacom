@@ -1,10 +1,12 @@
 <?php
+
 namespace App\Model\Table;
 
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
+use Search\Manager;
 
 /**
  * TabelasReajustes Model
@@ -21,8 +23,10 @@ use Cake\Validation\Validator;
  *
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
  */
-class TabelasReajustesTable extends Table
-{
+class TabelasReajustesTable extends Table {
+
+    use \App\Model\Traits\FuncoesTraits,
+        Search\Model\Behavior\SearchBehavior;
 
     /**
      * Initialize method
@@ -30,8 +34,7 @@ class TabelasReajustesTable extends Table
      * @param array $config The configuration for the Table.
      * @return void
      */
-    public function initialize(array $config)
-    {
+    public function initialize(array $config) {
         parent::initialize($config);
 
         $this->table('tabelas_reajustes');
@@ -43,6 +46,16 @@ class TabelasReajustesTable extends Table
         $this->belongsTo('TabelasValores', [
             'foreignKey' => 'tabelas_valor_id'
         ]);
+        $this->addBehavior('Search.Search');
+    }
+
+    public function searchConfiguration() {
+        return $this->searchConfigurationDynamic();
+    }
+
+    private function searchConfigurationDynamic() {
+        $search = $this->_searchConfigurationDynamic(new Manager($this));
+        return $search;
     }
 
     /**
@@ -51,30 +64,29 @@ class TabelasReajustesTable extends Table
      * @param \Cake\Validation\Validator $validator Validator instance.
      * @return \Cake\Validation\Validator
      */
-    public function validationDefault(Validator $validator)
-    {
+    public function validationDefault(Validator $validator) {
         $validator
-            ->integer('id')
-            ->allowEmpty('id', 'create');
+                ->integer('id')
+                ->allowEmpty('id', 'create');
 
         $validator
-            ->integer('status')
-            ->allowEmpty('status');
+                ->integer('status')
+                ->allowEmpty('status');
 
         $validator
-            ->integer('anto')
-            ->allowEmpty('anto');
+                ->integer('anto')
+                ->allowEmpty('anto');
 
         $validator
-            ->allowEmpty('mes');
+                ->allowEmpty('mes');
 
         $validator
-            ->integer('tipo_calculo')
-            ->allowEmpty('tipo_calculo');
+                ->integer('tipo_calculo')
+                ->allowEmpty('tipo_calculo');
 
         $validator
-            ->numeric('valor')
-            ->allowEmpty('valor');
+                ->numeric('valor')
+                ->allowEmpty('valor');
 
         return $validator;
     }
@@ -86,10 +98,10 @@ class TabelasReajustesTable extends Table
      * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
      * @return \Cake\ORM\RulesChecker
      */
-    public function buildRules(RulesChecker $rules)
-    {
+    public function buildRules(RulesChecker $rules) {
         $rules->add($rules->existsIn(['tabelas_valor_id'], 'TabelasValores'));
 
         return $rules;
     }
+
 }

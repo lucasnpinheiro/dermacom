@@ -6,6 +6,7 @@ use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
+use Search\Manager;
 
 /**
  * Usuarios Model
@@ -22,6 +23,9 @@ use Cake\Validation\Validator;
  */
 class UsuariosTable extends Table {
 
+    use \App\Model\Traits\FuncoesTraits,
+        Search\Model\Behavior\SearchBehavior;
+
     /**
      * Initialize method
      *
@@ -36,6 +40,16 @@ class UsuariosTable extends Table {
         $this->primaryKey('id');
 
         $this->addBehavior('Timestamp');
+        $this->addBehavior('Search.Search');
+    }
+
+    public function searchConfiguration() {
+        return $this->searchConfigurationDynamic();
+    }
+
+    private function searchConfigurationDynamic() {
+        $search = $this->_searchConfigurationDynamic(new Manager($this));
+        return $search;
     }
 
     /**

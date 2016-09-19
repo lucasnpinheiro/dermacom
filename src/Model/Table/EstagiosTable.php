@@ -1,10 +1,12 @@
 <?php
+
 namespace App\Model\Table;
 
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
+use Search\Manager;
 
 /**
  * Estagios Model
@@ -22,8 +24,10 @@ use Cake\Validation\Validator;
  *
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
  */
-class EstagiosTable extends Table
-{
+class EstagiosTable extends Table {
+
+    use \App\Model\Traits\FuncoesTraits,
+        Search\Model\Behavior\SearchBehavior;
 
     /**
      * Initialize method
@@ -31,8 +35,7 @@ class EstagiosTable extends Table
      * @param array $config The configuration for the Table.
      * @return void
      */
-    public function initialize(array $config)
-    {
+    public function initialize(array $config) {
         parent::initialize($config);
 
         $this->table('estagios');
@@ -47,6 +50,16 @@ class EstagiosTable extends Table
         $this->belongsTo('Classificacoes', [
             'foreignKey' => 'classificacao_id'
         ]);
+        $this->addBehavior('Search.Search');
+    }
+
+    public function searchConfiguration() {
+        return $this->searchConfigurationDynamic();
+    }
+
+    private function searchConfigurationDynamic() {
+        $search = $this->_searchConfigurationDynamic(new Manager($this));
+        return $search;
     }
 
     /**
@@ -55,21 +68,20 @@ class EstagiosTable extends Table
      * @param \Cake\Validation\Validator $validator Validator instance.
      * @return \Cake\Validation\Validator
      */
-    public function validationDefault(Validator $validator)
-    {
+    public function validationDefault(Validator $validator) {
         $validator
-            ->integer('id')
-            ->allowEmpty('id', 'create');
+                ->integer('id')
+                ->allowEmpty('id', 'create');
 
         $validator
-            ->allowEmpty('codigo');
+                ->allowEmpty('codigo');
 
         $validator
-            ->allowEmpty('nome');
+                ->allowEmpty('nome');
 
         $validator
-            ->integer('peso')
-            ->allowEmpty('peso');
+                ->integer('peso')
+                ->allowEmpty('peso');
 
         return $validator;
     }
@@ -81,11 +93,11 @@ class EstagiosTable extends Table
      * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
      * @return \Cake\ORM\RulesChecker
      */
-    public function buildRules(RulesChecker $rules)
-    {
+    public function buildRules(RulesChecker $rules) {
         $rules->add($rules->existsIn(['lesao_id'], 'Lesoes'));
         $rules->add($rules->existsIn(['classificacao_id'], 'Classificacoes'));
 
         return $rules;
     }
+
 }

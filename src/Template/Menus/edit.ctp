@@ -1,29 +1,21 @@
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-        <li><?= $this->Form->postLink(
-                __('Delete'),
-                ['action' => 'delete', $menu->id],
-                ['confirm' => __('Are you sure you want to delete # {0}?', $menu->id)]
-            )
-        ?></li>
-        <li><?= $this->Html->link(__('List Menus'), ['action' => 'index']) ?></li>
-    </ul>
-</nav>
-<div class="menus form large-9 medium-8 columns content">
+<?php
+$this->Html->addCrumb(__('Index'), ['action' => 'index']);
+$this->Html->addCrumb(__($this->request->params['action']), null);
+
+$this->Html->addButton($this->Html->link('<i class="fa fa-list" aria-hidden="true"></i> ' . __('Index'), ['action' => 'index'], ['class' => 'btn btn-success', 'escape' => false]));
+?>
+<div class="panel">
+    <div class="panel-heading">
+        <h3 class="panel-title"><?= __($sub_title) ?></h3>
+    </div>
     <?= $this->Form->create($menu) ?>
-    <fieldset>
-        <legend><?= __('Edit Menu') ?></legend>
+    <div class="panel-body">
         <?php
-            echo $this->Form->input('titulo');
-            echo $this->Form->input('path');
-            echo $this->Form->input('controller');
-            echo $this->Form->input('action');
-            echo $this->Form->input('status');
-            echo $this->Form->input('item_menu');
-            echo $this->Form->input('icon');
+        echo $this->Form->input('titulo', ['div' => ['class' => 'col-xs-12 col-md-12']]);
         ?>
-    </fieldset>
-    <?= $this->Form->button(__('Submit')) ?>
+    </div>
+    <div class="panel-footer text-right">
+        <?= $this->Form->button(__('Submit'), ['class' => "btn btn-success", 'type' => "submit"]) ?>
+    </div>
     <?= $this->Form->end() ?>
 </div>

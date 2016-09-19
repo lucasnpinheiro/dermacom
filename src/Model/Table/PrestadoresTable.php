@@ -1,10 +1,12 @@
 <?php
+
 namespace App\Model\Table;
 
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
+use Search\Manager;
 
 /**
  * Prestadores Model
@@ -23,8 +25,10 @@ use Cake\Validation\Validator;
  *
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
  */
-class PrestadoresTable extends Table
-{
+class PrestadoresTable extends Table {
+
+    use \App\Model\Traits\FuncoesTraits,
+        Search\Model\Behavior\SearchBehavior;
 
     /**
      * Initialize method
@@ -32,8 +36,7 @@ class PrestadoresTable extends Table
      * @param array $config The configuration for the Table.
      * @return void
      */
-    public function initialize(array $config)
-    {
+    public function initialize(array $config) {
         parent::initialize($config);
 
         $this->table('prestadores');
@@ -51,6 +54,16 @@ class PrestadoresTable extends Table
         $this->belongsTo('Conselhos', [
             'foreignKey' => 'conselho_id'
         ]);
+        $this->addBehavior('Search.Search');
+    }
+
+    public function searchConfiguration() {
+        return $this->searchConfigurationDynamic();
+    }
+
+    private function searchConfigurationDynamic() {
+        $search = $this->_searchConfigurationDynamic(new Manager($this));
+        return $search;
     }
 
     /**
@@ -59,76 +72,75 @@ class PrestadoresTable extends Table
      * @param \Cake\Validation\Validator $validator Validator instance.
      * @return \Cake\Validation\Validator
      */
-    public function validationDefault(Validator $validator)
-    {
+    public function validationDefault(Validator $validator) {
         $validator
-            ->integer('id')
-            ->allowEmpty('id', 'create');
+                ->integer('id')
+                ->allowEmpty('id', 'create');
 
         $validator
-            ->allowEmpty('nome');
+                ->allowEmpty('nome');
 
         $validator
-            ->allowEmpty('razao_social');
+                ->allowEmpty('razao_social');
 
         $validator
-            ->integer('status')
-            ->allowEmpty('status');
+                ->integer('status')
+                ->allowEmpty('status');
 
         $validator
-            ->allowEmpty('cep');
+                ->allowEmpty('cep');
 
         $validator
-            ->allowEmpty('endereco');
+                ->allowEmpty('endereco');
 
         $validator
-            ->allowEmpty('numero');
+                ->allowEmpty('numero');
 
         $validator
-            ->allowEmpty('complememnto');
+                ->allowEmpty('complememnto');
 
         $validator
-            ->allowEmpty('bairro');
+                ->allowEmpty('bairro');
 
         $validator
-            ->allowEmpty('cidade');
+                ->allowEmpty('cidade');
 
         $validator
-            ->allowEmpty('estado');
+                ->allowEmpty('estado');
 
         $validator
-            ->allowEmpty('cnpj');
+                ->allowEmpty('cnpj');
 
         $validator
-            ->allowEmpty('inscricao');
+                ->allowEmpty('inscricao');
 
         $validator
-            ->allowEmpty('cpf');
+                ->allowEmpty('cpf');
 
         $validator
-            ->allowEmpty('rg');
+                ->allowEmpty('rg');
 
         $validator
-            ->date('data_nascimento')
-            ->allowEmpty('data_nascimento');
+                ->date('data_nascimento')
+                ->allowEmpty('data_nascimento');
 
         $validator
-            ->allowEmpty('banco');
+                ->allowEmpty('banco');
 
         $validator
-            ->allowEmpty('agencia');
+                ->allowEmpty('agencia');
 
         $validator
-            ->allowEmpty('conta');
+                ->allowEmpty('conta');
 
         $validator
-            ->allowEmpty('numero_conselho');
+                ->allowEmpty('numero_conselho');
 
         $validator
-            ->allowEmpty('estado_conselho');
+                ->allowEmpty('estado_conselho');
 
         $validator
-            ->allowEmpty('centro_custo');
+                ->allowEmpty('centro_custo');
 
         return $validator;
     }
@@ -140,12 +152,12 @@ class PrestadoresTable extends Table
      * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
      * @return \Cake\ORM\RulesChecker
      */
-    public function buildRules(RulesChecker $rules)
-    {
+    public function buildRules(RulesChecker $rules) {
         $rules->add($rules->existsIn(['especialidade_id'], 'Especialidades'));
         $rules->add($rules->existsIn(['tabelas_preco_id'], 'TabelasPrecos'));
         $rules->add($rules->existsIn(['conselho_id'], 'Conselhos'));
 
         return $rules;
     }
+
 }

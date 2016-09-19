@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Controller;
 
 use App\Controller\AppController;
@@ -8,22 +9,16 @@ use App\Controller\AppController;
  *
  * @property \App\Model\Table\FuncionariosTable $Funcionarios
  */
-class FuncionariosController extends AppController
-{
+class FuncionariosController extends AppController {
 
     /**
      * Index method
      *
      * @return \Cake\Network\Response|null
      */
-    public function index()
-    {
-        $this->paginate = [
-            'contain' => []
-        ];
-        $funcionarios = $this->paginate($this->Funcionarios);
-
-        $this->set(compact('funcionarios'));
+    public function index() {
+        $query = $this->{$this->modelClass}->find('search', $this->{$this->modelClass}->filterParams($this->request->query));
+        $this->set('funcionarios', $this->paginate($query));
         $this->set('_serialize', ['funcionarios']);
     }
 
@@ -34,8 +29,7 @@ class FuncionariosController extends AppController
      * @return \Cake\Network\Response|null
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function view($id = null)
-    {
+    public function view($id = null) {
         $funcionario = $this->Funcionarios->get($id, [
             'contain' => []
         ]);
@@ -49,8 +43,7 @@ class FuncionariosController extends AppController
      *
      * @return \Cake\Network\Response|void Redirects on successful add, renders view otherwise.
      */
-    public function add()
-    {
+    public function add() {
         $funcionario = $this->Funcionarios->newEntity();
         if ($this->request->is('post')) {
             $funcionario = $this->Funcionarios->patchEntity($funcionario, $this->request->data);
@@ -75,8 +68,7 @@ class FuncionariosController extends AppController
      * @return \Cake\Network\Response|void Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Network\Exception\NotFoundException When record not found.
      */
-    public function edit($id = null)
-    {
+    public function edit($id = null) {
         $funcionario = $this->Funcionarios->get($id, [
             'contain' => []
         ]);
@@ -103,8 +95,7 @@ class FuncionariosController extends AppController
      * @return \Cake\Network\Response|null Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function delete($id = null)
-    {
+    public function delete($id = null) {
         $this->request->allowMethod(['post', 'delete']);
         $funcionario = $this->Funcionarios->get($id);
         if ($this->Funcionarios->delete($funcionario)) {
@@ -115,4 +106,5 @@ class FuncionariosController extends AppController
 
         return $this->redirect(['action' => 'index']);
     }
+
 }

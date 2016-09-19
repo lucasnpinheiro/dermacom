@@ -1,10 +1,12 @@
 <?php
+
 namespace App\Model\Table;
 
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
+use Search\Manager;
 
 /**
  * Convenios Model
@@ -21,8 +23,10 @@ use Cake\Validation\Validator;
  *
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
  */
-class ConveniosTable extends Table
-{
+class ConveniosTable extends Table {
+
+    use \App\Model\Traits\FuncoesTraits,
+        Search\Model\Behavior\SearchBehavior;
 
     /**
      * Initialize method
@@ -30,8 +34,7 @@ class ConveniosTable extends Table
      * @param array $config The configuration for the Table.
      * @return void
      */
-    public function initialize(array $config)
-    {
+    public function initialize(array $config) {
         parent::initialize($config);
 
         $this->table('convenios');
@@ -45,6 +48,16 @@ class ConveniosTable extends Table
             'targetForeignKey' => 'paciente_id',
             'joinTable' => 'pacientes_convenios'
         ]);
+        $this->addBehavior('Search.Search');
+    }
+
+    public function searchConfiguration() {
+        return $this->searchConfigurationDynamic();
+    }
+
+    private function searchConfigurationDynamic() {
+        $search = $this->_searchConfigurationDynamic(new Manager($this));
+        return $search;
     }
 
     /**
@@ -53,52 +66,52 @@ class ConveniosTable extends Table
      * @param \Cake\Validation\Validator $validator Validator instance.
      * @return \Cake\Validation\Validator
      */
-    public function validationDefault(Validator $validator)
-    {
+    public function validationDefault(Validator $validator) {
         $validator
-            ->integer('id')
-            ->allowEmpty('id', 'create');
+                ->integer('id')
+                ->allowEmpty('id', 'create');
 
         $validator
-            ->allowEmpty('nome');
+                ->allowEmpty('nome');
 
         $validator
-            ->integer('status')
-            ->allowEmpty('status');
+                ->integer('status')
+                ->allowEmpty('status');
 
         $validator
-            ->allowEmpty('razao_social');
+                ->allowEmpty('razao_social');
 
         $validator
-            ->allowEmpty('cep');
+                ->allowEmpty('cep');
 
         $validator
-            ->allowEmpty('endereco');
+                ->allowEmpty('endereco');
 
         $validator
-            ->allowEmpty('numero');
+                ->allowEmpty('numero');
 
         $validator
-            ->allowEmpty('complemento');
+                ->allowEmpty('complemento');
 
         $validator
-            ->allowEmpty('bairro');
+                ->allowEmpty('bairro');
 
         $validator
-            ->allowEmpty('cidade');
+                ->allowEmpty('cidade');
 
         $validator
-            ->allowEmpty('estado');
+                ->allowEmpty('estado');
 
         $validator
-            ->allowEmpty('cnpj');
+                ->allowEmpty('cnpj');
 
         $validator
-            ->allowEmpty('inscricao');
+                ->allowEmpty('inscricao');
 
         $validator
-            ->allowEmpty('centro_custo');
+                ->allowEmpty('centro_custo');
 
         return $validator;
     }
+
 }

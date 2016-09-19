@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Controller;
 
 use App\Controller\AppController;
@@ -8,19 +9,16 @@ use App\Controller\AppController;
  *
  * @property \App\Model\Table\EscolaridadesTable $Escolaridades
  */
-class EscolaridadesController extends AppController
-{
+class EscolaridadesController extends AppController {
 
     /**
      * Index method
      *
      * @return \Cake\Network\Response|null
      */
-    public function index()
-    {
-        $escolaridades = $this->paginate($this->Escolaridades);
-
-        $this->set(compact('escolaridades'));
+    public function index() {
+        $query = $this->{$this->modelClass}->find('search', $this->{$this->modelClass}->filterParams($this->request->query));
+        $this->set('escolaridades', $this->paginate($query));
         $this->set('_serialize', ['escolaridades']);
     }
 
@@ -31,8 +29,7 @@ class EscolaridadesController extends AppController
      * @return \Cake\Network\Response|null
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function view($id = null)
-    {
+    public function view($id = null) {
         $escolaridade = $this->Escolaridades->get($id, [
             'contain' => ['Pacientes']
         ]);
@@ -46,8 +43,7 @@ class EscolaridadesController extends AppController
      *
      * @return \Cake\Network\Response|void Redirects on successful add, renders view otherwise.
      */
-    public function add()
-    {
+    public function add() {
         $escolaridade = $this->Escolaridades->newEntity();
         if ($this->request->is('post')) {
             $escolaridade = $this->Escolaridades->patchEntity($escolaridade, $this->request->data);
@@ -70,8 +66,7 @@ class EscolaridadesController extends AppController
      * @return \Cake\Network\Response|void Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Network\Exception\NotFoundException When record not found.
      */
-    public function edit($id = null)
-    {
+    public function edit($id = null) {
         $escolaridade = $this->Escolaridades->get($id, [
             'contain' => []
         ]);
@@ -96,8 +91,7 @@ class EscolaridadesController extends AppController
      * @return \Cake\Network\Response|null Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function delete($id = null)
-    {
+    public function delete($id = null) {
         $this->request->allowMethod(['post', 'delete']);
         $escolaridade = $this->Escolaridades->get($id);
         if ($this->Escolaridades->delete($escolaridade)) {
@@ -108,4 +102,5 @@ class EscolaridadesController extends AppController
 
         return $this->redirect(['action' => 'index']);
     }
+
 }

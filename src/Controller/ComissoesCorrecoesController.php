@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Controller;
 
 use App\Controller\AppController;
@@ -8,22 +9,16 @@ use App\Controller\AppController;
  *
  * @property \App\Model\Table\ComissoesCorrecoesTable $ComissoesCorrecoes
  */
-class ComissoesCorrecoesController extends AppController
-{
+class ComissoesCorrecoesController extends AppController {
 
     /**
      * Index method
      *
      * @return \Cake\Network\Response|null
      */
-    public function index()
-    {
-        $this->paginate = [
-            'contain' => ['Comissoes']
-        ];
-        $comissoesCorrecoes = $this->paginate($this->ComissoesCorrecoes);
-
-        $this->set(compact('comissoesCorrecoes'));
+    public function index() {
+        $query = $this->{$this->modelClass}->find('search', $this->{$this->modelClass}->filterParams($this->request->query))->contain(['Comissoes']);
+        $this->set('comissoesCorrecoes', $this->paginate($query));
         $this->set('_serialize', ['comissoesCorrecoes']);
     }
 
@@ -34,8 +29,7 @@ class ComissoesCorrecoesController extends AppController
      * @return \Cake\Network\Response|null
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function view($id = null)
-    {
+    public function view($id = null) {
         $comissoesCorreco = $this->ComissoesCorrecoes->get($id, [
             'contain' => ['Comissoes']
         ]);
@@ -49,8 +43,7 @@ class ComissoesCorrecoesController extends AppController
      *
      * @return \Cake\Network\Response|void Redirects on successful add, renders view otherwise.
      */
-    public function add()
-    {
+    public function add() {
         $comissoesCorreco = $this->ComissoesCorrecoes->newEntity();
         if ($this->request->is('post')) {
             $comissoesCorreco = $this->ComissoesCorrecoes->patchEntity($comissoesCorreco, $this->request->data);
@@ -74,8 +67,7 @@ class ComissoesCorrecoesController extends AppController
      * @return \Cake\Network\Response|void Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Network\Exception\NotFoundException When record not found.
      */
-    public function edit($id = null)
-    {
+    public function edit($id = null) {
         $comissoesCorreco = $this->ComissoesCorrecoes->get($id, [
             'contain' => []
         ]);
@@ -101,8 +93,7 @@ class ComissoesCorrecoesController extends AppController
      * @return \Cake\Network\Response|null Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function delete($id = null)
-    {
+    public function delete($id = null) {
         $this->request->allowMethod(['post', 'delete']);
         $comissoesCorreco = $this->ComissoesCorrecoes->get($id);
         if ($this->ComissoesCorrecoes->delete($comissoesCorreco)) {
@@ -113,4 +104,5 @@ class ComissoesCorrecoesController extends AppController
 
         return $this->redirect(['action' => 'index']);
     }
+
 }

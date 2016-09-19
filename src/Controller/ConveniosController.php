@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Controller;
 
 use App\Controller\AppController;
@@ -8,19 +9,16 @@ use App\Controller\AppController;
  *
  * @property \App\Model\Table\ConveniosTable $Convenios
  */
-class ConveniosController extends AppController
-{
+class ConveniosController extends AppController {
 
     /**
      * Index method
      *
      * @return \Cake\Network\Response|null
      */
-    public function index()
-    {
-        $convenios = $this->paginate($this->Convenios);
-
-        $this->set(compact('convenios'));
+    public function index() {
+        $query = $this->{$this->modelClass}->find('search', $this->{$this->modelClass}->filterParams($this->request->query));
+        $this->set('convenios', $this->paginate($query));
         $this->set('_serialize', ['convenios']);
     }
 
@@ -31,8 +29,7 @@ class ConveniosController extends AppController
      * @return \Cake\Network\Response|null
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function view($id = null)
-    {
+    public function view($id = null) {
         $convenio = $this->Convenios->get($id, [
             'contain' => ['Pacientes']
         ]);
@@ -46,8 +43,7 @@ class ConveniosController extends AppController
      *
      * @return \Cake\Network\Response|void Redirects on successful add, renders view otherwise.
      */
-    public function add()
-    {
+    public function add() {
         $convenio = $this->Convenios->newEntity();
         if ($this->request->is('post')) {
             $convenio = $this->Convenios->patchEntity($convenio, $this->request->data);
@@ -71,8 +67,7 @@ class ConveniosController extends AppController
      * @return \Cake\Network\Response|void Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Network\Exception\NotFoundException When record not found.
      */
-    public function edit($id = null)
-    {
+    public function edit($id = null) {
         $convenio = $this->Convenios->get($id, [
             'contain' => ['Pacientes']
         ]);
@@ -98,8 +93,7 @@ class ConveniosController extends AppController
      * @return \Cake\Network\Response|null Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function delete($id = null)
-    {
+    public function delete($id = null) {
         $this->request->allowMethod(['post', 'delete']);
         $convenio = $this->Convenios->get($id);
         if ($this->Convenios->delete($convenio)) {
@@ -110,4 +104,5 @@ class ConveniosController extends AppController
 
         return $this->redirect(['action' => 'index']);
     }
+
 }
