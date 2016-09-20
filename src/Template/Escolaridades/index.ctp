@@ -20,6 +20,7 @@ $this->Html->addButton($this->Html->link('<i class="fa fa-list" aria-hidden="tru
                 ?>
                 <div class="bars pull-left">
                     <?php
+                    echo $this->Form->input('nome', ['label' => false, 'placeholder' => __('Nome')]);
                     echo $this->Form->status('status', ['label' => false, 'placeholder' => __('Status')]);
                     ?>
                 </div>
@@ -38,20 +39,12 @@ $this->Html->addButton($this->Html->link('<i class="fa fa-list" aria-hidden="tru
                         <thead>
                             <tr>
                                 <th><?= $this->Paginator->sort('nome') ?></th>
-                                <th><?= $this->Paginator->sort('created') ?></th>
-                                <th><?= $this->Paginator->sort('modified') ?></th>
-                                <th class="actions text-right"><?= __('Actions') ?></th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php foreach ($escolaridades as $escolaridade): ?>
-                                <tr>
+                                <tr class="dbClick" href="<?php echo \Cake\Routing\Router::url(['action'=>'edit', $escolaridade->id], true); ?>">
                                     <td><?= h($escolaridade->nome) ?></td>
-                                    <td><?= h($escolaridade->created) ?></td>
-                                    <td><?= h($escolaridade->modified) ?></td>
-                                    <td class="actions text-right">
-                                        <?= $this->Html->link(null, ['action' => 'edit', $escolaridade->id], ['title' => __('Edit'), 'class' => 'btn btn-primary btn-sm btn-rounded fa fa-pencil']) ?>
-                                        <?= $this->Form->postLink(null, ['action' => 'delete', $escolaridade->id], ['title' => __('Delete'), 'class' => 'btn btn-danger btn-sm btn-rounded fa fa-eraser', 'confirm' => __('Are you sure you want to delete # {0}?', $escolaridade->id)]) ?>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>

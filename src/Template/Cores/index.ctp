@@ -20,6 +20,7 @@ $this->Html->addButton($this->Html->link('<i class="fa fa-list" aria-hidden="tru
                 ?>
                 <div class="bars pull-left">
                     <?php
+                    echo $this->Form->input('nome', ['label' => false, 'placeholder' => __('Nome')]);
                     echo $this->Form->status('status', ['label' => false, 'placeholder' => __('Status')]);
                     ?>
                 </div>
@@ -38,20 +39,12 @@ $this->Html->addButton($this->Html->link('<i class="fa fa-list" aria-hidden="tru
                         <thead>
                             <tr>
                                 <th><?= $this->Paginator->sort('nome') ?></th>
-                                <th><?= $this->Paginator->sort('created') ?></th>
-                                <th><?= $this->Paginator->sort('modified') ?></th>
-                                <th class="actions text-right"><?= __('Actions') ?></th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php foreach ($cores as $core): ?>
-                                <tr>
+                                <tr class="dbClick" href="<?php echo \Cake\Routing\Router::url(['action'=>'edit', $core->id], true); ?>">
                                     <td><?= h($core->nome) ?></td>
-                                    <td><?= h($core->created) ?></td>
-                                    <td><?= h($core->modified) ?></td>
-                                    <td class="actions text-right">
-                                        <?= $this->Html->link(null, ['action' => 'edit', $core->id], ['title' => __('Edit'), 'class' => 'btn btn-primary btn-sm btn-rounded fa fa-pencil']) ?>
-                                        <?= $this->Form->postLink(null, ['action' => 'delete', $core->id], ['title' => __('Delete'), 'class' => 'btn btn-danger btn-sm btn-rounded fa fa-eraser', 'confirm' => __('Are you sure you want to delete # {0}?', $core->id)]) ?>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
