@@ -84,3 +84,9 @@ msgstr "Lesões"
 
 msgid "lesoes"
 msgstr "Lesões"
+
+msgid "Classificacoes"
+msgstr "Classificações"
+
+msgid "Submit"
+msgstr "Salvar"

@@ -20,7 +20,7 @@ $this->Html->addButton($this->Html->link('<i class="fa fa-list" aria-hidden="tru
                 ?>
                 <div class="bars pull-left">
                     <?php
-                    echo $this->Form->status('status', ['label' => false, 'placeholder' => __('Status')]);
+                    echo $this->Form->input('nome', ['label' => false, 'placeholder' => __('Nome')]);
                     ?>
                 </div>
                 <div class="pull-right search">
@@ -38,21 +38,12 @@ $this->Html->addButton($this->Html->link('<i class="fa fa-list" aria-hidden="tru
                         <thead>
                             <tr>
                                 <th><?= $this->Paginator->sort('nome') ?></th>
-                                <th><?= $this->Paginator->sort('created') ?></th>
-                                <th><?= $this->Paginator->sort('modified') ?></th>
-                                <th class="actions text-right"><?= __('Actions') ?></th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php foreach ($profissoes as $profisso): ?>
-                                <tr>
+                                <tr class="dbClick" href="<?php echo \Cake\Routing\Router::url(['action'=>'edit', $profisso->id], true); ?>">
                                     <td><?= h($profisso->nome) ?></td>
-                                    <td><?= h($profisso->created) ?></td>
-                                    <td><?= h($profisso->modified) ?></td>
-                                    <td class="actions text-right">
-                                        <?= $this->Html->link(null, ['action' => 'edit', $profisso->id], ['title' => __('Edit'), 'class' => 'btn btn-primary btn-sm btn-rounded fa fa-pencil']) ?>
-                                        <?= $this->Form->postLink(null, ['action' => 'delete', $profisso->id], ['title' => __('Delete'), 'class' => 'btn btn-danger btn-sm btn-rounded fa fa-eraser', 'confirm' => __('Are you sure you want to delete # {0}?', $profisso->id)]) ?>
-                                    </td>
                                 </tr>
                             <?php endforeach; ?>
                         </tbody>

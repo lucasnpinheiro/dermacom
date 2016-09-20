@@ -20,7 +20,8 @@ $this->Html->addButton($this->Html->link('<i class="fa fa-list" aria-hidden="tru
                 ?>
                 <div class="bars pull-left">
                     <?php
-                    echo $this->Form->status('status', ['label' => false, 'placeholder' => __('Status')]);
+                    echo $this->Form->input('nome', ['label' => false, 'placeholder' => __('Nome')]);
+                    echo $this->Form->input('pais', ['label' => false, 'placeholder' => __('País')]);
                     ?>
                 </div>
                 <div class="pull-right search">
@@ -39,22 +40,13 @@ $this->Html->addButton($this->Html->link('<i class="fa fa-list" aria-hidden="tru
                             <tr>
                                 <th><?= $this->Paginator->sort('nome') ?></th>
                                 <th><?= $this->Paginator->sort('pais') ?></th>
-                                <th><?= $this->Paginator->sort('created') ?></th>
-                                <th><?= $this->Paginator->sort('modified') ?></th>
-                                <th class="actions text-right"><?= __('Actions') ?></th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php foreach ($nacionalidades as $nacionalidade): ?>
-                                <tr>
+                                <tr class="dbClick" href="<?php echo \Cake\Routing\Router::url(['action'=>'edit', $nacionalidade->id], true); ?>">
                                     <td><?= h($nacionalidade->nome) ?></td>
                                     <td><?= h($nacionalidade->pais) ?></td>
-                                    <td><?= h($nacionalidade->created) ?></td>
-                                    <td><?= h($nacionalidade->modified) ?></td>
-                                    <td class="actions text-right">
-                                        <?= $this->Html->link(null, ['action' => 'edit', $nacionalidade->id], ['title' => __('Edit'), 'class' => 'btn btn-primary btn-sm btn-rounded fa fa-pencil']) ?>
-                                        <?= $this->Form->postLink(null, ['action' => 'delete', $nacionalidade->id], ['title' => __('Delete'), 'class' => 'btn btn-danger btn-sm btn-rounded fa fa-eraser', 'confirm' => __('Are you sure you want to delete # {0}?', $nacionalidade->id)]) ?>
-                                    </td>
                                 </tr>
                             <?php endforeach; ?>
                         </tbody>

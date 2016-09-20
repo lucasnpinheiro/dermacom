@@ -20,7 +20,7 @@ $this->Html->addButton($this->Html->link('<i class="fa fa-list" aria-hidden="tru
                 ?>
                 <div class="bars pull-left">
                     <?php
-                    echo $this->Form->status('status', ['label' => false, 'placeholder' => __('Status')]);
+                    echo $this->Form->input('nome', ['label' => false, 'placeholder' => __('Nome')]);
                     ?>
                 </div>
                 <div class="pull-right search">
@@ -39,22 +39,13 @@ $this->Html->addButton($this->Html->link('<i class="fa fa-list" aria-hidden="tru
                             <tr>
                                 <th><?= $this->Paginator->sort('nome') ?></th>
                                 <th><?= $this->Paginator->sort('lesao_id') ?></th>
-                                <th><?= $this->Paginator->sort('created') ?></th>
-                                <th><?= $this->Paginator->sort('modified') ?></th>
-                                <th class="actions text-right"><?= __('Actions') ?></th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php foreach ($classificacoes as $classificaco): ?>
-                                <tr>
+                                 <tr class="dbClick" href="<?php echo \Cake\Routing\Router::url(['action'=>'edit', $classificaco->id], true); ?>">
                                     <td><?= h($classificaco->nome) ?></td>
-                                    <td><?= $this->Number->format($classificaco->lesao_id) ?></td>
-                                    <td><?= h($classificaco->created) ?></td>
-                                    <td><?= h($classificaco->modified) ?></td>
-                                    <td class="actions text-right">
-                                        <?= $this->Html->link(null, ['action' => 'edit', $classificaco->id], ['title' => __('Edit'), 'class' => 'btn btn-primary btn-sm btn-rounded fa fa-pencil']) ?>
-                                        <?= $this->Form->postLink(null, ['action' => 'delete', $classificaco->id], ['title' => __('Delete'), 'class' => 'btn btn-danger btn-sm btn-rounded fa fa-eraser', 'confirm' => __('Are you sure you want to delete # {0}?', $classificaco->id)]) ?>
-                                    </td>
+                                    <td><?= h($classificaco->leso->nome) ?></td>
                                 </tr>
                             <?php endforeach; ?>
                         </tbody>

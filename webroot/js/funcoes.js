@@ -231,6 +231,10 @@ cake.util.convertFloat = function (valor) {
     }
     return parseFloat(valor);
 };
+cake.html.dblclick = function (obj) {
+    window.location.href = $(obj).attr('href');
+    console.log(obj)
+};
 cake.html.label = function (str, css) {
     return '<span class="label label-' + css + '">' + str + '</span>';
 };
@@ -242,4 +246,7 @@ cake.html.myAlert = function (str, css) {
 
 $(document).ready(function () {
     cake.util.mascara();
+    $('.dbClick').dblclick(function () {
+        cake.html.dblclick($(this));
+    });
 });

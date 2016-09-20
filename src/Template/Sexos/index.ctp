@@ -1,4 +1,5 @@
 <?php
+
 $this->Html->addCrumb(__('Index'), null);
 
 $this->Html->addButton($this->Html->link('<i class="fa fa-plus-circle" aria-hidden="true"></i> ' . __('Add'), ['action' => 'add'], ['class' => 'btn btn-primary', 'escape' => false]));
@@ -38,22 +39,13 @@ $this->Html->addButton($this->Html->link('<i class="fa fa-list" aria-hidden="tru
                         <thead>
                             <tr>
                                 <th><?= $this->Paginator->sort('nome') ?></th>
-                                <th><?= $this->Paginator->sort('created') ?></th>
-                                <th><?= $this->Paginator->sort('modified') ?></th>
-                                <th class="actions text-right"><?= __('Actions') ?></th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php foreach ($sexos as $sexo): ?>
-                                <tr>
-                                    <td><?= h($sexo->nome) ?></td>
-                                    <td><?= h($sexo->created) ?></td>
-                                    <td><?= h($sexo->modified) ?></td>
-                                    <td class="actions text-right">
-                                        <?= $this->Html->link(null, ['action' => 'edit', $sexo->id], ['title' => __('Edit'), 'class' => 'btn btn-primary btn-sm btn-rounded fa fa-pencil']) ?>
-                                        <?= $this->Form->postLink(null, ['action' => 'delete', $sexo->id], ['title' => __('Delete'), 'class' => 'btn btn-danger btn-sm btn-rounded fa fa-eraser', 'confirm' => __('Are you sure you want to delete # {0}?', $sexo->id)]) ?>
-                                    </td>
-                                </tr>
+                            <tr class="dbClick" href="<?php echo \Cake\Routing\Router::url(['action'=>'edit', $sexo->id], true); ?>">
+                                <td><?= h($sexo->nome) ?></td>
+                            </tr>
                             <?php endforeach; ?>
                         </tbody>
                     </table>
