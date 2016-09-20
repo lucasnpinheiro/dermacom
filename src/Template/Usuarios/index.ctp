@@ -42,23 +42,14 @@ $this->Html->addButton($this->Html->link('<i class="fa fa-list" aria-hidden="tru
                                 <th><?= $this->Paginator->sort('nome') ?></th>
                                 <th><?= $this->Paginator->sort('login') ?></th>
                                 <th><?= $this->Paginator->sort('status') ?></th>
-                                <th><?= $this->Paginator->sort('created') ?></th>
-                                <th><?= $this->Paginator->sort('modified') ?></th>
-                                <th class="actions text-right"><?= __('Actions') ?></th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php foreach ($usuarios as $usuario): ?>
-                                <tr>
+                                <tr class="dbClick" href="<?php echo \Cake\Routing\Router::url(['action'=>'edit', $usuario->id], true); ?>">
                                     <td><?= h($usuario->nome) ?></td>
                                     <td><?= h($usuario->login) ?></td>
                                     <td><?= $this->Number->status($usuario->status) ?></td>
-                                    <td><?= h($usuario->created) ?></td>
-                                    <td><?= h($usuario->modified) ?></td>
-                                    <td class="actions text-right">
-                                        <?= $this->Html->link(null, ['action' => 'edit', $usuario->id], ['title' => __('Edit'), 'class' => 'btn btn-primary btn-sm btn-rounded fa fa-pencil']) ?>
-                                        <?= $this->Form->postLink(null, ['action' => 'delete', $usuario->id], ['title' => __('Delete'), 'class' => 'btn btn-danger btn-sm btn-rounded fa fa-eraser', 'confirm' => __('Are you sure you want to delete # {0}?', $usuario->id)]) ?>
-                                    </td>
                                 </tr>
                             <?php endforeach; ?>
                         </tbody>

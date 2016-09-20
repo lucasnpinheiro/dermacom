@@ -35,6 +35,7 @@ CREATE TABLE IF NOT EXISTS `comissoes` (
 `status` INTEGER(11) DEFAULT NULL COMMENT '0 - Inativo | 1 - Ativo | 9 - Excluido',
 `crated` DATETIME DEFAULT NULL,
 `modified` DATETIME DEFAULT NULL,
+`comissoes_tipo_id` INTEGER(11) DEFAULT NULL,
 PRIMARY KEY (`id`)
 ) ENGINE=InnoDB;
 -- Fim das estrutura da tabela `comissoes` --
@@ -54,6 +55,20 @@ CREATE TABLE IF NOT EXISTS `comissoes_correcoes` (
 PRIMARY KEY (`id`)
 ) ENGINE=InnoDB;
 -- Fim das estrutura da tabela `comissoes_correcoes` --
+
+
+-- Inicio das estrutura da tabela `comissoes_tipos` --
+/* !40101 SET character_set_client = utf8 */;
+DROP TABLE IF EXISTS `comissoes_tipos`;
+CREATE TABLE IF NOT EXISTS `comissoes_tipos` (
+`id` INTEGER(11) NOT NULL AUTO_INCREMENT,
+`nome` VARCHAR(45) COLLATE latin1_swedish_ci DEFAULT NULL,
+`status` INTEGER(1) DEFAULT NULL,
+`created` DATETIME DEFAULT NULL,
+`modified` DATETIME DEFAULT NULL,
+PRIMARY KEY (`id`)
+) ENGINE=InnoDB;
+-- Fim das estrutura da tabela `comissoes_tipos` --
 
 
 -- Inicio das estrutura da tabela `conselhos` --
