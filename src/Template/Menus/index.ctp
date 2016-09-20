@@ -43,21 +43,16 @@ $this->Html->addButton($this->Html->link('<i class="fa fa-list" aria-hidden="tru
                                 <th><?= $this->Paginator->sort('action') ?></th>
                                 <th><?= $this->Paginator->sort('status') ?></th>
                                 <th><?= $this->Paginator->sort('item_menu') ?></th>
-                                <th><?= $this->Paginator->sort('created') ?></th>
-                                <th class="actions text-right"><?= __('Actions') ?></th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php foreach ($menus as $menu): ?>
-                                <tr>
+                                <tr class="dbClick" href="<?php echo \Cake\Routing\Router::url(['action'=>'edit', $menu->id], true); ?>">
                                     <td><?= h($menu->titulo) ?></td>
                                     <td><?= h($menu->controller) ?></td>
                                     <td><?= h($menu->action) ?></td>
                                     <td><?= $this->Number->status($menu->status) ?></td>
                                     <td><?= $this->Number->simNao($menu->item_menu) ?></td>
-                                    <td><?= h($menu->created) ?></td>
-                                    <td class="actions text-right">
-                                        <?= $this->Html->link(null, ['action' => 'edit', $menu->id], ['title' => __('Edit'), 'class' => 'btn btn-primary btn-sm btn-rounded fa fa-pencil']) ?>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
