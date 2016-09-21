@@ -28,6 +28,7 @@ $this->Html->addButton($this->Html->link('<i class="fa fa-list" aria-hidden="tru
                 <div class="pull-right search">
                     <?php
                     echo $this->Form->button($this->Html->icon('search') . ' Consultar', ['escape' => false, 'type' => 'submit']);
+                    echo $this->Form->myButtonExcluir(['action' => 'deleteAll']);
                     ?>
                 </div>
                 <?php
@@ -39,6 +40,7 @@ $this->Html->addButton($this->Html->link('<i class="fa fa-list" aria-hidden="tru
                     <table class="table table-hover">
                         <thead>
                             <tr>
+                                <th><?= $this->Form->myCheckBox(null) ?></th>
                                 <th><?= $this->Paginator->sort('nome') ?></th>
                                 <th><?= $this->Paginator->sort('login') ?></th>
                                 <th><?= $this->Paginator->sort('status') ?></th>
@@ -46,7 +48,8 @@ $this->Html->addButton($this->Html->link('<i class="fa fa-list" aria-hidden="tru
                         </thead>
                         <tbody>
                             <?php foreach ($usuarios as $usuario): ?>
-                                <tr class="dbClick" href="<?php echo \Cake\Routing\Router::url(['action'=>'edit', $usuario->id], true); ?>">
+                                <tr class="dbClick" href="<?php echo \Cake\Routing\Router::url(['action' => 'edit', $usuario->id], true); ?>">
+                                    <th><?= $this->Form->myCheckBoxOne($usuario->id) ?></th>
                                     <td><?= h($usuario->nome) ?></td>
                                     <td><?= h($usuario->login) ?></td>
                                     <td><?= $this->Number->status($usuario->status) ?></td>

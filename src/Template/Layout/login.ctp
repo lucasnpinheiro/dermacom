@@ -21,7 +21,7 @@
         <div id="container" class="cls-container">
             <div id="bg-overlay" class="bg-img" style="background-image: url(<?= Cake\Routing\Router::url('/img/Julho_1.jpg', true); ?>);"></div>
             <div class="cls-content" style="padding-top: 20vh;">
-                <?= $this->Flash->render() ?>
+                
                 <?= $this->fetch('content') ?>
             </div>
         </div>

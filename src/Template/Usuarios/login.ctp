@@ -1,5 +1,6 @@
 <div class="cls-content-sm panel">
     <div class="panel-body">
+        <?= $this->Flash->render() ?>
         <div class="mar-ver pad-btm">
             <h3 class="h4 mar-no">Area Administrativa</h3>
             <p class="text-muted">Entre com o seu usuário e senha</p>

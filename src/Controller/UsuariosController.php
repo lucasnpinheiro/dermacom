@@ -131,4 +131,16 @@ class UsuariosController extends AppController {
         return $this->redirect(['action' => 'index']);
     }
 
+    /**
+     * Delete method
+     *
+     * @param string|null $id Usuario id.
+     * @return \Cake\Network\Response|null Redirects to index.
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+     */
+    public function deleteAll() {
+        debug($this->request);
+        exit;
+    }
+
 }

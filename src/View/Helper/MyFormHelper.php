@@ -655,4 +655,17 @@ class MyFormHelper extends BootstrapFormHelper {
               </div>';
     }
 
+    public function myCheckBox($value, $name = 'selectAll', $class = 'selectAll', $js = 'onclick="cake.tableList.selectAll(this);"') {
+        return '<div><input ' . $js . ' class="' . $class . '" type="checkbox" name="' . \Cake\Utility\Inflector::variable($name) . '" value="' . $value . '" id="' . $this->_domId($name) . '"></div>';
+    }
+
+    public function myCheckBoxOne($value, $name = 'selectOne', $class = 'selectOne') {
+        return $this->myCheckBox($value, 'selectOne.' . $value, 'selectOne', '');
+    }
+
+    public function myButtonExcluir($url) {
+        $this->bHtml->script('/js/excluirTableList.js', ['block' => 'script']);
+        return $this->button($this->Html->icon('trash') . ' Excluir', ['onclick' => 'cake.tableList.enviar(this);', 'escape' => false, 'type' => 'button', 'class' => 'btn btn-danger', 'url' => \Cake\Routing\Router::url($url, true)]);
+    }
+
 }
