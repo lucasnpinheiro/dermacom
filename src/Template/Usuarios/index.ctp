@@ -49,7 +49,7 @@ $this->Html->addButton($this->Html->link('<i class="fa fa-list" aria-hidden="tru
                         <tbody>
                             <?php foreach ($usuarios as $usuario): ?>
                                 <tr class="dbClick" href="<?php echo \Cake\Routing\Router::url(['action' => 'edit', $usuario->id], true); ?>">
-                                    <th><?= $this->Form->myCheckBoxOne($usuario->id) ?></th>
+                                    <th><?= ($usuario->id != $this->request->session()->read('Auth.User.id') ? $this->Form->myCheckBoxOne($usuario->id) : null) ?></th>
                                     <td><?= h($usuario->nome) ?></td>
                                     <td><?= h($usuario->login) ?></td>
                                     <td><?= $this->Number->status($usuario->status) ?></td>

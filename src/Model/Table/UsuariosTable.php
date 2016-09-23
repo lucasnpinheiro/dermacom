@@ -26,6 +26,10 @@ class UsuariosTable extends Table {
     use \App\Model\Traits\FuncoesTraits,
         \App\Model\Traits\SearchTraits;
 
+    public $statusInativo = 0;
+    public $statusAtivo = 1;
+    public $statusExcluido = 9;
+
     /**
      * Initialize method
      *
@@ -64,17 +68,22 @@ class UsuariosTable extends Table {
                 ->allowEmpty('id', 'create');
 
         $validator
-                ->allowEmpty('nome');
+                ->notBlank('nome')
+                ->requirePresence('nome');
 
         $validator
-                ->allowEmpty('login');
+                ->requirePresence('login')
+                ->notBlank('login');
 
         $validator
-                ->allowEmpty('senha');
+                ->requirePresence('senha', 'create')
+                ->notBlank('senha', 'create')
+                ->allowEmpty('senha', 'update');
 
         $validator
+                ->requirePresence('status')
                 ->integer('status')
-                ->allowEmpty('status');
+                ->notBlank('status');
 
         return $validator;
     }

@@ -45,7 +45,12 @@ class UsuariosController extends AppController {
      * @return \Cake\Network\Response|null
      */
     public function index() {
-        $query = $this->{$this->modelClass}->find('search', $this->{$this->modelClass}->filterParams($this->request->query))->where(['Usuarios.root' => $this->Auth->user('root')]);
+        $query = $this->{$this->modelClass}->find('search', $this->{$this->modelClass}->filterParams($this->request->query))->where(['status !='=>  $this->{$this->modelClass}->statusExcluido]);
+
+        if ($this->Auth->user('root') != 1) {
+            $query->where(['Usuarios.root' => $this->Auth->user('root')]);
+        }
+
         $this->set('usuarios', $this->paginate($query));
         $this->set('_serialize', ['usuarios']);
     }
@@ -139,7 +144,20 @@ class UsuariosController extends AppController {
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
     public function deleteAll() {
-        debug($this->request);
+        $retorno = [
+            'cod' => 111,
+            'msg' => 'Erro ao excluir o regstro',
+            'ids' => [],
+        ];
+        if ($this->request->is(['patch', 'post', 'put'])) {
+            $this->Usuarios->updateAll(['status' => $this->{$this->modelClass}->statusExcluido], ['id in' => $this->request->data('ids')]);
+            $retorno = [
+                'cod' => 999,
+                'msg' => 'Registro excluido com sucesso,',
+                'ids' => $this->request->data('ids'),
+            ];
+        }
+        echo json_encode($retorno);
         exit;
     }
 

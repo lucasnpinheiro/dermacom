@@ -90,3 +90,6 @@ msgstr "Classificações"
 
 msgid "Submit"
 msgstr "Salvar"
+
+msgid "Comissao"
+msgstr "Comissão"

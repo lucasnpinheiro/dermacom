@@ -116,20 +116,23 @@ class MenusController extends AppController {
         foreach ($files as $key => $value) {
             foreach ($actions as $k => $v) {
                 $value = str_replace('Table.php', '', $value);
-                $menu = $this->Menus->newEntity();
+                $menu = $this->Menus->find()->where(['controller' => $value, 'action' => $k])->first();
+                if (count($menu) === 0) {
+                    $menu = $this->Menus->newEntity();
 
-                if ($k === 'index') {
-                    $menu->titulo = \Cake\Utility\Inflector::humanize(\Cake\Utility\Inflector::underscore($value));
-                } else {
-                    $menu->titulo = $k;
+                    if ($k === 'index') {
+                        $menu->titulo = \Cake\Utility\Inflector::humanize(\Cake\Utility\Inflector::underscore($value));
+                    } else {
+                        $menu->titulo = $k;
+                    }
+                    $menu->path = null;
+                    $menu->controller = $value;
+                    $menu->action = $k;
+                    $menu->status = 1;
+                    $menu->item_menu = $v;
+                    $menu->icon = null;
+                    $this->Menus->save($menu);
                 }
-                $menu->path = null;
-                $menu->controller = $value;
-                $menu->action = $k;
-                $menu->status = 1;
-                $menu->item_menu = $v;
-                $menu->icon = null;
-                $this->Menus->save($menu);
                 debug($menu);
             }
         }
