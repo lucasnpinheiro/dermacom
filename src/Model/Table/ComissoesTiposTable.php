@@ -1,10 +1,12 @@
 <?php
+
 namespace App\Model\Table;
 
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
+use Search\Manager;
 
 /**
  * ComissoesTipos Model
@@ -21,8 +23,14 @@ use Cake\Validation\Validator;
  *
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
  */
-class ComissoesTiposTable extends Table
-{
+class ComissoesTiposTable extends Table {
+
+    use \App\Model\Traits\FuncoesTraits,
+        \App\Model\Traits\SearchTraits;
+
+    public $statusInativo = 0;
+    public $statusAtivo = 1;
+    public $statusExcluido = 9;
 
     /**
      * Initialize method
@@ -30,12 +38,11 @@ class ComissoesTiposTable extends Table
      * @param array $config The configuration for the Table.
      * @return void
      */
-    public function initialize(array $config)
-    {
+    public function initialize(array $config) {
         parent::initialize($config);
 
         $this->table('comissoes_tipos');
-        $this->displayField('id');
+        $this->displayField('nome');
         $this->primaryKey('id');
 
         $this->addBehavior('Timestamp');
@@ -43,6 +50,16 @@ class ComissoesTiposTable extends Table
         $this->hasMany('Comissoes', [
             'foreignKey' => 'comissoes_tipo_id'
         ]);
+        $this->addBehavior('Search.Search');
+    }
+
+    public function searchConfiguration() {
+        return $this->searchConfigurationDynamic();
+    }
+
+    private function searchConfigurationDynamic() {
+        $search = $this->_searchConfigurationDynamic(new Manager($this));
+        return $search;
     }
 
     /**
@@ -51,19 +68,21 @@ class ComissoesTiposTable extends Table
      * @param \Cake\Validation\Validator $validator Validator instance.
      * @return \Cake\Validation\Validator
      */
-    public function validationDefault(Validator $validator)
-    {
+    public function validationDefault(Validator $validator) {
         $validator
-            ->integer('id')
-            ->allowEmpty('id', 'create');
+                ->integer('id')
+                ->allowEmpty('id', 'create');
 
         $validator
-            ->allowEmpty('nome');
+                ->requirePresence('nome')
+                ->notBlank('nome');
 
         $validator
-            ->integer('status')
-            ->allowEmpty('status');
+                ->requirePresence('status')
+                ->integer('status')
+                ->notBlank('status');
 
         return $validator;
     }
+
 }

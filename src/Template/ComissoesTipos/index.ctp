@@ -1,47 +1,61 @@
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-        <li><?= $this->Html->link(__('New Comissoes Tipo'), ['action' => 'add']) ?></li>
-        <li><?= $this->Html->link(__('List Comissoes'), ['controller' => 'Comissoes', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Comisso'), ['controller' => 'Comissoes', 'action' => 'add']) ?></li>
-    </ul>
-</nav>
-<div class="comissoesTipos index large-9 medium-8 columns content">
-    <h3><?= __('Comissoes Tipos') ?></h3>
-    <table cellpadding="0" cellspacing="0">
-        <thead>
-            <tr>
-                <th scope="col"><?= $this->Paginator->sort('id') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('nome') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('status') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('created') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('modified') ?></th>
-                <th scope="col" class="actions"><?= __('Actions') ?></th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php foreach ($comissoesTipos as $comissoesTipo): ?>
-            <tr>
-                <td><?= $this->Number->format($comissoesTipo->id) ?></td>
-                <td><?= h($comissoesTipo->nome) ?></td>
-                <td><?= $this->Number->format($comissoesTipo->status) ?></td>
-                <td><?= h($comissoesTipo->created) ?></td>
-                <td><?= h($comissoesTipo->modified) ?></td>
-                <td class="actions">
-                    <?= $this->Html->link(__('View'), ['action' => 'view', $comissoesTipo->id]) ?>
-                    <?= $this->Html->link(__('Edit'), ['action' => 'edit', $comissoesTipo->id]) ?>
-                    <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $comissoesTipo->id], ['confirm' => __('Are you sure you want to delete # {0}?', $comissoesTipo->id)]) ?>
-                </td>
-            </tr>
-            <?php endforeach; ?>
-        </tbody>
-    </table>
-    <div class="paginator">
-        <ul class="pagination">
-            <?= $this->Paginator->prev('< ' . __('previous')) ?>
-            <?= $this->Paginator->numbers() ?>
-            <?= $this->Paginator->next(__('next') . ' >') ?>
-        </ul>
-        <p><?= $this->Paginator->counter() ?></p>
+<?php
+$this->Html->addCrumb(__('Index'), null);
+
+$this->Html->addButton($this->Html->link('<i class="fa fa-plus-circle" aria-hidden="true"></i> ' . __('Add'), ['action' => 'add'], ['class' => 'btn btn-primary', 'escape' => false]));
+$this->Html->addButton($this->Html->link('<i class="fa fa-list" aria-hidden="true"></i> ' . __('Index'), ['action' => 'index'], ['class' => 'btn btn-success', 'escape' => false]));
+?>
+<div class="panel">
+    <div class="panel-heading">
+        <h3 class="panel-title"><?= __($sub_title) ?></h3>
+    </div>
+    <div class="panel-body">
+
+        <div class="bootstrap-table">
+            <div class="fixed-table-toolbar">
+                <?php
+                echo $this->Form->create(null, [
+                    'inline' => true,
+                    'label' => false
+                ]);
+                ?>
+                <div class="bars pull-left">
+                    <?php
+                    echo $this->Form->input('nome', ['label' => false, 'placeholder' => __('Nome')]);
+                    echo $this->Form->status('status', ['label' => false, 'placeholder' => __('Status')]);
+                    ?>
+                </div>
+                <div class="pull-right search">
+                    <?php
+                    echo $this->Form->button($this->Html->icon('search') . ' Consultar', ['escape' => false, 'type' => 'submit']);
+                    ?>
+                </div>
+                <?php
+                echo $this->Form->end();
+                ?>
+            </div>
+            <div class="fixed-table-container" style="padding-bottom: 0px;">
+                <div class="fixed-table-body">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th scope="col"><?= $this->Paginator->sort('nome') ?></th>
+                                <th scope="col"><?= $this->Paginator->sort('status') ?></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php foreach ($comissoesTipos as $comissoesTipo): ?>
+                                <tr class="dbClick" href="<?php echo \Cake\Routing\Router::url(['action' => 'edit', $comissoesTipo->id], true); ?>">
+                                    <td><?= h($comissoesTipo->nome) ?></td>
+                                    <td><?= $this->Number->status($comissoesTipo->status) ?></td>
+                                </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="panel-footer">
+        <?= $this->element('Pagination/paginator') ?>
     </div>
 </div>

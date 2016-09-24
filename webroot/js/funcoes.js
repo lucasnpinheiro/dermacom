@@ -169,6 +169,10 @@ cake.util.mascara = function () {
         $(this).maskMoney('destroy');
         $(this).maskMoney({allowZero: $(this).attr('data-allowZero'), prefix: $(this).attr('data-prefix'), allowNegative: $(this).attr('data-allowNegative'), thousands: $(this).attr('data-thousands'), decimal: $(this).attr('data-decimal'), affixesStay: $(this).attr('data-affixesStay')});
     });
+    $('input.porcentagem').each(function () {
+        $(this).maskMoney('destroy');
+        $(this).maskMoney({allowZero: $(this).attr('data-allowZero'), prefix: $(this).attr('data-prefix'), allowNegative: $(this).attr('data-allowNegative'), thousands: $(this).attr('data-thousands'), decimal: $(this).attr('data-decimal'), affixesStay: $(this).attr('data-affixesStay')});
+    });
     $('input.quantidade').each(function () {
         $(this).maskMoney('destroy');
         $(this).maskMoney({prefix: $(this).attr('data-prefix'), allowNegative: $(this).attr('data-allowNegative'), thousands: $(this).attr('data-thousands'), decimal: $(this).attr('data-decimal'), affixesStay: $(this).attr('data-affixesStay')});

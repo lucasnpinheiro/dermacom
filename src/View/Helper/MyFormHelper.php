@@ -26,6 +26,9 @@ class MyFormHelper extends BootstrapFormHelper {
         'Url',
         'bHtml' => [
             'className' => 'Bootstrap.BootstrapHtml'
+        ],
+        'Number' => [
+            'className' => 'MyNumber'
         ]
     ];
 
@@ -431,7 +434,27 @@ class MyFormHelper extends BootstrapFormHelper {
         $options = \Cake\Utility\Hash::merge($default, $options);
         $options['class'] = $this->mergeValuesTags('class', $default, $options);
         if (!empty($options['value'])) {
-            $options['value'] = $options['data-prefix'] . number_format($options['value'], $options['data-precision'], $options['data-decimal'], $options['data-thousands']);
+            $options['value'] = str_replace('R$ ', '', $this->Number->currency($options['value']));
+        }
+        return $this->input($fieldName, $options);
+    }
+
+    public function porcentagem($fieldName, array $options = []) {
+        $default = [
+            'class' => 'porcentagem',
+            'type' => 'text',
+            'data-prefix' => '',
+            'data-allowNegative' => 'true',
+            'data-thousands' => '.',
+            'data-decimal' => ',',
+            'data-precision' => '2',
+            'data-affixesStay' => 'false',
+            'append' => '%',
+        ];
+        $options = \Cake\Utility\Hash::merge($default, $options);
+        $options['class'] = $this->mergeValuesTags('class', $default, $options);
+        if (!empty($options['value'])) {
+            $options['value'] = str_replace('%', '', $this->Number->toPercentage($options['value'], $options['data-precision']));
         }
         return $this->input($fieldName, $options);
     }
@@ -442,17 +465,6 @@ class MyFormHelper extends BootstrapFormHelper {
             'append' => '<i class="fa fa-link" aria-hidden="true"></i>',
         ];
         $options = \Cake\Utility\Hash::merge($default, $options);
-        return $this->input($fieldName, $options);
-    }
-
-    public function porcentagem($fieldName, array $options = []) {
-        $default = [
-            'class' => '',
-            'type' => 'text',
-            'append' => '%',
-        ];
-        $options = \Cake\Utility\Hash::merge($default, $options);
-        $options['class'] = $this->mergeValuesTags('class', $default, $options);
         return $this->input($fieldName, $options);
     }
 

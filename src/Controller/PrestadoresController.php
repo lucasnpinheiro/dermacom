@@ -17,7 +17,7 @@ class PrestadoresController extends AppController {
      * @return \Cake\Network\Response|null
      */
     public function index() {
-        $query = $this->{$this->modelClass}->find('search', $this->{$this->modelClass}->filterParams($this->request->query))->contain(['Especialidades', 'TabelasPrecos', 'Conselhos']);
+        $query = $this->{$this->modelClass}->find('search', $this->{$this->modelClass}->filterParams($this->request->query))->where([$this->modelClass . '.status !=' => $this->{$this->modelClass}->statusExcluido])->contain(['Especialidades', 'TabelasPrecos', 'Conselhos']);
         $this->set('prestadores', $this->paginate($query));
         $this->set('_serialize', ['prestadores']);
     }

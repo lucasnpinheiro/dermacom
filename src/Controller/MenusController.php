@@ -17,7 +17,7 @@ class MenusController extends AppController {
      * @return \Cake\Network\Response|null
      */
     public function index() {
-        $query = $this->{$this->modelClass}->find('search', $this->{$this->modelClass}->filterParams($this->request->query));
+        $query = $this->{$this->modelClass}->find('search', $this->{$this->modelClass}->filterParams($this->request->query))->where([$this->modelClass . '.status !=' => $this->{$this->modelClass}->statusExcluido]);
         $this->set('menus', $this->paginate($query));
         $this->set('_serialize', ['menus']);
     }

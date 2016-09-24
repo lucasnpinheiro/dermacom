@@ -1,5 +1,4 @@
 <?php
-
 $this->Html->addCrumb(__('Index'), null);
 
 $this->Html->addButton($this->Html->link('<i class="fa fa-plus-circle" aria-hidden="true"></i> ' . __('Add'), ['action' => 'add'], ['class' => 'btn btn-primary', 'escape' => false]));
@@ -21,9 +20,8 @@ $this->Html->addButton($this->Html->link('<i class="fa fa-list" aria-hidden="tru
                 ?>
                 <div class="bars pull-left">
                     <?php
-                                        echo $this->Form->input('nome', ['label' => false, 'placeholder' => __('Nome')]);
-                                        echo $this->Form->status('status', ['label' => false, 'placeholder' => __('Status')]);
-
+                    echo $this->Form->input('nome', ['label' => false, 'placeholder' => __('Nome')]);
+                    echo $this->Form->status('status', ['label' => false, 'placeholder' => __('Status')]);
                     ?>
                 </div>
                 <div class="pull-right search">
@@ -43,17 +41,19 @@ $this->Html->addButton($this->Html->link('<i class="fa fa-list" aria-hidden="tru
                                 <th><?= $this->Paginator->sort('nome') ?></th>
                                 <th><?= $this->Paginator->sort('valor_maximo') ?></th>
                                 <th><?= $this->Paginator->sort('comissao') ?></th>
+                                <th><?= $this->Paginator->sort('comissoes_tipo_id') ?></th>
                                 <th><?= $this->Paginator->sort('status') ?></th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php foreach ($comissoes as $comisso): ?>
-                            <tr class="dbClick" href="<?php echo \Cake\Routing\Router::url(['action'=>'edit', $comisso->id], true); ?>">
-                                <td><?= h($comisso->nome) ?></td>
-                                <td><?= $this->Number->format($comisso->valor_maximo) ?></td>
-                                <td><?= $this->Number->format($comisso->comissao) ?></td>
-                                <td><?= $this->Number->status($comisso->status) ?></td>
-                            </tr>
+                                <tr class="dbClick" href="<?php echo \Cake\Routing\Router::url(['action' => 'edit', $comisso->id], true); ?>">
+                                    <td><?= h($comisso->nome) ?></td>
+                                    <td><?= $this->Number->currency($comisso->valor_maximo) ?></td>
+                                    <td><?= $this->Number->toPercentage($comisso->comissao) ?></td>
+                                    <td><?= h($comisso->comissoes_tipo->nome) ?></td>
+                                    <td><?= $this->Number->status($comisso->status) ?></td>
+                                </tr>
                             <?php endforeach; ?>
                         </tbody>
                     </table>

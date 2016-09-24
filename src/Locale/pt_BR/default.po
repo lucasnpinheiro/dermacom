@@ -93,3 +93,6 @@ msgstr "Salvar"
 
 msgid "Comissao"
 msgstr "Comissão"
+
+msgid "Comissoes Tipo"
+msgstr "Comissões Tipo"

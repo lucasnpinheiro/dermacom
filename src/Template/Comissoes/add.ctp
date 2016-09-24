@@ -13,9 +13,10 @@ $this->Html->addButton($this->Html->link('<i class="fa fa-list" aria-hidden="tru
     <div class="panel-body">
         <?php
         echo $this->Form->input('nome', ['div' => ['class' => 'col-xs-12 col-md-12']]);
-        echo $this->Form->input('valor_maximo', ['div' => ['class' => 'col-xs-12 col-md-12']]);
-        echo $this->Form->input('comissao', ['div' => ['class' => 'col-xs-12 col-md-12']]);
-        echo $this->Form->status('status', ['div' => ['class' => 'col-xs-12 col-md-12']]);
+        echo $this->Form->moeda('valor_maximo', ['div' => ['class' => 'col-xs-12 col-md-3']]);
+        echo $this->Form->porcentagem('comissao', ['div' => ['class' => 'col-xs-12 col-md-3']]);
+        echo $this->Form->status('status', ['div' => ['class' => 'col-xs-12 col-md-3']]);
+        echo $this->Form->input('comissoes_tipo_id', ['empty'=>'Selecione um tipo de comissão','options' => $comissoesTipos, 'div' => ['class' => 'col-xs-12 col-md-3']]);
         ?>
     </div>
     <div class="panel-footer text-right">

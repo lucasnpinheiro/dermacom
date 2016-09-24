@@ -28,7 +28,9 @@ class PacientesEmergenciasTable extends Table {
 
     use \App\Model\Traits\FuncoesTraits,
         \App\Model\Traits\SearchTraits;
-
+public $statusInativo = 0;
+    public $statusAtivo = 1;
+    public $statusExcluido = 9;
     /**
      * Initialize method
      *

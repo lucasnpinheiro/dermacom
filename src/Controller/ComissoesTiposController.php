@@ -18,9 +18,9 @@ class ComissoesTiposController extends AppController
      */
     public function index()
     {
-        $comissoesTipos = $this->paginate($this->ComissoesTipos);
+       $query = $this->{$this->modelClass}->find('search', $this->{$this->modelClass}->filterParams($this->request->query))->where([$this->modelClass . '.status !=' => $this->{$this->modelClass}->statusExcluido]);
 
-        $this->set(compact('comissoesTipos'));
+        $this->set('comissoesTipos', $this->paginate($query));
         $this->set('_serialize', ['comissoesTipos']);
     }
 

@@ -26,6 +26,10 @@ class ComissoesTable extends Table {
     use \App\Model\Traits\FuncoesTraits,
         \App\Model\Traits\SearchTraits;
 
+    public $statusInativo = 0;
+    public $statusAtivo = 1;
+    public $statusExcluido = 9;
+
     /**
      * Initialize method
      *
@@ -38,6 +42,14 @@ class ComissoesTable extends Table {
         $this->table('comissoes');
         $this->displayField('nome');
         $this->primaryKey('id');
+
+        $this->belongsTo('ComissoesTipos', [
+            'foreignKey' => 'comissoes_tipo_id'
+        ]);
+        
+        $this->hasMany('ComissoesCorrecoes', [
+            'foreignKey' => 'comissao_id'
+        ]);
 
         $this->addBehavior('Timestamp');
         $this->addBehavior('Search.Search');
@@ -64,19 +76,28 @@ class ComissoesTable extends Table {
                 ->allowEmpty('id', 'create');
 
         $validator
-                ->allowEmpty('nome');
+                ->requirePresence('nome')
+                ->notBlank('nome');
 
         $validator
-                ->numeric('valor_maximo')
-                ->allowEmpty('valor_maximo');
+                ->requirePresence('valor_maximo')
+                ->decimal('valor_maximo')
+                ->notBlank('valor_maximo');
 
         $validator
-                ->numeric('comissao')
-                ->allowEmpty('comissao');
+                ->requirePresence('comissao')
+                ->decimal('comissao')
+                ->notBlank('comissao');
 
         $validator
+                ->requirePresence('status')
                 ->integer('status')
-                ->allowEmpty('status');
+                ->notBlank('status');
+
+        $validator
+                ->requirePresence('comissoes_tipo_id')
+                ->integer('comissoes_tipo_id')
+                ->notBlank('comissoes_tipo_id');
 
         return $validator;
     }

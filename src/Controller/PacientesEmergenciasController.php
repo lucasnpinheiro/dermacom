@@ -17,7 +17,7 @@ class PacientesEmergenciasController extends AppController {
      * @return \Cake\Network\Response|null
      */
     public function index() {
-        $query = $this->{$this->modelClass}->find('search', $this->{$this->modelClass}->filterParams($this->request->query))->contain(['Pacientes', 'Parentescos']);
+        $query = $this->{$this->modelClass}->find('search', $this->{$this->modelClass}->filterParams($this->request->query))->where([$this->modelClass . '.status !=' => $this->{$this->modelClass}->statusExcluido])->contain(['Pacientes', 'Parentescos']);
         $this->set('pacientesEmergencias', $this->paginate($query));
         $this->set('_serialize', ['pacientesEmergencias']);
     }
