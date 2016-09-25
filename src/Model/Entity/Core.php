@@ -25,6 +25,6 @@ class Core extends Entity
      */
     protected $_accessible = [
         '*' => true,
-        'id' => false
+       
     ];
 }

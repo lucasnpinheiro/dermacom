@@ -223,6 +223,22 @@ cake.util.slug = function (str) {
 
     return str;
 }
+cake.util.mes = function (id) {
+    var m = [];
+    m[1] = 'Janeiro';
+    m[2] = 'Fevereiro';
+    m[3] = 'Março';
+    m[4] = 'Abrirl';
+    m[5] = 'Maio';
+    m[6] = 'Junho';
+    m[7] = 'Julho';
+    m[8] = 'Agosto';
+    m[9] = 'Setembro';
+    m[10] = 'Outubro';
+    m[11] = 'Novembro';
+    m[12] = 'Dezembro';
+    return m[id];
+}
 cake.util.convertFloat = function (valor) {
     if (!valor) {
         valor = 0;

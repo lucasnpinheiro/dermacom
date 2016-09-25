@@ -45,18 +45,12 @@ class ComissoesCorrecoesController extends AppController {
      */
     public function add() {
         $comissoesCorreco = $this->ComissoesCorrecoes->newEntity();
-        if ($this->request->is('post')) {
-            $comissoesCorreco = $this->ComissoesCorrecoes->patchEntity($comissoesCorreco, $this->request->data);
-            if ($this->ComissoesCorrecoes->save($comissoesCorreco)) {
-                $this->Flash->success(__('Registro salvo com sucesso.'));
-
-                return $this->redirect(['action' => 'index']);
-            } else {
-                $this->Flash->error(__('Não foi possivel salvar o registro.'));
-            }
+        if (empty($this->request->data('id'))) {
+            unset($this->request->data['id']);
         }
-        $comissaos = $this->ComissoesCorrecoes->Comissoes->find('list', ['limit' => 200]);
-        $this->set(compact('comissoesCorreco', 'comissaos'));
+        $comissoesCorreco = $this->ComissoesCorrecoes->patchEntity($comissoesCorreco, $this->request->data);
+        $this->ComissoesCorrecoes->save($comissoesCorreco);
+        $this->set(compact('comissoesCorreco'));
         $this->set('_serialize', ['comissoesCorreco']);
     }
 

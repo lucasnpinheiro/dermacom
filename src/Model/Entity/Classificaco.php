@@ -28,6 +28,6 @@ class Classificaco extends Entity
      */
     protected $_accessible = [
         '*' => true,
-        'id' => false
+       
     ];
 }

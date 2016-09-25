@@ -27,6 +27,6 @@ class Cargo extends Entity
      */
     protected $_accessible = [
         '*' => true,
-        'id' => false
+       
     ];
 }

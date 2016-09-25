@@ -25,11 +25,13 @@ $this->Html->addButton($this->Form->postLink('<i class="fa fa-trash-o"></i> ' . 
     </div>
     <?= $this->Form->end() ?>
 </div>
+
+
 <div class="panel panel-bordered panel-info">
     <div class="panel-heading">
         <div class="panel-control">
             <?php
-            echo $this->Form->button($this->Html->icon('plus-circle') . ' Adicionar Correções', ['escape' => false, 'type' => 'button']);
+            echo $this->Form->button($this->Html->icon('plus-circle') . ' Adicionar Correções', ['onclick' => 'cake.comissoes.openModalNew()', 'class' => 'btn btn-custom btn-modal', 'escape' => false, 'type' => 'button']);
             echo $this->Form->myButtonExcluir(['action' => 'deleteAll']);
             ?>
         </div>
@@ -49,12 +51,12 @@ $this->Html->addButton($this->Form->postLink('<i class="fa fa-trash-o"></i> ' . 
                                 <th><?= $this->Paginator->sort('percentual') ?></th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody id="lista-comissoes-correcoes">
                             <?php foreach ($comisso->comissoes_correcoes as $comissoesCorreco): ?>
-                                <tr class="dbClick" href="<?php echo \Cake\Routing\Router::url(['action' => 'edit', $comissoesCorreco->id], true); ?>">
-                                    <th><?= $this->Form->myCheckBoxOne($comissoesCorreco->id) ?></th>
+                                <tr ondblclick="cake.comissoes.openModal('<?= $comissoesCorreco->id; ?>')">
+                                    <td><?= $this->Form->myCheckBoxOne($comissoesCorreco->id) ?></td>
                                     <td><?= h($comissoesCorreco->ano) ?></td>
-                                    <td><?= h($comissoesCorreco->mes) ?></td>
+                                    <td><?= $this->Number->mes($comissoesCorreco->mes) ?></td>
                                     <td><?= $this->Number->toPercentage($comissoesCorreco->percentual) ?></td>
                                 </tr>
                             <?php endforeach; ?>
@@ -65,3 +67,25 @@ $this->Html->addButton($this->Form->postLink('<i class="fa fa-trash-o"></i> ' . 
         </div>
     </div>
 </div>
+<button type="button" class="btn btn-custom btn-modal" data-toggle="modal" data-target="#MyModal2">Show Modal</button>
+<?php
+$content = $this->Form->input('id', ['type' => 'hidden', 'value' => '']);
+$content .= $this->Form->input('comissao_id', ['type' => 'hidden', 'value' => $comisso->id]);
+$content .= $this->Form->numero('ano', ['required' => true, 'div' => ['class' => 'col-xs-12 col-md-6']]);
+$content .= $this->Form->mes('mes', ['required' => true, 'div' => ['class' => 'col-xs-12 col-md-6']]);
+$content .= $this->Form->porcentagem('percentual', ['required' => true, 'div' => ['class' => 'col-xs-12 col-md-12']]);
+
+
+echo $this->Modal->create(['id' => 'MyModal2']);
+echo $this->Form->create($comissoesCorreco);
+echo $this->Modal->header('Correções', ['close' => false]);
+echo $this->Modal->body($content, ['class' => 'my-body-class']);
+echo $this->Modal->footer([
+    $this->Form->button(__('Submit'), ['class' => "btn btn-success", 'type' => "button", 'onclick' => 'cake.comissoes.save()']),
+    $this->Form->button(__('Close'), ['data-dismiss' => 'modal', 'type' => "button"])
+]);
+echo $this->Form->end();
+echo $this->Modal->end();
+
+$this->Html->script('/js/comissoes.js', ['block' => 'script']);
+?>

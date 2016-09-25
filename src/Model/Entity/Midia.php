@@ -29,6 +29,6 @@ class Midia extends Entity
      */
     protected $_accessible = [
         '*' => true,
-        'id' => false
+       
     ];
 }

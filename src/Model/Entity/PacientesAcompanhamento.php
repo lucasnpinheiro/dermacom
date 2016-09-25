@@ -31,6 +31,6 @@ class PacientesAcompanhamento extends Entity
      */
     protected $_accessible = [
         '*' => true,
-        'id' => false
+       
     ];
 }

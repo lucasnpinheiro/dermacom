@@ -27,6 +27,6 @@ class Leso extends Entity
      */
     protected $_accessible = [
         '*' => true,
-        'id' => false
+       
     ];
 }

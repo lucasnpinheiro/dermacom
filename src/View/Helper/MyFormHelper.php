@@ -88,6 +88,28 @@ class MyFormHelper extends BootstrapFormHelper {
         }
     }
 
+    public function mes($fieldName, array $options = []) {
+        $default = [
+            'empty' => 'Selecione um mês',
+            'options' => [
+                1 => 'Janeiro',
+                2 => 'Fevereiro',
+                3 => 'Março',
+                4 => 'Abril',
+                5 => 'Maio',
+                6 => 'Junho',
+                7 => 'Julho',
+                8 => 'Agosto',
+                9 => 'Setembro',
+                10 => 'Outubro',
+                11 => 'Novembro',
+                12 => 'Dezembro',
+            ]
+        ];
+        $options = \Cake\Utility\Hash::merge($default, $options);
+        return $this->input($fieldName, $options);
+    }
+
     public function status($fieldName, array $options = []) {
         $default = [
             'empty' => 'Selecione uma situação',

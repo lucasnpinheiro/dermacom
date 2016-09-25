@@ -72,15 +72,23 @@ public $statusInativo = 0;
                 ->allowEmpty('id', 'create');
 
         $validator
+                ->requirePresence('ano')
                 ->integer('ano')
-                ->allowEmpty('ano');
+                ->notBlank('ano');
 
         $validator
-                ->allowEmpty('mes');
+                ->requirePresence('comissao_id')
+                ->integer('comissao_id')
+                ->notBlank('comissao_id');
 
         $validator
-                ->numeric('percentual')
-                ->allowEmpty('percentual');
+                ->requirePresence('mes')
+                ->notBlank('mes');
+
+        $validator
+                ->requirePresence('percentual')
+                ->decimal('percentual')
+                ->notBlank('percentual');
 
         return $validator;
     }
@@ -93,8 +101,6 @@ public $statusInativo = 0;
      * @return \Cake\ORM\RulesChecker
      */
     public function buildRules(RulesChecker $rules) {
-        $rules->add($rules->existsIn(['comissao_id'], 'Comissoes'));
-
         return $rules;
     }
 

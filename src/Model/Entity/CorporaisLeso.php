@@ -29,6 +29,6 @@ class CorporaisLeso extends Entity
      */
     protected $_accessible = [
         '*' => true,
-        'id' => false
+       
     ];
 }

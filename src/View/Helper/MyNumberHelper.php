@@ -29,6 +29,60 @@ class MyNumberHelper extends NumberHelper {
       ]
       ]; */
 
+    public function mes($fieldName, array $options = [], $labelExtra = null) {
+        $d = [
+            1 => [
+                'text' => 'Janeiro',
+                'class' => 'default',
+            ],
+            2 => [
+                'text' => 'Fevereiro',
+                'class' => 'default',
+            ],
+            3 => [
+                'text' => 'Março',
+                'class' => 'default',
+            ],
+            4 => [
+                'text' => 'Abril',
+                'class' => 'default',
+            ],
+            5 => [
+                'text' => 'Maio',
+                'class' => 'default',
+            ],
+            6 => [
+                'text' => 'Junho',
+                'class' => 'default',
+            ],
+            7 => [
+                'text' => 'Julho',
+                'class' => 'default',
+            ],
+            8 => [
+                'text' => 'Agosto',
+                'class' => 'default',
+            ],
+            9 => [
+                'text' => 'Setembro',
+                'class' => 'default',
+            ],
+            10 => [
+                'text' => 'Outubro',
+                'class' => 'default',
+            ],
+            11 => [
+                'text' => 'Novembro',
+                'class' => 'default',
+            ],
+            12 => [
+                'text' => 'Dezembro',
+                'class' => 'default',
+            ]
+        ];
+        return $this->bHtml->label($labelExtra . $d[$fieldName]['text'], $d[$fieldName]['class']);
+    }
+
     public function status($fieldName, array $options = [], $labelExtra = null) {
         $d = [
             0 => [

@@ -68,6 +68,8 @@ class ComissoesController extends AppController {
      * @throws \Cake\Network\Exception\NotFoundException When record not found.
      */
     public function edit($id = null) {
+        $this->loadModel('ComissoesCorrecoes');
+        $comissoesCorreco = $this->ComissoesCorrecoes->newEntity();
         $comisso = $this->Comissoes->get($id, [
             'contain' => ['ComissoesTipos', 'ComissoesCorrecoes' => function($q) {
                     return $q->order(['ComissoesCorrecoes.ano' => 'DESC', 'ComissoesCorrecoes.mes' => 'DESC']);
@@ -84,7 +86,7 @@ class ComissoesController extends AppController {
                     }
                 }
                 $comissoesTipos = $this->Comissoes->ComissoesTipos->find('list');
-                $this->set(compact('comisso', 'comissoesTipos'));
+                $this->set(compact('comissoesCorreco', 'comisso', 'comissoesTipos'));
                 $this->set('_serialize', ['comisso']);
             }
 

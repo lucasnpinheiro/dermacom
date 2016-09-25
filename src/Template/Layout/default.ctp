@@ -16,6 +16,12 @@
         echo $this->Html->css('/css/admin.css');
         ?>
         <?= $this->fetch('css') ?>
+        <script>
+            var router = {
+                url: "<?php echo \Cake\Routing\Router::url('/', true); ?>",
+                params: <?php echo json_encode($this->request->params); ?>
+            };
+        </script>
     </head>
 
     <!--TIPS-->
