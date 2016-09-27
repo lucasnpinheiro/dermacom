@@ -17,7 +17,7 @@ class ContatosTiposController extends AppController {
      * @return \Cake\Network\Response|null
      */
     public function index() {
-        $query = $this->{$this->modelClass}->find('search', $this->{$this->modelClass}->filterParams($this->request->query));
+        $query = $this->{$this->modelClass}->find('search', $this->{$this->modelClass}->filterParams($this->request->query))->order(['nome' => 'ASC']);
         $this->set('contatosTipos', $this->paginate($query));
         $this->set('_serialize', ['contatosTipos']);
     }

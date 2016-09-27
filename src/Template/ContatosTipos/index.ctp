@@ -21,7 +21,6 @@ $this->Html->addButton($this->Html->link('<i class="fa fa-list" aria-hidden="tru
                 <div class="bars pull-left">
                     <?php
                     echo $this->Form->input('nome', ['nome' => false, 'placeholder' => __('Nome')]);
-                    echo $this->Form->status('status', ['label' => false, 'placeholder' => __('Status')]);
                     ?>
                 </div>
                 <div class="pull-right search">

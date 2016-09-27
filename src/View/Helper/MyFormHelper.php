@@ -697,10 +697,10 @@ class MyFormHelper extends BootstrapFormHelper {
         return $this->myCheckBox($value, 'selectOne.' . $value, 'selectOne', '');
     }
 
-    public function myButtonExcluir($url) {
+    public function myButtonExcluir($url, $callback = null) {
         $this->bHtml->script('/js/bootbox.min.js', ['block' => 'script']);
         $this->bHtml->script('/js/excluirTableList.js', ['block' => 'script']);
-        return $this->button($this->Html->icon('trash') . ' Excluir', ['onclick' => 'cake.tableList.enviar(this);', 'escape' => false, 'type' => 'button', 'class' => 'btn btn-danger', 'url' => \Cake\Routing\Router::url($url, true)]);
+        return $this->button($this->Html->icon('trash') . ' Excluir', ['onclick' => 'cake.tableList.enviar(this' . (!empty($callback) ? ', \'' . $callback . '\'' : '') . ');', 'escape' => false, 'type' => 'button', 'class' => 'btn btn-danger', 'url' => \Cake\Routing\Router::url($url, true)]);
     }
 
 }

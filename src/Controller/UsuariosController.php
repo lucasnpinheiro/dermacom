@@ -137,7 +137,7 @@ class UsuariosController extends AppController {
     }
 
     /**
-     * Delete method
+     * DeleteAll method
      *
      * @param string|null $id Usuario id.
      * @return \Cake\Network\Response|null Redirects to index.
@@ -150,7 +150,7 @@ class UsuariosController extends AppController {
             'ids' => [],
         ];
         if ($this->request->is(['patch', 'post', 'put'])) {
-            $this->Usuarios->updateAll(['status' => $this->{$this->modelClass}->statusExcluido], ['id in' => $this->request->data('ids')]);
+            $this->{$this->modelClass}->updateAll(['status' => $this->{$this->modelClass}->statusExcluido], ['id in' => $this->request->data('ids')]);
             $retorno = [
                 'cod' => 999,
                 'msg' => 'Registro excluido com sucesso,',

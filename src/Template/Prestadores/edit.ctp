@@ -17,7 +17,12 @@ $this->Html->addButton($this->Form->postLink('<i class="fa fa-trash-o"></i> ' . 
         echo $this->Form->input('razao_social', ['div' => ['class' => 'col-xs-12 col-md-12']]);
         echo $this->Form->status('status', ['div' => ['class' => 'col-xs-12 col-md-4']]);
         echo $this->Form->input('especialidade_id', ['options' => $especialidades, 'empty' => true, 'div' => ['class' => 'col-xs-12 col-md-4']]);
-        echo $this->Form->input('cep', ['div' => ['class' => 'col-xs-12 col-md-4']]);
+         echo $this->Form->cep('cep', ['data-campos' => [
+                '#endereco' => 'logradouro',
+                '#bairro' => 'bairro',
+                '#cidade' => 'cidade',
+                '#estado' => 'uf'
+            ], 'div' => ['class' => 'col-xs-12 col-md-4']]);
         echo $this->Form->input('endereco', ['div' => ['class' => 'col-xs-12 col-md-10']]);
         echo $this->Form->input('numero', ['div' => ['class' => 'col-xs-12 col-md-2']]);
         echo $this->Form->input('complememnto', ['div' => ['class' => 'col-xs-12 col-md-3']]);

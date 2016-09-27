@@ -32,7 +32,7 @@ $this->Html->addButton($this->Form->postLink('<i class="fa fa-trash-o"></i> ' . 
         <div class="panel-control">
             <?php
             echo $this->Form->button($this->Html->icon('plus-circle') . ' Adicionar Correções', ['onclick' => 'cake.comissoes.openModalNew()', 'class' => 'btn btn-custom btn-modal', 'escape' => false, 'type' => 'button']);
-            echo $this->Form->myButtonExcluir(['action' => 'deleteAll']);
+            echo $this->Form->myButtonExcluir(['controller' => 'ComissoesCorrecoes', 'action' => 'deleteAll'], 'cake.comissoes.list('.$comisso->id.')');
             ?>
         </div>
         <h3 class="panel-title">Correções</h3>
@@ -67,7 +67,6 @@ $this->Html->addButton($this->Form->postLink('<i class="fa fa-trash-o"></i> ' . 
         </div>
     </div>
 </div>
-<button type="button" class="btn btn-custom btn-modal" data-toggle="modal" data-target="#MyModal2">Show Modal</button>
 <?php
 $content = $this->Form->input('id', ['type' => 'hidden', 'value' => '']);
 $content .= $this->Form->input('comissao_id', ['type' => 'hidden', 'value' => $comisso->id]);

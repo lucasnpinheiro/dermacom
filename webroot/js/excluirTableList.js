@@ -6,7 +6,7 @@ cake.tableList = {
             $('.selectOne').removeAttr('checked');
         }
     },
-    enviar: function (obj) {
+    enviar: function (obj, callback) {
         var iconLoad = '<i class="fa fa-spinner fa-pulse fa-fw"></i> Excluindo';
         var iconBtn = '<i class="fa fa-trash"></i> Excluir';
         var href = $(obj).attr('url');
@@ -42,6 +42,12 @@ cake.tableList = {
                                                 q++;
                                                 if (t === q) {
                                                     $(obj).html(iconBtn);
+                                                    console.log(!!callback);
+                                                    console.log(callback);
+                                                    if (!!callback) {
+                                                        var f = new Function(callback);
+                                                        f.call(this);
+                                                    }
                                                 }
                                             }
                                         });

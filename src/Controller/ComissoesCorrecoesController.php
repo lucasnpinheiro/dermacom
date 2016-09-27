@@ -17,7 +17,7 @@ class ComissoesCorrecoesController extends AppController {
      * @return \Cake\Network\Response|null
      */
     public function index() {
-        $query = $this->{$this->modelClass}->find('search', $this->{$this->modelClass}->filterParams($this->request->query))->contain(['Comissoes']);
+        $query = $this->{$this->modelClass}->find('search', $this->{$this->modelClass}->filterParams($this->request->query))->order([$this->modelClass . '.ano' => 'DESC', $this->modelClass . '.mes' => 'DESC'])->contain(['Comissoes']);
         $this->set('comissoesCorrecoes', $this->paginate($query));
         $this->set('_serialize', ['comissoesCorrecoes']);
     }
@@ -44,7 +44,10 @@ class ComissoesCorrecoesController extends AppController {
      * @return \Cake\Network\Response|void Redirects on successful add, renders view otherwise.
      */
     public function add() {
-        $comissoesCorreco = $this->ComissoesCorrecoes->newEntity();
+        $comissoesCorreco = $this->ComissoesCorrecoes->find()->where(['ano' => $this->request->data('ano'), 'mes' => $this->request->data('mes'), 'comissao_id' => $this->request->data('comissao_id')])->first();
+        if (count($comissoesCorreco) === 0) {
+            $comissoesCorreco = $this->ComissoesCorrecoes->newEntity();
+        }
         if (empty($this->request->data('id'))) {
             unset($this->request->data['id']);
         }
@@ -97,6 +100,31 @@ class ComissoesCorrecoesController extends AppController {
         }
 
         return $this->redirect(['action' => 'index']);
+    }
+    
+    /**
+     * DeleteAll method
+     *
+     * @param string|null $id Usuario id.
+     * @return \Cake\Network\Response|null Redirects to index.
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+     */
+    public function deleteAll() {
+        $retorno = [
+            'cod' => 111,
+            'msg' => 'Erro ao excluir o regstro',
+            'ids' => [],
+        ];
+        if ($this->request->is(['patch', 'post', 'put'])) {
+            $this->{$this->modelClass}->deleteAll(['id in' => $this->request->data('ids')]);
+            $retorno = [
+                'cod' => 999,
+                'msg' => 'Registro excluido com sucesso,',
+                'ids' => $this->request->data('ids'),
+            ];
+        }
+        echo json_encode($retorno);
+        exit;
     }
 
 }

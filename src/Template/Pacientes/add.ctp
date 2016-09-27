@@ -14,7 +14,12 @@ $this->Html->addButton($this->Html->link('<i class="fa fa-list" aria-hidden="tru
         <?php
         echo $this->Form->input('nome', ['div' => ['class' => 'col-xs-12 col-md-12']]);
         echo $this->Form->status('status', ['div' => ['class' => 'col-xs-12 col-md-6']]);
-        echo $this->Form->input('cep', ['div' => ['class' => 'col-xs-12 col-md-6']]);
+        echo $this->Form->cep('cep', ['data-campos' => [
+                '#endereco' => 'logradouro',
+                '#bairro' => 'bairro',
+                '#cidade' => 'cidade',
+                '#estado' => 'uf'
+            ], 'div' => ['class' => 'col-xs-12 col-md-6']]);
         echo $this->Form->input('endereco', ['div' => ['class' => 'col-xs-12 col-md-10']]);
         echo $this->Form->input('numero', ['div' => ['class' => 'col-xs-12 col-md-2']]);
         echo $this->Form->input('complemento', ['div' => ['class' => 'col-xs-12 col-md-3']]);

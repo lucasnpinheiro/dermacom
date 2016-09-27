@@ -20,12 +20,16 @@ $this->Html->addButton($this->Html->link('<i class="fa fa-list" aria-hidden="tru
                 ?>
                 <div class="bars pull-left">
                     <?php
+                    echo $this->Form->input('nome', ['label' => false, 'placeholder' => __('Nome')]);
+                    echo $this->Form->input('razao_social', ['label' => false, 'placeholder' => __('Razão Social')]);
+                    echo $this->Form->input('cidade', ['label' => false, 'placeholder' => __('Cidade')]);
                     echo $this->Form->status('status', ['label' => false, 'placeholder' => __('Status')]);
                     ?>
                 </div>
                 <div class="pull-right search">
                     <?php
                     echo $this->Form->button($this->Html->icon('search') . ' Consultar', ['escape' => false, 'type' => 'submit']);
+                    echo $this->Form->myButtonExcluir(['action' => 'deleteAll']);
                     ?>
                 </div>
                 <?php
@@ -37,46 +41,29 @@ $this->Html->addButton($this->Html->link('<i class="fa fa-list" aria-hidden="tru
                     <table class="table table-hover">
                         <thead>
                             <tr>
+                                <th><?= $this->Form->myCheckBox(null) ?></th>
                                 <th><?= $this->Paginator->sort('nome') ?></th>
                                 <th><?= $this->Paginator->sort('status') ?></th>
                                 <th><?= $this->Paginator->sort('razao_social') ?></th>
-                                <th><?= $this->Paginator->sort('cep') ?></th>
-                                <th><?= $this->Paginator->sort('endereco') ?></th>
-                                <th><?= $this->Paginator->sort('numero') ?></th>
-                                <th><?= $this->Paginator->sort('complemento') ?></th>
-                                <th><?= $this->Paginator->sort('bairro') ?></th>
                                 <th><?= $this->Paginator->sort('cidade') ?></th>
                                 <th><?= $this->Paginator->sort('estado') ?></th>
                                 <th><?= $this->Paginator->sort('cnpj') ?></th>
                                 <th><?= $this->Paginator->sort('inscricao') ?></th>
                                 <th><?= $this->Paginator->sort('centro_custo') ?></th>
-                                <th><?= $this->Paginator->sort('created') ?></th>
-                                <th><?= $this->Paginator->sort('modified') ?></th>
-                                <th class="actions text-right"><?= __('Actions') ?></th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php foreach ($convenios as $convenio): ?>
-                                <tr>
+                                <tr class="dbClick" href="<?php echo \Cake\Routing\Router::url(['action' => 'edit', $convenio->id], true); ?>">
+                                    <td><?= $this->Form->myCheckBoxOne($convenio->id) ?></td>
                                     <td><?= h($convenio->nome) ?></td>
                                     <td><?= $this->Number->status($convenio->status) ?></td>
                                     <td><?= h($convenio->razao_social) ?></td>
-                                    <td><?= h($convenio->cep) ?></td>
-                                    <td><?= h($convenio->endereco) ?></td>
-                                    <td><?= h($convenio->numero) ?></td>
-                                    <td><?= h($convenio->complemento) ?></td>
-                                    <td><?= h($convenio->bairro) ?></td>
                                     <td><?= h($convenio->cidade) ?></td>
                                     <td><?= h($convenio->estado) ?></td>
                                     <td><?= h($convenio->cnpj) ?></td>
                                     <td><?= h($convenio->inscricao) ?></td>
                                     <td><?= h($convenio->centro_custo) ?></td>
-                                    <td><?= h($convenio->created) ?></td>
-                                    <td><?= h($convenio->modified) ?></td>
-                                    <td class="actions text-right">
-                                        <?= $this->Html->link(null, ['action' => 'edit', $convenio->id], ['title' => __('Edit'), 'class' => 'btn btn-primary btn-sm btn-rounded fa fa-pencil']) ?>
-                                        <?= $this->Form->postLink(null, ['action' => 'delete', $convenio->id], ['title' => __('Delete'), 'class' => 'btn btn-danger btn-sm btn-rounded fa fa-eraser', 'confirm' => __('Are you sure you want to delete # {0}?', $convenio->id)]) ?>
-                                    </td>
                                 </tr>
                             <?php endforeach; ?>
                         </tbody>

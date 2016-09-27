@@ -108,12 +108,18 @@ cake.util.rand = function (max, min) {
 }
 cake.util.cep = function (obj) {
     $.ajax({
-        url: router.url + "util/cep/" + $(obj).val() + '.json',
+        method: "GET",
+        dataType: 'JSON',
+        url: router.url + "utilits/cep/" + $(obj).val(),
         success: function (result) {
-            if (result.retorno.status == 'OK') {
+            if (result.retorno.result.status === 'OK') {
                 var campos = JSON.parse($(obj).attr('data-campos'));
+                console.log(campos);
                 $.each(campos, function (a, b) {
-                    $(a).val(result.retorno.Cep[b]);
+                    console.log(a);
+                    console.log(b);
+                    console.log(result.retorno.result.Cep[b]);
+                    $(a).val(result.retorno.result.Cep[b]);
                 });
                 $($(obj).attr('data-focus')).focus();
                 if ($(obj).attr('data-load-function') != '') {
