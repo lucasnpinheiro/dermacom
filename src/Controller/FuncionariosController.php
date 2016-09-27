@@ -107,4 +107,29 @@ class FuncionariosController extends AppController {
         return $this->redirect(['action' => 'index']);
     }
 
+    /**
+     * DeleteAll method
+     *
+     * @param string|null $id Usuario id.
+     * @return \Cake\Network\Response|null Redirects to index.
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+     */
+    public function deleteAll() {
+        $retorno = [
+            'cod' => 111,
+            'msg' => 'Erro ao excluir o regstro',
+            'ids' => [],
+        ];
+        if ($this->request->is(['patch', 'post', 'put'])) {
+            $this->{$this->modelClass}->updateAll(['status' => $this->{$this->modelClass}->statusExcluido], ['id in' => $this->request->data('ids')]);
+            $retorno = [
+                'cod' => 999,
+                'msg' => 'Registro excluido com sucesso,',
+                'ids' => $this->request->data('ids'),
+            ];
+        }
+        echo json_encode($retorno);
+        exit;
+    }
+
 }

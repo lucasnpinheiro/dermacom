@@ -111,20 +111,21 @@ cake.util.cep = function (obj) {
         method: "GET",
         dataType: 'JSON',
         url: router.url + "utilits/cep/" + $(obj).val(),
+        beforeSend: function(){
+            $(obj).closest('div').find('.fa-location-arrow').removeClass('fa-location-arrow').addClass('fa-spinner fa-spin');
+        },
         success: function (result) {
+            //fa fa-location-arrow
             if (result.retorno.result.status === 'OK') {
                 var campos = JSON.parse($(obj).attr('data-campos'));
-                console.log(campos);
                 $.each(campos, function (a, b) {
-                    console.log(a);
-                    console.log(b);
-                    console.log(result.retorno.result.Cep[b]);
                     $(a).val(result.retorno.result.Cep[b]);
                 });
                 $($(obj).attr('data-focus')).focus();
                 if ($(obj).attr('data-load-function') != '') {
                     cake.util.exec(obj, 'data-load-function');
                 }
+                $(obj).closest('div').find('.fa-spinner').removeClass('fa-spinner fa-spin').addClass('fa-location-arrow');
             }
         }
     });

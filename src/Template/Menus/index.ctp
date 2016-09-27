@@ -21,7 +21,6 @@ $this->Html->addButton($this->Html->link('<i class="fa fa-list" aria-hidden="tru
                     <?php
                     echo $this->Form->input('titulo', ['label' => false, 'placeholder' => __('Titulo')]);
                     echo $this->Form->status('status', ['label' => false, 'placeholder' => __('Status')]);
-                    echo $this->Form->simNao('item_menu', ['label' => false, 'placeholder' => __('Item de Menu')]);
                     ?>
                 </div>
                 <div class="pull-right search">
@@ -40,7 +39,6 @@ $this->Html->addButton($this->Html->link('<i class="fa fa-list" aria-hidden="tru
                             <tr>
                                 <th><?= $this->Paginator->sort('titulo') ?></th>
                                 <th><?= $this->Paginator->sort('controller') ?></th>
-                                <th><?= $this->Paginator->sort('action') ?></th>
                                 <th><?= $this->Paginator->sort('status') ?></th>
                                 <th><?= $this->Paginator->sort('item_menu') ?></th>
                             </tr>
@@ -50,7 +48,6 @@ $this->Html->addButton($this->Html->link('<i class="fa fa-list" aria-hidden="tru
                                 <tr class="dbClick" href="<?php echo \Cake\Routing\Router::url(['action'=>'edit', $menu->id], true); ?>">
                                     <td><?= h($menu->titulo) ?></td>
                                     <td><?= h($menu->controller) ?></td>
-                                    <td><?= h($menu->action) ?></td>
                                     <td><?= $this->Number->status($menu->status) ?></td>
                                     <td><?= $this->Number->simNao($menu->item_menu) ?></td>
                                     </td>

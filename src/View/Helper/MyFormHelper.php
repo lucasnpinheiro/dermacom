@@ -703,4 +703,24 @@ class MyFormHelper extends BootstrapFormHelper {
         return $this->button($this->Html->icon('trash') . ' Excluir', ['onclick' => 'cake.tableList.enviar(this' . (!empty($callback) ? ', \'' . $callback . '\'' : '') . ');', 'escape' => false, 'type' => 'button', 'class' => 'btn btn-danger', 'url' => \Cake\Routing\Router::url($url, true)]);
     }
 
+    public function inputDataList($fieldName, array $options = []) {
+        $default = [
+            'type' => 'text',
+            'list' => 'dataList' . $fieldName,
+            'options' => []
+        ];
+        $options = \Cake\Utility\Hash::merge($default, $options);
+        $list = $options['options'];
+        unset($options['options']);
+        $_list = [];
+        if (count($list) > 0) {
+            $_list[] = '<datalist id="' . $options['list'] . '">';
+            foreach ($list as $key => $value) {
+                $_list[] = '<option value="' . $key . ' - ' . $value . '">';
+            }
+            $_list[] = '</datalist>';
+        }
+        return parent::input($fieldName, $options) . ' ' . implode(' ', $_list);
+    }
+
 }

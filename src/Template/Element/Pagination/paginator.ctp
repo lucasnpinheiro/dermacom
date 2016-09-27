@@ -1,11 +1,10 @@
-<div class="paginator text-left col-xs-12 col-md-10">
-    <ul class="pagination">
-        <?= $this->Paginator->prev('< ' . __('previous')) ?>
-        <?= $this->Paginator->numbers() ?>
-        <?= $this->Paginator->next(__('next') . ' >') ?>
+<div class=" text-left col-xs-12 col-md-10">
+    <ul class="paginator">
+        <?= $this->Paginator->numbers(['prev' => '< ' . __('previous'), 'next' => __('next') . ' >']) ?>
     </ul>
 </div>
-<div class="paginator text-right col-xs-12 col-md-2">
-    <p style="margin: 25px 0px;"><?= $this->Paginator->counter() ?></p>
+<div class=" text-right col-xs-12 col-md-2">
+    <p class="paginator" style="margin: 25px 0px;"><?= $this->Paginator->counter() ?></p>
 </div>
 <div class="clearfix"></div>
+<?php echo $this->Paginator->meta(['block' => true]); ?>

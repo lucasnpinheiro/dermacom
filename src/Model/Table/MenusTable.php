@@ -25,9 +25,13 @@ class MenusTable extends Table {
 
     use \App\Model\Traits\FuncoesTraits,
         \App\Model\Traits\SearchTraits;
-public $statusInativo = 0;
+
+    public $statusInativo = 0;
     public $statusAtivo = 1;
     public $statusExcluido = 9;
+    public $itemMenuNao = 0;
+    public $itemMenuSim = 1;
+
     /**
      * Initialize method
      *
