@@ -27,7 +27,7 @@ $this->Html->addButton($this->Html->link('<i class="fa fa-list" aria-hidden="tru
         echo $this->Form->input('bairro', ['div' => ['class' => 'col-xs-12 col-md-3']]);
         echo $this->Form->input('cidade', ['div' => ['class' => 'col-xs-12 col-md-3']]);
         echo $this->Form->input('estado', ['div' => ['class' => 'col-xs-12 col-md-3']]);
-        echo $this->Form->input('cnpj', ['div' => ['class' => 'col-xs-12 col-md-6']]);
+        echo $this->Form->cnpj('cnpj', ['div' => ['class' => 'col-xs-12 col-md-6']]);
         echo $this->Form->input('inscricao', ['div' => ['class' => 'col-xs-12 col-md-6']]);
         echo $this->Form->input('centro_custo', ['div' => ['class' => 'col-xs-12 col-md-12']]);
         ?>

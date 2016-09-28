@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Model\Entity;
 
 use Cake\ORM\Entity;
@@ -25,8 +26,9 @@ use Cake\ORM\Entity;
  *
  * @property \App\Model\Entity\Paciente[] $pacientes
  */
-class Convenio extends Entity
-{
+class Convenio extends Entity {
+
+    use \App\Model\Traits\FuncoesTraits;
 
     /**
      * Fields that can be mass assigned using newEntity() or patchEntity().
@@ -39,6 +41,21 @@ class Convenio extends Entity
      */
     protected $_accessible = [
         '*' => true,
-       
+        'cnpj_mascara',
+        'inscricao_estadual_mascara'
     ];
+    protected $_virtual = ['cnpj_mascara', 'inscricao_estadual_mascara'];
+
+    protected function _getCnpjMascara() {
+        return $this->mask($this->_properties['cnpj'], '##.###.###/####-##');
+    }
+
+    protected function _getInscricaoEstadualMascara() {
+        if (!empty($this->_properties['estado']) AND ! empty($this->_properties['inscricao'])) {
+            $m = 'maskInscricaoEstadual' . $this->_properties['estado'];
+            return $this->{$m}($this->_properties['inscricao']);
+        }
+        return $this->_properties['inscricao'];
+    }
+
 }

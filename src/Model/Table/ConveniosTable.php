@@ -27,9 +27,11 @@ class ConveniosTable extends Table {
 
     use \App\Model\Traits\FuncoesTraits,
         \App\Model\Traits\SearchTraits;
-public $statusInativo = 0;
+
+    public $statusInativo = 0;
     public $statusAtivo = 1;
     public $statusExcluido = 9;
+
     /**
      * Initialize method
      *
@@ -114,6 +116,13 @@ public $statusInativo = 0;
                 ->allowEmpty('centro_custo');
 
         return $validator;
+    }
+
+    public function patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = []) {
+        $data['cnpj'] = $this->removeMascara($data['cnpj']);
+        $data['inscricao'] = $this->removeMascara($data['inscricao']);
+        $data['cep'] = $this->removeMascara($data['cep']);
+        return parent::patchEntity($entity, $data, $options);
     }
 
 }

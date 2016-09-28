@@ -369,6 +369,19 @@ class MyFormHelper extends BootstrapFormHelper {
         return $this->input($fieldName, $options);
     }
 
+    public function inscricaoEstadual($fieldName, array $options = []) {
+        $default = [
+            'class' => 'numero',
+            'type' => 'text',
+            'data-mask' => '?999999999999999',
+            'data-placeholder' => ' ',
+            'append' => '0-9',
+        ];
+        $options = \Cake\Utility\Hash::merge($default, $options);
+        $options['class'] = $this->mergeValuesTags('class', $default, $options);
+        return $this->input($fieldName, $options);
+    }
+
     public function numero($fieldName, array $options = []) {
         $default = [
             'class' => 'numero',
@@ -458,6 +471,36 @@ class MyFormHelper extends BootstrapFormHelper {
         if (!empty($options['value'])) {
             $options['value'] = str_replace('R$ ', '', $this->Number->currency($options['value']));
         }
+        return $this->input($fieldName, $options);
+    }
+
+    public function cnpj($fieldName, array $options = []) {
+        $default = [
+            'class' => 'cnpj',
+            'type' => 'text',
+        ];
+        $options = \Cake\Utility\Hash::merge($default, $options);
+        $options['class'] = $this->mergeValuesTags('class', $default, $options);
+        return $this->input($fieldName, $options);
+    }
+
+    public function cpf($fieldName, array $options = []) {
+        $default = [
+            'class' => 'cpf',
+            'type' => 'text',
+        ];
+        $options = \Cake\Utility\Hash::merge($default, $options);
+        $options['class'] = $this->mergeValuesTags('class', $default, $options);
+        return $this->input($fieldName, $options);
+    }
+
+    public function cnpjCpf($fieldName, array $options = []) {
+        $default = [
+            'class' => 'cnpj_cpf',
+            'type' => 'text',
+        ];
+        $options = \Cake\Utility\Hash::merge($default, $options);
+        $options['class'] = $this->mergeValuesTags('class', $default, $options);
         return $this->input($fieldName, $options);
     }
 

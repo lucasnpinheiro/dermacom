@@ -61,8 +61,8 @@ $this->Html->addButton($this->Html->link('<i class="fa fa-list" aria-hidden="tru
                                     <td><?= h($convenio->razao_social) ?></td>
                                     <td><?= h($convenio->cidade) ?></td>
                                     <td><?= h($convenio->estado) ?></td>
-                                    <td><?= h($convenio->cnpj) ?></td>
-                                    <td><?= h($convenio->inscricao) ?></td>
+                                    <td><?= h($convenio->cnpj_mascara) ?></td>
+                                    <td><?= h($convenio->inscricao_estadual_mascara) ?></td>
                                     <td><?= h($convenio->centro_custo) ?></td>
                                 </tr>
                             <?php endforeach; ?>
