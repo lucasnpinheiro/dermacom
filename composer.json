@@ -17,7 +17,8 @@
         "cakephp/debug_kit": "~3.2",
         "cakephp/bake": "~1.1",
         "holt59/cakephp3-bootstrap-helpers": "~3.0",
-        "eventviva/php-image-resize": "1.5.*"
+        "eventviva/php-image-resize": "1.5.*",
+        "phpunit/phpunit": "@stable"
     },
     "suggest": {
         "markstory/asset_compress": "An asset compression plugin which provides file concatenation and a flexible filter system for preprocessing and minification.",

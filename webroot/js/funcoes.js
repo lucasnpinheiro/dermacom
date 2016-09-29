@@ -1,6 +1,9 @@
 cake = {};
 cake.html = {};
 cake.util = {};
+cake.util.redirect = function (url) {
+    window.location.href = url;
+};
 cake.util.exec = function (obj, name) {
     var f = new Function($(obj).attr(name));
     f.call(this);
@@ -111,7 +114,7 @@ cake.util.cep = function (obj) {
         method: "GET",
         dataType: 'JSON',
         url: router.url + "utilits/cep/" + $(obj).val(),
-        beforeSend: function(){
+        beforeSend: function () {
             $(obj).closest('div').find('.fa-location-arrow').removeClass('fa-location-arrow').addClass('fa-spinner fa-spin');
         },
         success: function (result) {

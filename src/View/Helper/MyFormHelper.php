@@ -759,11 +759,11 @@ class MyFormHelper extends BootstrapFormHelper {
         if (count($list) > 0) {
             $_list[] = '<datalist id="' . $options['list'] . '">';
             foreach ($list as $key => $value) {
-                $_list[] = '<option value="' . $key . ' - ' . $value . '">';
+                $_list[] = '<option value="' . $value . '">';
             }
             $_list[] = '</datalist>';
         }
-        return parent::input($fieldName, $options) . ' ' . implode(' ', $_list);
+        return $this->input($fieldName, $options) . ' ' . implode(' ', $_list);
     }
 
 }
