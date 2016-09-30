@@ -110,6 +110,13 @@ class UsuariosTable extends Table {
         } else {
             unset($entity->senha);
         }
+
+        if (!empty($entity->root) AND $entity->root === 1) {
+            $entity->root = 1;
+        } else {
+            $entity->root = 0;
+        }
+
         return true;
     }
 
