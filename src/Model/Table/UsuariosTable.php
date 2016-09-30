@@ -29,6 +29,8 @@ class UsuariosTable extends Table {
     public $statusInativo = 0;
     public $statusAtivo = 1;
     public $statusExcluido = 9;
+    public $rootSim = 1;
+    public $rootNao = 0;
 
     /**
      * Initialize method

@@ -47,8 +47,8 @@ class UsuariosController extends AppController {
     public function index() {
         $query = $this->{$this->modelClass}->find('search', $this->{$this->modelClass}->filterParams($this->request->query))->where([$this->modelClass . '.status !=' => $this->{$this->modelClass}->statusExcluido]);
 
-        if ($this->Auth->user('root') != 1) {
-            $query->where(['Usuarios.root' => $this->Auth->user('root')]);
+        if ($this->Auth->user('root') != $this->{$this->modelClass}->rootSim) {
+            $query->where(['Usuarios.root !=' => $this->{$this->modelClass}->rootSim]);
         }
 
         $this->set('usuarios', $this->paginate($query));
