@@ -22,21 +22,32 @@ class LesoesController extends AppController {
      */
     public function index() {
         $lesoes = $this->Lesoes->find()->all();
+        $this->set('data', $this->_lesoes($lesoes));
+        $this->set('lesoesList', $lesoes);
+    }
+
+    private function _lesoes($lesoes) {
+        $lesao_selecionada = $this->request->session()->read('lesao_selecionada');
+        $lesao_selecionada = (int) (!empty($lesao_selecionada) ? $lesao_selecionada : 0);
+
         $data = [];
         if (count($lesoes) > 0) {
             foreach ($lesoes as $key => $value) {
                 $data[] = [
                     'lesao' => $value->nome,
-                    'open' => false,
+                    'open' => ($lesao_selecionada === $value->id ? true : false),
                     'classificacoes' => $this->classificacoes($value->id)
                 ];
             }
         }
-        $this->set('data', $data);
-        $this->set('lesoesList', $lesoes);
+        $this->request->session()->write('lesao_selecionada', 0);
+        $this->request->session()->write('classificacao_selecionada', 0);
+        return $data;
     }
 
     private function classificacoes($id_lesao) {
+        $classificacao_selecionada = $this->request->session()->read('classificacao_selecionada');
+        $classificacao_selecionada = (int) (!empty($classificacao_selecionada) ? $classificacao_selecionada : 0);
         $this->loadModel('Classificacoes');
         $classificacoes = $this->Classificacoes->find()->where(['lesao_id' => $id_lesao])->all();
         $data = [];
@@ -44,11 +55,12 @@ class LesoesController extends AppController {
             foreach ($classificacoes as $key => $value) {
                 $data[] = [
                     'classificacao' => $value->nome,
-                    'open' => false,
+                    'open' => ($classificacao_selecionada === $value->id ? true : false),
                     'estagios' => $this->estagios($value->id)
                 ];
             }
         }
+
         return $data;
     }
 
@@ -124,6 +136,8 @@ class LesoesController extends AppController {
             $this->Lesoes->save($lesao);
         }
 
+        $this->request->session()->write('lesao_selecionada', $lesao->id);
+
         $this->loadModel('Classificacoes');
 
         $classificacao = $this->Classificacoes->find()->where(['nome' => $this->request->data('classificacao')])->first();
@@ -132,6 +146,8 @@ class LesoesController extends AppController {
             $classificacao = $this->Classificacoes->patchEntity($classificacao, ['lesao_id' => $lesao->id, 'nome' => $this->request->data('classificacao')]);
             $this->Classificacoes->save($classificacao);
         }
+
+        $this->request->session()->write('classificacao_selecionada', $classificacao->id);
 
         $this->loadModel('Estagios');
 
@@ -145,18 +161,8 @@ class LesoesController extends AppController {
         $this->Estagios->save($estagio);
 
         $lesoes = $this->Lesoes->find()->all();
-        $data = [];
-        if (count($lesoes) > 0) {
-            foreach ($lesoes as $key => $value) {
-                $data[] = [
-                    'lesao' => $value->nome,
-                    'open' => false,
-                    'classificacoes' => $this->classificacoes($value->id)
-                ];
-            }
-        }
         echo json_encode([
-            'data' => $data,
+            'data' => $this->_lesoes($lesoes),
             'lesoesList' => $lesoes,
         ]);
         exit;
