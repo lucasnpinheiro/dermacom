@@ -6,6 +6,18 @@ var app = new Vue({
         listaClassificacoes: classificacoesList
     },
     methods: {
+        excluir: function () {
+            alert('Não implementado');
+        },
+        imprimir: function () {
+            alert('Não implementado');
+        },
+        consultar: function () {
+            alert('Não implementado');
+        },
+        editar: function () {
+            alert('Não implementado');
+        },
         novo: function () {
             var itens = [
                 'lesao', 'classificacao', 'estagio', 'descricao', 'peso', 'id', 'classificacao-id', 'estagio-id'
@@ -34,12 +46,14 @@ var app = new Vue({
                 dados[itens[i].replace('-', '_')] = document.getElementById('input-' + itens[i]).value;
             }
             if (error === false) {
-                console.log(dados);
                 this.$http.post(router.url + 'lesoes/gravar', dados).then(function (resp) {
                     var r = JSON.parse(resp.body);
-                    console.log(r);
                     this.lista = r.data;
                     this.listaLesao = r.lesoesList;
+                    for (var i = 0; i < itens.length; i++) {
+                        document.getElementById('input-' + itens[i]).classList.remove('is-danger');
+                        document.getElementById('input-' + itens[i]).value = '';
+                    }
                 }, function (resp) {});
             }
 
@@ -63,3 +77,6 @@ var app = new Vue({
         }
     }
 });
+
+var windowHeight = window.innerHeight;
+document.getElementById('listagem-lesoes').style.height = (windowHeight - 60) + "px";

@@ -134,7 +134,7 @@ class AppController extends Controller {
             ],
             'storage' => 'Session'
         ]);
-         $this->viewBuilder()->layout('simples');
+        $this->viewBuilder()->layout('simples');
     }
 
     /**
@@ -160,13 +160,13 @@ class AppController extends Controller {
 
     public function beforeFilter(Event $event) {
         parent::beforeFilter($event);
-        /*if ($this->request->params['controller'] != 'Usuarios' AND $this->request->params['action'] != 'login') {
+        if ($this->request->params['controller'] != 'Usuarios' AND $this->request->params['action'] != 'login') {
             if (!empty($this->Auth->user())) {
                 $this->Auth->allow();
             }
-        }*/
-        
-         $this->Auth->allow();
+        }
+
+        // $this->Auth->allow();
 
         if ($this->request->is('ajax')) {
             $this->viewBuilder()->layout('ajax');

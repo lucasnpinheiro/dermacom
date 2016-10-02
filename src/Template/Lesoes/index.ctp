@@ -10,7 +10,7 @@ $this->Html->script('/js/lesoes/index.js', ['block' => 'script']);
 $this->Html->css('/css/lesoes/index.css', ['block' => 'css']);
 ?>
 <div class="columns">
-    <div class="column">
+    <div class="column" id="listagem-lesoes" style="overflow: auto;">
         <ul class="tree">
             <li v-for="item in lista" class="lista-tree">
                 <a v-show="!item.open" class="button" v-on:click="item.open = !item.open" style="margin: 0px; padding: 0px; height: 20px; width: 20px;">
