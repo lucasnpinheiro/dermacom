@@ -27,7 +27,7 @@ class UsuariosController extends AppController {
             $user = $this->Auth->identify();
             if ($user) {
                 $this->Auth->setUser($user);
-                return $this->redirect(['controller' => 'Usuarios', 'action' => 'index']);
+                return $this->redirect(['controller' => 'Usuarios', 'action' => 'dashboard']);
             }
             $this->Flash->error(__('Usuário ou senha invalidos.'));
         } else {
@@ -39,6 +39,14 @@ class UsuariosController extends AppController {
         return $this->redirect($this->Auth->logout());
     }
 
+    /**
+     * Index method
+     *
+     * @return \Cake\Network\Response|null
+     */
+    public function dashboard() {
+       
+    }
     /**
      * Index method
      *

@@ -21,205 +21,145 @@ class LesoesController extends AppController {
      * @return \Cake\Network\Response|null
      */
     public function index() {
-        $query = $this->{$this->modelClass}
-                        ->find('search', $this->{$this->modelClass}->filterParams($this->request->query))
-                        ->select(['Lesoes.id', 'Lesoes.nome', 'Classificacoes.id', 'Classificacoes.nome', 'Estagios.id', 'Estagios.codigo', 'Estagios.nome', 'Estagios.peso'])
-                        ->hydrate(true)
-                        ->autoFields(true)
-                        ->join([
-                            'table' => 'classificacoes',
-                            'alias' => 'Classificacoes',
-                            'type' => 'LEFT',
-                            'conditions' => 'Classificacoes.lesao_id = Lesoes.id',
-                        ])->join([
-                    'table' => 'estagios',
-                    'alias' => 'Estagios',
-                    'type' => 'LEFT',
-                    'conditions' => 'Lesoes.id = Estagios.lesao_id AND Classificacoes.id = Estagios.classificacao_id',
-                        ]
-                )->order([
-            'Lesoes.nome' => 'ASC',
-            'Classificacoes.nome' => 'ASC',
-            'Estagios.codigo' => 'ASC',
-            'Estagios.nome' => 'ASC'
-        ]);
-        if (count($this->request->query) > 0) {
-            if (!empty($this->request->query('Classificacoes.nome'))) {
-                $query->where(['Classificacoes.nome LIKE' => '%' . $this->request->query('Classificacoes.nome') . '%']);
-            }
-            if (!empty($this->request->query('Estagios.codigo'))) {
-                $query->where(['Estagios.codigo LIKE' => $this->request->query('Estagios.codigo')]);
-            }
-            if (!empty($this->request->query('Estagios.nome'))) {
-                $query->where(['Estagios.nome LIKE' => '%' . $this->request->query('Estagios.nome') . '%']);
-            }
-            if (!empty($this->request->query('Estagios.peso'))) {
-                $query->where(['Estagios.peso LIKE' => $this->request->query('Estagios.peso')]);
+        $lesoes = $this->Lesoes->find()->all();
+        $data = [];
+        if (count($lesoes) > 0) {
+            foreach ($lesoes as $key => $value) {
+                $data[] = [
+                    'lesao' => $value->nome,
+                    'open' => false,
+                    'classificacoes' => $this->classificacoes($value->id)
+                ];
             }
         }
-
-        $this->loadModel('Classificacoes');
-
-        $this->set('classificacoes', $this->Classificacoes->find('list')->group('nome')->all());
-        $this->set('lesoes', $this->paginate($query));
-        $this->set('_serialize', ['lesoes']);
-        $this->set('lesao', $this->{$this->modelClass}->newEntity());
+        $this->set('data', $data);
+        $this->set('lesoesList', $lesoes);
     }
 
-    /**
-     * View method
-     *
-     * @param string|null $id Leso id.
-     * @return \Cake\Network\Response|null
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
-     */
-    public function view($id = null, $classificacao_id = null, $estagio_id = null) {
-        $query = $this->{$this->modelClass}
-                        ->find()
-                        ->select(['Lesoes.id', 'Lesoes.nome', 'Classificacoes.id', 'Classificacoes.nome', 'Estagios.id', 'Estagios.codigo', 'Estagios.nome', 'Estagios.peso'])
-                        ->hydrate(true)
-                        ->autoFields(true)
-                        ->join([
-                            'table' => 'classificacoes',
-                            'alias' => 'Classificacoes',
-                            'type' => 'LEFT',
-                            'conditions' => 'Classificacoes.lesao_id = Lesoes.id',
-                        ])->join([
-                    'table' => 'estagios',
-                    'alias' => 'Estagios',
-                    'type' => 'LEFT',
-                    'conditions' => 'Lesoes.id = Estagios.lesao_id AND Classificacoes.id = Estagios.classificacao_id',
-                        ]
-                )->order([
-                    'Lesoes.nome' => 'ASC',
-                    'Classificacoes.nome' => 'ASC',
-                    'Estagios.codigo' => 'ASC',
-                    'Estagios.nome' => 'ASC'
-                ])->where([
-            'Lesoes.id' => $id,
-            'Classificacoes.id' => $classificacao_id,
-            'Estagios.id' => $estagio_id,
-        ]);
-
+    private function classificacoes($id_lesao) {
         $this->loadModel('Classificacoes');
-
-        $this->set('classificacoes', $this->Classificacoes->find('list')->group('nome')->all());
-        $this->set('leso', $query->first());
-        $this->set('lesao', $this->{$this->modelClass}->newEntity());
-        $this->set('_serialize', ['leso', 'classificacoes']);
+        $classificacoes = $this->Classificacoes->find()->where(['lesao_id' => $id_lesao])->all();
+        $data = [];
+        if (count($classificacoes) > 0) {
+            foreach ($classificacoes as $key => $value) {
+                $data[] = [
+                    'classificacao' => $value->nome,
+                    'open' => false,
+                    'estagios' => $this->estagios($value->id)
+                ];
+            }
+        }
+        return $data;
     }
 
-    /**
-     * Add method
-     *
-     * @return \Cake\Network\Response|void Redirects on successful add, renders view otherwise.
-     */
-    public function add() {
-
-        $this->loadModel('Classificacoes');
+    private function estagios($id_classificacao) {
         $this->loadModel('Estagios');
-
-
-        if ($this->request->data('acao') === 'novo') {
-            $leso = $this->Lesoes->newEntity();
-            $leso = $this->Lesoes->patchEntity($leso, [
-                'nome' => $this->request->data('nome')
-            ]);
-
-            $this->Lesoes->save($leso);
-
-            $classificacao = $this->Classificacoes->newEntity();
-            $classificacao = $this->Classificacoes->patchEntity($classificacao, [
-                'nome' => $this->request->data('classificacao_nome'),
-                'lesao_id' => $leso->id
-            ]);
-
-            $this->Classificacoes->save($classificacao);
-
-            $estagio = $this->Estagios->newEntity();
-            $estagio = $this->Estagios->patchEntity($estagio, [
-                'nome' => $this->request->data('estagio_nome'),
-                'codigo' => $this->request->data('estagio_codigo'),
-                'peso' => $this->request->data('estagio_peso'),
-                'classificacao_id' => $classificacao->id,
-                'lesao_id' => $leso->id
-            ]);
-
-            $this->Estagios->save($estagio);
-        } else if ($this->request->data('acao') === 'edit') {
-            $leso = $this->Lesoes->get((int) $this->request->data('id'));
-            $leso = $this->Lesoes->patchEntity($leso, [
-                'nome' => $this->request->data('nome')
-            ]);
-
-            $this->Lesoes->save($leso);
-
-            $classificacao = $this->Classificacoes->get((int) $this->request->data('classificacao_id'));
-            $classificacao = $this->Classificacoes->patchEntity($classificacao, [
-                'nome' => $this->request->data('classificacao_nome'),
-                'lesao_id' => $leso->id
-            ]);
-
-            $this->Classificacoes->save($classificacao);
-
-            $estagio = $this->Estagios->get((int) $this->request->data('estagio_id'));
-            $estagio = $this->Estagios->patchEntity($estagio, [
-                'nome' => $this->request->data('estagio_nome'),
-                'codigo' => $this->request->data('estagio_codigo'),
-                'peso' => $this->request->data('estagio_peso'),
-                'classificacao_id' => $classificacao->id,
-                'lesao_id' => $leso->id
-            ]);
-
-            $this->Estagios->save($estagio);
+        $estagio = $this->Estagios->find()
+                ->where(['classificacao_id' => $id_classificacao])
+                ->select([
+                    'Estagios.codigo',
+                    'Estagios.nome',
+                    'Estagios.peso',
+                    'Estagios.id',
+                    'Estagios.classificacao_id',
+                    'Estagios.lesao_id',
+                    'lesao' => 'Lesoes.nome',
+                    'classificacao' => 'Classificacoes.nome',
+                ])
+                ->join([
+                    'table' => 'lesoes',
+                    'alias' => 'Lesoes',
+                    'type' => 'INNER',
+                    'conditions' => 'Lesoes.id = Estagios.lesao_id',
+                ])
+                ->join([
+                    'table' => 'classificacoes',
+                    'alias' => 'Classificacoes',
+                    'type' => 'INNER',
+                    'conditions' => 'Classificacoes.id = Estagios.classificacao_id',
+                ])
+                ->all();
+        $data = [];
+        if (count($estagio) > 0) {
+            foreach ($estagio as $key => $value) {
+                $data[] = [
+                    'estagio' => $value->codigo,
+                    'descricao' => $value->nome,
+                    'peso' => $value->peso,
+                    'id' => $value->lesao_id,
+                    'classificacao_id' => $value->classificacao_id,
+                    'estagio_id' => $value->id,
+                    'lesao' => $value->lesao,
+                    'classificacao' => $value->classificacao,
+                ];
+            }
         }
-        echo json_encode(['status' => 'ok']);
+        return $data;
+    }
+
+    public function listaClassificacoes() {
+        $this->loadModel('Classificacoes');
+        $this->autoRender = false;
+        $sub = $this->Lesoes->find()->select(['id'])->where(['nome LIKE' => '%' . $this->request->data('q') . '%']);
+        $classificacoes = $this->Classificacoes->find()->where(['lesao_id in' => $sub])->all();
+        echo json_encode($classificacoes);
         exit;
     }
 
-    /**
-     * Edit method
-     *
-     * @param string|null $id Leso id.
-     * @return \Cake\Network\Response|void Redirects on successful edit, renders view otherwise.
-     * @throws \Cake\Network\Exception\NotFoundException When record not found.
-     */
-    public function edit($id = null) {
-        $leso = $this->Lesoes->get($id, [
-            'contain' => ['Corporais']
-        ]);
-        if ($this->request->is(['patch', 'post', 'put'])) {
-            $leso = $this->Lesoes->patchEntity($leso, $this->request->data);
-            if ($this->Lesoes->save($leso)) {
-                $this->Flash->success(__('Registro salvo com sucesso.'));
-
-                return $this->redirect(['action' => 'index']);
-            } else {
-                $this->Flash->error(__('Não foi possivel salvar o registro.'));
-            }
-        }
-        $corporais = $this->Lesoes->Corporais->find('list', ['limit' => 200]);
-        $this->set(compact('leso', 'corporais'));
-        $this->set('_serialize', ['leso']);
+    public function listaLesoes() {
+        $this->loadModel('Classificacoes');
+        $this->autoRender = false;
+        $sub = $this->Lesoes->find()->select(['id'])->where(['nome LIKE' => '%' . $this->request->data('q') . '%']);
+        $classificacoes = $this->Classificacoes->find()->where(['lesao_id in' => $sub])->all();
+        echo json_encode($classificacoes);
+        exit;
     }
 
-    /**
-     * Delete method
-     *
-     * @param string|null $id Leso id.
-     * @return \Cake\Network\Response|null Redirects to index.
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
-     */
-    public function delete($id = null) {
-        $this->request->allowMethod(['post', 'delete']);
-        $leso = $this->Lesoes->get($id);
-        if ($this->Lesoes->delete($leso)) {
-            $this->Flash->success(__('Registro removido com sucesso.'));
-        } else {
-            $this->Flash->error(__('Não foi possivel removido o registro.'));
+    public function gravar() {
+
+        $lesao = $this->Lesoes->find()->where(['nome' => $this->request->data('lesao')])->first();
+        if (count($lesao) === 0) {
+            $lesao = $this->Lesoes->newEntity();
+            $lesao = $this->Lesoes->patchEntity($lesao, ['nome' => $this->request->data('lesao')]);
+            $this->Lesoes->save($lesao);
         }
 
-        return $this->redirect(['action' => 'index']);
+        $this->loadModel('Classificacoes');
+
+        $classificacao = $this->Classificacoes->find()->where(['nome' => $this->request->data('classificacao')])->first();
+        if (count($classificacao) === 0) {
+            $classificacao = $this->Classificacoes->newEntity();
+            $classificacao = $this->Classificacoes->patchEntity($classificacao, ['lesao_id' => $lesao->id, 'nome' => $this->request->data('classificacao')]);
+            $this->Classificacoes->save($classificacao);
+        }
+
+        $this->loadModel('Estagios');
+
+        if (!empty($this->request->data('estagio_id'))) {
+            $estagio = $this->Estagios->get((int) $this->request->data('estagio_id'));
+        } else {
+            $estagio = $this->Estagios->newEntity();
+        }
+
+        $estagio = $this->Estagios->patchEntity($estagio, ['lesao_id' => $lesao->id, 'classificacao_id' => $classificacao->id, 'codigo' => $this->request->data('estagio'), 'nome' => $this->request->data('descricao'), 'peso' => $this->request->data('peso')]);
+        $this->Estagios->save($estagio);
+
+        $lesoes = $this->Lesoes->find()->all();
+        $data = [];
+        if (count($lesoes) > 0) {
+            foreach ($lesoes as $key => $value) {
+                $data[] = [
+                    'lesao' => $value->nome,
+                    'open' => false,
+                    'classificacoes' => $this->classificacoes($value->id)
+                ];
+            }
+        }
+        echo json_encode([
+            'data' => $data,
+            'lesoesList' => $lesoes,
+        ]);
+        exit;
     }
 
 }

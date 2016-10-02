@@ -9,8 +9,8 @@
         <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700' rel='stylesheet' type='text/css'>
 
         <?php
-        echo $this->Html->css('/componentes/bower_components/bootstrap/dist/css/bootstrap.min.css');
-        echo $this->Html->css('/componentes/bower_components/components-font-awesome/css/font-awesome.css');
+        echo $this->Html->css('/bower_components/font-awesome/css/font-awesome.min.css');
+        echo $this->Html->css('/bower_components/bootstrap/dist/css/bootstrap.min.css');
         echo $this->Html->css('/css/nifty.min.css');
         ?>
         <?= $this->fetch('css') ?>
@@ -26,8 +26,8 @@
             </div>
         </div>
         <?php
-        echo $this->Html->script('/componentes/bower_components/jquery/dist/jquery.min.js');
-        echo $this->Html->script('/componentes/bower_components/bootstrap/dist/js/bootstrap.min.js');
+        echo $this->Html->script('/bower_components/jquery/dist/jquery.min.js');
+        echo $this->Html->script('/bower_components/bootstrap/dist/js/bootstrap.min.js');
         echo $this->Html->script('/js/nifty.min.js');
         ?>
         <?= $this->fetch('script') ?>

@@ -50,7 +50,7 @@ class AppController extends Controller {
         parent::__construct($request, $response, $name, $eventManager, $components);
         $this->set('title', $this->title);
         $this->set('sub_title', $this->sub_title);
-        $this->definedTitles();
+        //$this->definedTitles();
     }
 
     /**
@@ -134,6 +134,7 @@ class AppController extends Controller {
             ],
             'storage' => 'Session'
         ]);
+         $this->viewBuilder()->layout('simples');
     }
 
     /**
@@ -159,10 +160,17 @@ class AppController extends Controller {
 
     public function beforeFilter(Event $event) {
         parent::beforeFilter($event);
-        if ($this->request->params['controller'] != 'Usuarios' AND $this->request->params['action'] != 'login') {
+        /*if ($this->request->params['controller'] != 'Usuarios' AND $this->request->params['action'] != 'login') {
             if (!empty($this->Auth->user())) {
                 $this->Auth->allow();
             }
+        }*/
+        
+         $this->Auth->allow();
+
+        if ($this->request->is('ajax')) {
+            $this->viewBuilder()->layout('ajax');
+            $this->response->disableCache();
         }
     }
 
