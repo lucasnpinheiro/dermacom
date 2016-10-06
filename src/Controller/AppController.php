@@ -135,6 +135,15 @@ class AppController extends Controller {
             'storage' => 'Session'
         ]);
         $this->viewBuilder()->layout('simples');
+
+        if ($this->RequestHandler->accepts('json') OR $this->request->accepts('application/json') OR $this->request->is('ajax')) {
+            $this->viewBuilder()->layout('ajax');
+            $this->response->disableCache();
+            $this->RequestHandler->prefers('json');
+            $this->RequestHandler->renderAs($this, 'json');
+            $this->response->type('application/json');
+            $this->set('_serialize', true);
+        }
     }
 
     /**
@@ -167,11 +176,6 @@ class AppController extends Controller {
         }
 
         // $this->Auth->allow();
-
-        if ($this->request->is('ajax')) {
-            $this->viewBuilder()->layout('ajax');
-            $this->response->disableCache();
-        }
     }
 
     protected function definedTitles() {

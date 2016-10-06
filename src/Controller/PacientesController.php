@@ -44,7 +44,24 @@ class PacientesController extends AppController {
      * @return \Cake\Network\Response|void Redirects on successful add, renders view otherwise.
      */
     public function add() {
-        $paciente = $this->Pacientes->newEntity();
+        $paciente = $this->Pacientes->get(1, [
+            'contain' => [
+                'Convenios',
+                'Midias',
+                'Sexos',
+                'EstadosCivis',
+                'Escolaridades',
+                'Profissoes',
+                'Nacionalidades',
+                'Religioes',
+                'Cores',
+                'PacientesAcompanhamentos',
+                'PacientesEmergencias',
+                'PacientesServicos',
+                'PacientesSoube',
+                'Contatos',
+            ]
+        ]);
         if ($this->request->is('post')) {
             $paciente = $this->Pacientes->patchEntity($paciente, $this->request->data);
             if ($this->Pacientes->save($paciente)) {
@@ -55,17 +72,17 @@ class PacientesController extends AppController {
                 $this->Flash->error(__('Não foi possivel salvar o registro.'));
             }
         }
-        $sexos = $this->Pacientes->Sexos->find('list', ['limit' => 200]);
-        $estadosCivils = $this->Pacientes->EstadosCivis->find('list', ['limit' => 200]);
-        $escolaridades = $this->Pacientes->Escolaridades->find('list', ['limit' => 200]);
-        $profissaos = $this->Pacientes->Profissoes->find('list', ['limit' => 200]);
-        $nacionalidades = $this->Pacientes->Nacionalidades->find('list', ['limit' => 200]);
-        $religiaos = $this->Pacientes->Religioes->find('list', ['limit' => 200]);
-        $cors = $this->Pacientes->Cores->find('list', ['limit' => 200]);
-        $convenios = $this->Pacientes->Convenios->find('list', ['limit' => 200]);
-        $midias = $this->Pacientes->Midias->find('list', ['limit' => 200]);
+        $sexos = $this->Pacientes->Sexos->find()->all();
+        $estadosCivils = $this->Pacientes->EstadosCivis->find()->all();
+        $escolaridades = $this->Pacientes->Escolaridades->find()->all();
+        $profissaos = $this->Pacientes->Profissoes->find()->all();
+        $nacionalidades = $this->Pacientes->Nacionalidades->find()->all();
+        $religiaos = $this->Pacientes->Religioes->find()->all();
+        $cors = $this->Pacientes->Cores->find()->all();
+        $convenios = $this->Pacientes->Convenios->find()->all();
+        $midias = $this->Pacientes->Midias->find()->all();
         $this->set(compact('paciente', 'sexos', 'estadosCivils', 'escolaridades', 'profissaos', 'nacionalidades', 'religiaos', 'cors', 'convenios', 'midias'));
-        $this->set('_serialize', ['paciente']);
+        $this->set('_serialize', ['paciente', 'sexos', 'estadosCivils', 'escolaridades', 'profissaos', 'nacionalidades', 'religiaos', 'cors', 'convenios', 'midias']);
     }
 
     /**
@@ -89,15 +106,15 @@ class PacientesController extends AppController {
                 $this->Flash->error(__('Não foi possivel salvar o registro.'));
             }
         }
-        $sexos = $this->Pacientes->Sexos->find('list', ['limit' => 200]);
-        $estadosCivils = $this->Pacientes->EstadosCivis->find('list', ['limit' => 200]);
-        $escolaridades = $this->Pacientes->Escolaridades->find('list', ['limit' => 200]);
-        $profissaos = $this->Pacientes->Profissoes->find('list', ['limit' => 200]);
-        $nacionalidades = $this->Pacientes->Nacionalidades->find('list', ['limit' => 200]);
-        $religiaos = $this->Pacientes->Religioes->find('list', ['limit' => 200]);
-        $cors = $this->Pacientes->Cores->find('list', ['limit' => 200]);
-        $convenios = $this->Pacientes->Convenios->find('list', ['limit' => 200]);
-        $midias = $this->Pacientes->Midias->find('list', ['limit' => 200]);
+        $sexos = $this->Pacientes->Sexos->find()->all();
+        $estadosCivils = $this->Pacientes->EstadosCivis->find()->all();
+        $escolaridades = $this->Pacientes->Escolaridades->find()->all();
+        $profissaos = $this->Pacientes->Profissoes->find()->all();
+        $nacionalidades = $this->Pacientes->Nacionalidades->find()->all();
+        $religiaos = $this->Pacientes->Religioes->find()->all();
+        $cors = $this->Pacientes->Cores->find()->all();
+        $convenios = $this->Pacientes->Convenios->find()->all();
+        $midias = $this->Pacientes->Midias->find()->all();
         $this->set(compact('paciente', 'sexos', 'estadosCivils', 'escolaridades', 'profissaos', 'nacionalidades', 'religiaos', 'cors', 'convenios', 'midias'));
         $this->set('_serialize', ['paciente']);
     }

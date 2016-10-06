@@ -87,6 +87,11 @@ public $statusInativo = 0;
         $this->hasMany('PacientesServicos', [
             'foreignKey' => 'paciente_id'
         ]);
+        $this->hasMany('Contatos', [
+            'foreignKey' => 'referencia_id',
+            'className' => 'Contatos',
+            'conditions' => ['Contatos.tabela'=>'Pacientes']
+        ]);
         $this->hasMany('PacientesSoube', [
             'foreignKey' => 'paciente_id'
         ]);

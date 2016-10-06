@@ -69,6 +69,7 @@
             </div>
         </div>
 
+        <?= $this->Html->script('/bower_components/lodash/dist/lodash.min.js'); ?>
         <?= $this->Html->script('/bower_components/vue/dist/vue.min.js'); ?>
         <?= $this->Html->script('/bower_components/vue-resource/dist/vue-resource.min.js'); ?>
 
