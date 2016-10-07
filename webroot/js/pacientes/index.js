@@ -12,7 +12,41 @@ var app = new Vue({
         links: [],
         isPagination: false,
         isCarregando: true,
-        list: []
+        isOpenDropdown: '',
+        isOpenDropdownLimit: '',
+        list: [],
+        colums: [
+            {
+                label: 'Nome',
+                key: 'nome',
+                ative: true,
+                css: ''
+            },
+            {
+                label: 'CPF',
+                key: 'cpf',
+                ative: true,
+                css: ''
+            },
+            {
+                label: 'Situação',
+                key: 'status',
+                ative: true,
+                css: ''
+            },
+            {
+                label: 'Cidade',
+                key: 'cidade',
+                ative: true,
+                css: ''
+            },
+            {
+                label: 'Estado',
+                key: 'uf',
+                ative: true,
+                css: ''
+            }
+        ]
     },
     methods: {
         load: function () {
@@ -65,9 +99,23 @@ var app = new Vue({
             } else {
                 return '';
             }
+        },
+        dropdown: function () {
+            this.isOpenDropdown = this.isOpenDropdown === '' ? 'is-active' : '';
+            return;
+        },
+        dropdownUl: function (index) {
+            this.colums[index].ative = !this.colums[index].ative;
+            this.colums[index].css = this.colums[index].css === '' ? 'active' :'';
+        },
+        dropdownLimit: function () {
+            this.isOpenDropdownLimit = this.isOpenDropdownLimit === '' ? 'is-active' : '';
+            return;
+        },
+        dropdownUlLimit: function (limit) {
+            this.paging.limit = limit;
+            this.load();
         }
-
-
     }
 });
 app.load();

@@ -77,3 +77,81 @@ body,
 #menu-acoes-topo .fa{
     font-size: 12px;
 }
+
+.checkbox-dropdown {
+    border: 1px solid silver;
+    cursor: pointer; /* use correct mouse pointer when hovering over the dropdown */
+    padding: 5px;
+    position: relative;
+    margin: 0 auto;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+/* Display CSS arrow to the right of the dropdown text */
+.checkbox-dropdown:after {
+    content:'';
+    height: 0;
+    position: absolute;
+    width: 0;
+    border: 6px solid transparent;
+    border-top-color: #000;
+    top: 50%;
+    right: 10px;
+    margin-top: -3px;
+}
+
+/* Reverse the CSS arrow when the dropdown is active */
+.checkbox-dropdown.is-active:after {
+    border-bottom-color: #000;
+    border-top-color: #fff;
+    margin-top: -9px;
+}
+
+.checkbox-dropdown-list {
+    background: #fff;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    top: 100%; /* align the dropdown right below the dropdown text */
+    border: inherit;
+    border-top: none;
+    left: -1px; /* align the dropdown to the left */
+    right: -1px; /* align the dropdown to the right */
+    opacity: 0; /* hide the dropdown */
+    -webkit-transition: opacity 0.4s ease-in-out;
+    -moz-transition: opacity 0.4s ease-in-out;
+    -o-transition: opacity 0.4s ease-in-out;
+    -ms-transition: opacity 0.4s ease-in-out;
+    transition: opacity 0.4s ease-in-out;
+    pointer-events: none; /* avoid mouse click events inside the dropdown */
+}
+.is-active .checkbox-dropdown-list {
+    opacity: 1; /* display the dropdown */
+    pointer-events: auto; /* make sure that the user still can select checkboxes */
+}
+
+.checkbox-dropdown-list li{
+    display: block;
+    border-bottom: 1px solid silver;
+    padding: 5px;
+    -webkit-transition: all 0.2s ease-out;
+    -moz-transition: all 0.2s ease-out;
+    -o-transition: all 0.2s ease-out;
+    -ms-transition: all 0.2s ease-out;
+    transition: all 0.2s ease-out;
+}
+.checkbox-dropdown-list li.active{
+    background-color: greenyellow;
+    color: black;
+}
+
+.checkbox-dropdown-list li:hover {
+    background-color: #c41230;
+    color: white;
+}
