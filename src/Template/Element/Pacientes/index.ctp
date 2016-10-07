@@ -1,11 +1,9 @@
-
-<div id="menu-acoes-topo" style="padding: 35px 0px 0px 0px; position: fixed; width: 100%; z-index: 99998;">
-    <div class="columns" style="text-align: center; background: #ccc; padding: 0px; margin: 5px 0px;">
-        <button class="column" style="padding: 0; margin: 0;" v-on:click="novo">Novo</button>
-        <button disabled="disabled" class="column" style="padding: 0; margin: 0;" v-on:click="editar">Editar</button>
-        <button class="column" style="padding: 0; margin: 0;" v-on:click="gravar">Gravar</button>
-        <button disabled="disabled" class="column" style="padding: 0; margin: 0;" v-on:click="excluir">Excluir</button>
-        <button disabled="disabled" class="column" style="padding: 0; margin: 0;" v-on:click="consultar">Consultar</button>
-        <button disabled="disabled" class="column" style="padding: 0; margin: 0;" v-on:click="imprimir">Imprimir</button>
-    </div>
+<div class="column is-6"><h1 class="title">Pacientes</h1></div>
+<div class="column is-6 text-right">
+    <a class="button is-info is-small" href="<?= Cake\Routing\Router::url(['controller' => 'Pacientes', 'action' => 'add']) ?>"><i class="fa fa-plus-circle" aria-hidden="true"></i>&nbsp;Novo</a>
+    <a class="button is-info is-small" href="<?= Cake\Routing\Router::url(['controller' => 'Pacientes', 'action' => 'edit']) ?>"><i class="fa fa-pencil-square" aria-hidden="true"></i>&nbsp;Editar</a>
+    <a class="button is-info is-small" href="#"><i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;Gravar</a>
+    <a class="button is-info is-small" href="#"><i class="fa fa-times-circle" aria-hidden="true"></i>&nbsp;Excluir</a>
+    <a class="button is-info is-small" href="<?= Cake\Routing\Router::url(['controller' => 'Pacientes', 'action' => 'index']) ?>"><i class="fa fa-list" aria-hidden="true"></i>&nbsp;Consultar</a>
+    <a class="button is-info is-small" href="<?= Cake\Routing\Router::url(['controller' => 'Pacientes', 'action' => 'imprimir']) ?>"><i class="fa fa-print" aria-hidden="true"></i>&nbsp;Imprimir</a>
 </div>

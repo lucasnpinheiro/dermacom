@@ -57,14 +57,20 @@
                         </ul>
                     </li -->
                     <li><a href="<?= Cake\Routing\Router::url(['controller' => 'Lesoes', 'action' => 'index']) ?>">Lesões</a></li>
+                    <li><a href="<?= Cake\Routing\Router::url(['controller' => 'Pacientes', 'action' => 'index']) ?>">Pacientes</a></li>
                 </ul>
             </div>
 
         </div>
 
         <div id="app" >
-            <?= $this->element($this->request->params['controller'] . '/' . $this->request->params['action']) ?>
-            <div style="padding: 70px 5px 0px 5px;">
+            <div id="menu-acoes-topo" style="padding: 0px; position: fixed; width: 100%; z-index: 99998; border-bottom: 1px solid #000; margin-top: 40px; background: #efefef;">
+                <div class="columns" style="margin-top: 2px;">
+                    <?= $this->element($this->request->params['controller'] . '/index') ?>
+                </div>
+            </div>
+            
+            <div style="padding: 90px 5px 0px 5px;">
                 <?= $this->fetch('content') ?>
             </div>
         </div>

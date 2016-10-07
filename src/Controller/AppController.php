@@ -190,4 +190,40 @@ class AppController extends Controller {
         }
     }
 
+    public function sendResponse($result = [], $code = 200, $msg = 'Generico') {
+        if ($this->request->is('options')) {
+            $code = 200;
+            $result = [];
+        }
+        $paging = [];
+
+        if (!empty($this->request->params['paging'])) {
+            $k = array_keys($this->request->params['paging']);
+            $paging = array_merge($paging, $this->request->params['paging'][$k[0]]);
+        }
+        $new_code = $this->response->httpCodes($code);
+        if (empty($new_code)) {
+            $this->response->httpCodes([$code => $msg]);
+            $new_code = [$code => $msg];
+        }
+        $url = h($this->request->here());
+        $message = $new_code[$code];
+        if (is_array($result) AND isset($result['message'])) {
+            $message = $result['message'];
+            unset($result['message']);
+        }
+        $this->response->statusCode($code);
+        if (count($paging) > 0) {
+            $this->set(compact('message', 'code', 'url', 'paging', 'result'));
+            $this->set('_serialize', ['message', 'code', 'url', 'paging', 'result']);
+        } else {
+            $this->set(compact('message', 'code', 'url', 'result'));
+            $this->set('_serialize', ['message', 'code', 'url', 'result']);
+        }
+
+        if (\Cake\Core\Configure::read('debug') === true) {
+            \Cake\Log\Log::info('Response: ' . json_encode(compact('message', 'code', 'url', 'paging', 'result'), JSON_PRETTY_PRINT) . "\n", ['scope' => ['api']]);
+        }
+    }
+
 }

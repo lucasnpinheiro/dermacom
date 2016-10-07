@@ -17,9 +17,19 @@ class PacientesController extends AppController {
      * @return \Cake\Network\Response|null
      */
     public function index() {
-        $query = $this->{$this->modelClass}->find('search', $this->{$this->modelClass}->filterParams($this->request->query))->where([$this->modelClass . '.status !=' => $this->{$this->modelClass}->statusExcluido])->contain(['Sexos', 'EstadosCivis', 'Escolaridades', 'Profissoes', 'Nacionalidades', 'Religioes', 'Cores']);
-        $this->set('pacientes', $this->paginate($query));
-        $this->set('_serialize', ['pacientes']);
+        
+    }
+
+    public function indexLoad() {
+        $this->loadComponent('Search.Prg');
+        $query = $this->{$this->modelClass}->find('search', $this->{$this->modelClass}->filterParams($this->request->query))
+                ->where([$this->modelClass . '.status !=' => $this->{$this->modelClass}->statusExcluido]);
+        $result = $this->paginate($query);
+        if (count($result) > 0) {
+            $this->sendResponse($result, 200);
+        } else {
+            $this->sendResponse($result, 216);
+        }
     }
 
     /**

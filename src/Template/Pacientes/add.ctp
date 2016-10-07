@@ -378,6 +378,5 @@
 
 
 <?php
-$this->Html->script('/js/pacientes/index.js', ['block' => 'script']);
-$this->Html->css('/css/pacientes/index.css', ['block' => 'css']);
+$this->Html->script('/js/pacientes/add.js', ['block' => 'script']);
 ?>

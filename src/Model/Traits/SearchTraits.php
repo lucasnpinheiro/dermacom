@@ -5,10 +5,12 @@ namespace App\Model\Traits;
 trait SearchTraits {
 
     public function _searchConfigurationDynamic($search) {
+        $__fields = [];
         $c = $this->schema()->columns();
         foreach ($c as $key => $value) {
             $t = $this->schema()->columnType($value);
             if ($t != 'string' AND $t != 'text') {
+                $__fields[] = $value;
                 $search->value($value, ['field' => $this->aliasField($value)]);
             } else if ($t === 'date') {
                 $search->callback($value, [
@@ -37,8 +39,19 @@ trait SearchTraits {
                             }
                                 ]);
                             } else {
+                                $__fields[] = $value;
                                 $search->like($value, ['before' => true, 'after' => true, 'field' => $this->aliasField($value)]);
                             }
+
+                            $search->add('q', 'Search.Like', [
+                                'before' => true,
+                                'after' => true,
+                                'mode' => 'or',
+                                'comparison' => 'LIKE',
+                                'wildcardAny' => '*',
+                                'wildcardOne' => '?',
+                                'field' => $__fields
+                            ]);
                         }
                         return $search;
                     }
