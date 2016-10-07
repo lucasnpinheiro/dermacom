@@ -19,12 +19,15 @@
                 <li v-on:click.prevent="dropdownUlLimit(5)">5</li>
                 <li v-on:click.prevent="dropdownUlLimit(15)">15</li>
                 <li v-on:click.prevent="dropdownUlLimit(30)">30</li>
+                <li v-on:click.prevent="dropdownUlLimit(50)">50</li>
+                <li v-on:click.prevent="dropdownUlLimit(75)">75</li>
+                <li v-on:click.prevent="dropdownUlLimit(100)">100</li>
             </ul>
         </div>
     </div>
 </div>
 
-<div class="text-center" v-if="isCarregando">
+<div class="text-center" style="position: absolute; right: 45%; background: #ccc; padding: 50px;" v-show="isCarregando">
     <i class="fa fa-spinner fa-sp in fa-3x fa-fw"></i>
     <span>Carregando...</span>
 </div>
@@ -32,11 +35,11 @@
 <table class="table is-striped is-narrow">
     <thead>
         <tr>
-            <th v-for="c in colums" v-if="c.ative">{{c.label}}</th>
+            <th v-for="c in colums" v-if="c.ative" v-on:click.prevent="sort(c.key)" :class="c.css"><i :class="sortCss(c.key)" aria-hidden="true" style="font-size: 13px;margin-top: 4px;"></i>&nbsp;{{c.label}}</th>
         </tr>
     </thead>
     <tbody>
-        <tr v-for="item in list">
+        <tr v-for="(item, key) in list" v-on:click.prevent="linhaSelecionada(key)" :class="item.linha_selecionada">
             <td v-for="c in colums" v-if="c.ative">{{item[c.key]}}</td>
         </tr>
     </tbody>

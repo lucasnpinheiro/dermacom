@@ -155,3 +155,9 @@ body,
     background-color: #c41230;
     color: white;
 }
+
+.linha-selecionada,
+.table tr.linha-selecionada:hover,
+.table.is-striped tbody tr.linha-selecionada:nth-child(even){
+    background-color: yellow;
+}
