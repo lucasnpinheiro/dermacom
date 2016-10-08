@@ -1,6 +1,7 @@
 var app = new Vue({
     el: '#app',
     data: {
+        url: params.url,
         paging: {
             count: 0,
             page: 1,
@@ -8,7 +9,7 @@ var app = new Vue({
             sort: '',
             q: '',
             direction: '',
-            limit: 5
+            limit: 20
         },
         links: [],
         isPagination: false,
@@ -16,43 +17,20 @@ var app = new Vue({
         isOpenDropdown: '',
         isOpenDropdownLimit: '',
         list: [],
-        colums: [
-            {
-                label: 'Nome',
-                key: 'nome',
-                ative: true,
-                css: 'active is-6'
-            },
-            {
-                label: 'CPF',
-                key: 'cpf',
-                ative: true,
-                css: 'active is-2'
-            },
-            {
-                label: 'Situação',
-                key: 'status',
-                ative: true,
-                css: 'active'
-            },
-            {
-                label: 'Cidade',
-                key: 'cidade',
-                ative: true,
-                css: 'active is-2'
-            },
-            {
-                label: 'Estado',
-                key: 'uf',
-                ative: true,
-                css: 'active is-2'
-            }
-        ]
+        colums: params.colums
     },
     methods: {
+        preLoad: function () {
+            for (s in this.links) {
+                if (this.links[s].page === this.paging.page) {
+                    this.links[s].css = 'is-loading';
+                }
+            }
+            //fa fa-spinner fa-sp in fa-3x fa-fw   
+            this.load();
+        },
         load: function () {
-            this.isCarregando = true;
-            this.$http.get(router.url + 'pacientes/index-load', {params: this.paging}).then(function (resp) {
+            this.$http.get(router.url + this.url, {params: this.paging}).then(function (resp) {
                 this.retorno(resp);
             }, function (resp) {
                 this.retorno(resp);
@@ -85,7 +63,7 @@ var app = new Vue({
                 }
                 this.links = [];
                 for (i; i <= f; i++) {
-                    this.links.push({page: i});
+                    this.links.push({page: i, css: ''});
                 }
             }
 
@@ -95,13 +73,13 @@ var app = new Vue({
             if (page <= this.paging.pageCount && page >= 1) {
                 if (page != this.paging.page) {
                     this.paging.page = page;
-                    this.load();
+                    this.preLoad();
                 }
             }
         },
         search: function (page) {
             this.paging.page = 1;
-            this.load();
+            this.preLoad();
         },
         activePage: function (page) {
             if (this.paging.page == page) {
@@ -125,7 +103,7 @@ var app = new Vue({
         dropdownUlLimit: function (limit) {
             this.paging.page = 1;
             this.paging.limit = limit;
-            this.load();
+            this.preLoad();
         },
         sort: function (key) {
             if (this.paging.sort === key) {
@@ -135,7 +113,7 @@ var app = new Vue({
             }
             this.paging.sort = key;
             this.sortCss(key);
-            this.load();
+            this.preLoad();
         },
         sortCss: function (key) {
             if (this.paging.sort === key) {

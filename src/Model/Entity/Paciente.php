@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Model\Entity;
 
 use Cake\ORM\Entity;
@@ -47,8 +48,9 @@ use Cake\ORM\Entity;
  * @property \App\Model\Entity\Convenio[] $convenios
  * @property \App\Model\Entity\Midia[] $midias
  */
-class Paciente extends Entity
-{
+class Paciente extends Entity {
+
+    use \App\Model\Traits\FuncoesTraits;
 
     /**
      * Fields that can be mass assigned using newEntity() or patchEntity().
@@ -61,6 +63,15 @@ class Paciente extends Entity
      */
     protected $_accessible = [
         '*' => true,
-       
+        'cpf_mask',
     ];
+    protected $_virtual = ['cpf_mask'];
+
+    protected function _getCpfMask() {
+        if (!empty($this->_properties['cpf'])) {
+            return $this->mask($this->_properties['cpf'], '###.###.###-##');
+        }
+        return '';
+    }
+
 }

@@ -378,5 +378,6 @@
 
 
 <?php
+$this->Html->script('/js/componentes/filters.js', ['block' => 'script']);
 $this->Html->script('/js/pacientes/add.js', ['block' => 'script']);
 ?>
