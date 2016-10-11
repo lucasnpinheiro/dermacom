@@ -39,9 +39,11 @@ class PacientesTable extends Table {
 
     use \App\Model\Traits\FuncoesTraits,
         \App\Model\Traits\SearchTraits;
-public $statusInativo = 0;
+
+    public $statusInativo = 0;
     public $statusAtivo = 1;
     public $statusExcluido = 9;
+
     /**
      * Initialize method
      *
@@ -90,7 +92,7 @@ public $statusInativo = 0;
         $this->hasMany('Contatos', [
             'foreignKey' => 'referencia_id',
             'className' => 'Contatos',
-            'conditions' => ['Contatos.tabela'=>'Pacientes']
+            'conditions' => ['Contatos.tabela' => 'Pacientes']
         ]);
         $this->hasMany('PacientesSoube', [
             'foreignKey' => 'paciente_id'
@@ -163,7 +165,7 @@ public $statusInativo = 0;
                 ->allowEmpty('rg');
 
         $validator
-                ->date('data_nascimento')
+                ->date('data_nascimento',['dmy'])
                 ->allowEmpty('data_nascimento');
 
         $validator
@@ -198,6 +200,13 @@ public $statusInativo = 0;
         $rules->add($rules->existsIn(['cor_id'], 'Cores'));
 
         return $rules;
+    }
+
+    public function patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = []) {
+        if(!empty($data['cpf'])){
+            $data['cpf'] = $this->removeMascara($data['cpf']);
+        }
+        return parent::patchEntity($entity, $data, $options);
     }
 
 }

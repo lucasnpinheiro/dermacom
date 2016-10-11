@@ -26,6 +26,15 @@ trait FuncoesTraits {
         return $str;
     }
 
+    public function converteData($str, $explode = '/', $split = '-') {
+        if (!empty($str)) {
+            if (stripos($explode, $str) !== FALSE) {
+                $str = implode($split, array_reverse(explode($explode, $str)));
+            }
+        }
+        return $str;
+    }
+
     public function removeMascara($str) {
         return str_replace(['.', ' ', '-', '_', '/', '(', ')', '\\'], '', $str);
     }

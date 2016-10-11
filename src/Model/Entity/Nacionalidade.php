@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Model\Entity;
 
 use Cake\ORM\Entity;
@@ -14,8 +15,7 @@ use Cake\ORM\Entity;
  *
  * @property \App\Model\Entity\Paciente[] $pacientes
  */
-class Nacionalidade extends Entity
-{
+class Nacionalidade extends Entity {
 
     /**
      * Fields that can be mass assigned using newEntity() or patchEntity().
@@ -28,6 +28,15 @@ class Nacionalidade extends Entity
      */
     protected $_accessible = [
         '*' => true,
-       
+        'nome_pais',
     ];
+    protected $_virtual = ['nome_pais'];
+
+    protected function _getNomePais() {
+        if (!empty($this->_properties['nome'])) {
+            return $this->_properties['nome'] . '/' . $this->_properties['pais'];
+        }
+        return '';
+    }
+
 }

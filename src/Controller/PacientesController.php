@@ -54,34 +54,36 @@ class PacientesController extends AppController {
      * @return \Cake\Network\Response|void Redirects on successful add, renders view otherwise.
      */
     public function add() {
-        $paciente = $this->Pacientes->get(1, [
-            'contain' => [
-                'Convenios',
-                'Midias',
-                'Sexos',
-                'EstadosCivis',
-                'Escolaridades',
-                'Profissoes',
-                'Nacionalidades',
-                'Religioes',
-                'Cores',
-                'PacientesAcompanhamentos',
-                'PacientesEmergencias',
-                'PacientesServicos',
-                'PacientesSoube',
-                'Contatos',
-            ]
-        ]);
-        if ($this->request->is('post')) {
-            $paciente = $this->Pacientes->patchEntity($paciente, $this->request->data);
-            if ($this->Pacientes->save($paciente)) {
-                $this->Flash->success(__('Registro salvo com sucesso.'));
+        $paciente = $this->Pacientes->newEntity();
+        $paciente->id = null;
+        $paciente->nome = null;
+        $paciente->status = 1;
+        $paciente->cep = null;
+        $paciente->endereco = null;
+        $paciente->numero = null;
+        $paciente->complemento = null;
+        $paciente->bairro = null;
+        $paciente->cidade = null;
+        $paciente->estado = null;
+        $paciente->cpf = null;
+        $paciente->rg = null;
+        $paciente->data_nascimento = null;
+        $paciente->sexo_id = null;
+        $paciente->foto = null;
+        $paciente->cartao_sus = null;
+        $paciente->estados_civil_id = null;
+        $paciente->escolaridade_id = null;
+        $paciente->profissao_id = null;
+        $paciente->naturalidade = null;
+        $paciente->nacionalidade_id = null;
+        $paciente->religiao_id = null;
+        $paciente->cor_id = null;
+        $paciente->centro_custo = null;
+        $paciente->created = null;
+        $paciente->modified = null;
+        $paciente->cpf_mask = null;
+        $paciente->idade = null;
 
-                return $this->redirect(['action' => 'index']);
-            } else {
-                $this->Flash->error(__('Não foi possivel salvar o registro.'));
-            }
-        }
         $sexos = $this->Pacientes->Sexos->find()->all();
         $estadosCivils = $this->Pacientes->EstadosCivis->find()->all();
         $escolaridades = $this->Pacientes->Escolaridades->find()->all();
@@ -95,6 +97,22 @@ class PacientesController extends AppController {
         $this->set('_serialize', ['paciente', 'sexos', 'estadosCivils', 'escolaridades', 'profissaos', 'nacionalidades', 'religiaos', 'cors', 'convenios', 'midias']);
     }
 
+    public function gravar() {
+        $id = $this->request->data('id');
+        unset($this->request->data['id']);
+        if (!empty($id)) {
+            $paciente = $this->Pacientes->get($id);
+        } else {
+            $paciente = $this->Pacientes->newEntity();
+        }
+        $paciente = $this->Pacientes->patchEntity($paciente, $this->request->data);
+        if ($this->Pacientes->save($paciente)) {
+            $this->sendResponse($paciente, 200);
+        } else {
+            $this->sendResponse($paciente->errors(), 214);
+        }
+    }
+
     /**
      * Edit method
      *
@@ -106,16 +124,6 @@ class PacientesController extends AppController {
         $paciente = $this->Pacientes->get($id, [
             'contain' => ['Convenios', 'Midias']
         ]);
-        if ($this->request->is(['patch', 'post', 'put'])) {
-            $paciente = $this->Pacientes->patchEntity($paciente, $this->request->data);
-            if ($this->Pacientes->save($paciente)) {
-                $this->Flash->success(__('Registro salvo com sucesso.'));
-
-                return $this->redirect(['action' => 'index']);
-            } else {
-                $this->Flash->error(__('Não foi possivel salvar o registro.'));
-            }
-        }
         $sexos = $this->Pacientes->Sexos->find()->all();
         $estadosCivils = $this->Pacientes->EstadosCivis->find()->all();
         $escolaridades = $this->Pacientes->Escolaridades->find()->all();
