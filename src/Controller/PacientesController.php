@@ -122,7 +122,9 @@ class PacientesController extends AppController {
      */
     public function edit($id = null) {
         $paciente = $this->Pacientes->get($id, [
-            'contain' => ['Convenios', 'Midias']
+            'contain' => ['Convenios', 'Midias', 'PacientesAcompanhamentos' => function($q) {
+                    return $q->contain('Especialidades');
+                }, 'PacientesEmergencias', 'PacientesServicos', 'Contatos', 'PacientesSoube']
         ]);
         $sexos = $this->Pacientes->Sexos->find()->all();
         $estadosCivils = $this->Pacientes->EstadosCivis->find()->all();
@@ -133,7 +135,9 @@ class PacientesController extends AppController {
         $cors = $this->Pacientes->Cores->find()->all();
         $convenios = $this->Pacientes->Convenios->find()->all();
         $midias = $this->Pacientes->Midias->find()->all();
-        $this->set(compact('paciente', 'sexos', 'estadosCivils', 'escolaridades', 'profissaos', 'nacionalidades', 'religiaos', 'cors', 'convenios', 'midias'));
+        $this->loadModel('Especialidades');
+        $especialidades = $this->Especialidades->find()->all();
+        $this->set(compact('especialidades','paciente', 'sexos', 'estadosCivils', 'escolaridades', 'profissaos', 'nacionalidades', 'religiaos', 'cors', 'convenios', 'midias'));
         $this->set('_serialize', ['paciente']);
     }
 

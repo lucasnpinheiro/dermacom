@@ -32,6 +32,21 @@ var app = new Vue({
             } else {
 
             }
+        },
+        tabActive: function (key) {
+            for (var i in this.tabs) {
+                console.log(i);
+                this.tabs[i].active = false;
+                this.tabs[i].class = '';
+            }
+            this.tabs[key].active = true;
+            this.tabs[key].class = 'is-active';
+        },
+        remove: function (k, lista) {
+            this.paciente[lista] = this.paciente[lista].filter(function (item, chave) {
+                return chave !== k;
+            });
+            return this.paciente;
         }
     }
 });
