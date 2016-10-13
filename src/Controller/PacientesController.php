@@ -83,18 +83,7 @@ class PacientesController extends AppController {
         $paciente->modified = null;
         $paciente->cpf_mask = null;
         $paciente->idade = null;
-
-        $sexos = $this->Pacientes->Sexos->find()->all();
-        $estadosCivils = $this->Pacientes->EstadosCivis->find()->all();
-        $escolaridades = $this->Pacientes->Escolaridades->find()->all();
-        $profissaos = $this->Pacientes->Profissoes->find()->all();
-        $nacionalidades = $this->Pacientes->Nacionalidades->find()->all();
-        $religiaos = $this->Pacientes->Religioes->find()->all();
-        $cors = $this->Pacientes->Cores->find()->all();
-        $convenios = $this->Pacientes->Convenios->find()->all();
-        $midias = $this->Pacientes->Midias->find()->all();
-        $this->set(compact('paciente', 'sexos', 'estadosCivils', 'escolaridades', 'profissaos', 'nacionalidades', 'religiaos', 'cors', 'convenios', 'midias'));
-        $this->set('_serialize', ['paciente', 'sexos', 'estadosCivils', 'escolaridades', 'profissaos', 'nacionalidades', 'religiaos', 'cors', 'convenios', 'midias']);
+        $this->_setData($paciente);
     }
 
     public function gravar() {
@@ -126,6 +115,10 @@ class PacientesController extends AppController {
                     return $q->contain('Especialidades');
                 }, 'PacientesEmergencias', 'PacientesServicos', 'Contatos', 'PacientesSoube']
         ]);
+        $this->_setData($paciente);
+    }
+
+    private function _setData($paciente) {
         $sexos = $this->Pacientes->Sexos->find()->all();
         $estadosCivils = $this->Pacientes->EstadosCivis->find()->all();
         $escolaridades = $this->Pacientes->Escolaridades->find()->all();
@@ -137,7 +130,7 @@ class PacientesController extends AppController {
         $midias = $this->Pacientes->Midias->find()->all();
         $this->loadModel('Especialidades');
         $especialidades = $this->Especialidades->find()->all();
-        $this->set(compact('especialidades','paciente', 'sexos', 'estadosCivils', 'escolaridades', 'profissaos', 'nacionalidades', 'religiaos', 'cors', 'convenios', 'midias'));
+        $this->set(compact('especialidades', 'paciente', 'sexos', 'estadosCivils', 'escolaridades', 'profissaos', 'nacionalidades', 'religiaos', 'cors', 'convenios', 'midias'));
         $this->set('_serialize', ['paciente']);
     }
 
