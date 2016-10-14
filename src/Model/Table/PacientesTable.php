@@ -83,6 +83,9 @@ class PacientesTable extends Table {
         $this->hasMany('PacientesAcompanhamentos', [
             'foreignKey' => 'paciente_id'
         ]);
+        $this->hasMany('PacientesProgramacoes', [
+            'foreignKey' => 'paciente_id'
+        ]);
         $this->hasMany('PacientesEmergencias', [
             'foreignKey' => 'paciente_id'
         ]);

@@ -1,12 +1,3 @@
-Vue.filter('reverse', function (value) {
-    return value.split('').reverse().join('');
-});
-
-Vue.filter('cpf', function (value) {
-    value = value.replace(/\D/g, '');
-    return value.substr(0, 3) + '.' + value.substr(3, 3) + '.' + value.substr(6, 3) + '-' + value.substr(9, 2);
-});
-
 var extra = {};
 extra.input = {};
 extra.input.data = function (val) {
@@ -37,6 +28,19 @@ extra.input.data = function (val) {
     }
     val.data_nascimento = d;
     return val;
+};
+extra.input.hora = function (value) {
+    var v = value.split('T');
+    if (v.length > 1) {
+        v = v[1].split('-');
+    }
+    value = v[0];
+    return value;
+};
+extra.input._data = function (value) {
+    var v = value.split('T');
+    value = v[0];
+    return value;
 };
 extra.input.cpf = function (val) {
     var d = val.cpf;
@@ -73,3 +77,45 @@ extra.input.cep = function (val, obj) {
     val.cep = d;
     return val;
 };
+
+
+extra.input.getSelectedText = function (elementId) {
+    var elt = document.getElementById(elementId);
+
+    if (elt.selectedIndex == -1)
+        return null;
+
+    return elt.options[elt.selectedIndex].text;
+};
+
+Vue.directive('mask', {
+    update: function (el, binding, vnode, oldVnode) {
+        var parse = function (input, mask) {
+            var maskared = '';
+            var k = 0;
+            for (var i = 0; i <= mask.length - 1; i++) {
+                if (mask[i] === '#') {
+                    if (input[k] !== undefined)
+                        maskared += input[k++];
+                } else {
+                    if (mask[i] !== undefined)
+                        maskared += mask[i];
+                }
+            }
+            return maskared;
+        };
+        vnode.elm.value = parse(oldVnode.elm.value, binding.expression);
+    }
+});
+
+Vue.filter('cpf', function (value) {
+    value = value.replace(/\D/g, '');
+    return value.substr(0, 3) + '.' + value.substr(3, 3) + '.' + value.substr(6, 3) + '-' + value.substr(9, 2);
+});
+
+Vue.filter('data', function (value) {
+    return extra.input._data(value).split('-').reverse().join('/');
+});
+Vue.filter('hora', function (value) {
+    return extra.input.hora(value);
+});

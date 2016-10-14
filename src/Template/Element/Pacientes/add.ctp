@@ -23,10 +23,12 @@ if (!$paciente->has('convenios')) {
 if (!$paciente->has('midias')) {
     $paciente->midias = [];
 }
-//debug($paciente);
+if (!$paciente->has('pacientes_programacoes')) {
+    $paciente->pacientes_programacoes = [];
+}
 ?>
 <script>
-    var data = <?php echo json_encode(['especialidades' => $especialidades, 'paciente' => $paciente, 'sexos' => $sexos, 'estadosCivils' => $estadosCivils, 'escolaridades' => $escolaridades, 'profissaos' => $profissaos, 'nacionalidades' => $nacionalidades, 'religiaos' => $religiaos, 'cors' => $cors, 'convenios' => $convenios, 'midias' => $midias]); ?>;
+    var data = <?php echo json_encode(['usuarios'=>$usuarios,'parentescos' => $parentescos, 'especialidades' => $especialidades, 'paciente' => $paciente, 'sexos' => $sexos, 'estadosCivils' => $estadosCivils, 'escolaridades' => $escolaridades, 'profissaos' => $profissaos, 'nacionalidades' => $nacionalidades, 'religiaos' => $religiaos, 'cors' => $cors, 'convenios' => $convenios, 'midias' => $midias]); ?>;
     data.tabs = {
         'profissional': {label: 'Profissional', active: true, class: 'is-active'},
         'emergencia': {label: 'Emergência', active: false, class: ''},
@@ -225,6 +227,7 @@ if (!$paciente->has('midias')) {
 
     <div v-if="tabs.profissional.active">
         <h3 class="title text-center">Possui acompanhamento de profissional da saúde</h3>
+        <input type="hidden" id="pacientes_acompanhamentos_id" autocomplete="off">
         <div class="columns">
 
             <div class="column is-3">
@@ -251,7 +254,7 @@ if (!$paciente->has('midias')) {
             </div>
             <div class="column text-center">
                 <label class="label">&nbsp;</label>
-                <button class="button"><i class="fa fa-plus-circle"></i></button>
+                <button type="button" v-on:click="add('pacientes_acompanhamentos')" class="button"><i class="fa fa-plus-circle"></i></button>
             </div>
         </div>
         <table class="table">
@@ -268,7 +271,10 @@ if (!$paciente->has('midias')) {
                     <td>{{item.especialidade.nome}}</td>
                     <td>{{item.medico}}</td>
                     <td>{{item.telefone}}</td>
-                    <td class="text-center"><i v-on:click="remove(k, 'pacientes_acompanhamentos')" class="fa fa-eraser"></i></td>
+                    <td class="text-center">
+                        <i v-on:click="clone(k, 'pacientes_acompanhamentos')" class="fa fa-pencil"></i>
+                        <i v-on:click="remove(k, 'pacientes_acompanhamentos')" class="fa fa-eraser"></i>
+                    </td>
                 </tr>
             </tbody>
         </table>
@@ -276,10 +282,120 @@ if (!$paciente->has('midias')) {
     </div>
 
     <div v-if="tabs.emergencia.active">
-        <h3>Em caso de emergência avisar</h3>
+        <h3 class="title text-center">Em caso de emergência avisar</h3>
+        <input type="hidden" id="pacientes_emergencias_id" autocomplete="off">
+        <div class="columns">
+
+            <div class="column is-3">
+                <label class="label">Parentesco</label>
+                <p class="control">
+                    <select class="select" style="width: 100%;" id="pacientes_emergencias_parentesco_id" autocomplete="off">
+                        <option>Selecione uma Profissão</option>
+                        <option v-for="item in parentescos" v-bind:value="item.id">{{item.nome}}</option>
+                    </select>
+                </p>
+
+            </div>
+            <div class="column is-6">
+                <label class="label">Nome</label>
+                <p class="control">
+                    <input class="input" type="text" id="pacientes_emergencias_nome" autocomplete="off">
+                </p>
+            </div>
+            <div class="column is-2">
+                <label class="label">Telefone</label>
+                <p class="control">
+                    <input class="input" type="text" id="pacientes_emergencias_telefone" autocomplete="off">
+                </p>
+            </div>
+            <div class="column text-center">
+                <label class="label">&nbsp;</label>
+                <button type="button" v-on:click="add('pacientes_emergencias')" class="button"><i class="fa fa-plus-circle"></i></button>
+            </div>
+        </div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Parentesco</th>
+                    <th>Nome</th>
+                    <th>Telefone</th>
+                    <th style="text-align: center;">Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="(item, k) in paciente.pacientes_emergencias">
+                    <td>{{item.parentesco.nome}}</td>
+                    <td>{{item.nome}}</td>
+                    <td>{{item.telefone}}</td>
+                    <td class="text-center">
+                        <i v-on:click="clone(k, 'pacientes_emergencias')" class="fa fa-pencil"></i>
+                        <i v-on:click="remove(k, 'pacientes_emergencias')" class="fa fa-eraser"></i>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
     </div>
     <div v-if="tabs.programacao.active">
-        <h3>Programação de retorno do Paciente</h3>  
+        <h3 class="title text-center">Programação de retorno do Paciente</h3>
+        <input type="hidden" id="pacientes_programacoes_id" autocomplete="off">
+        <div class="columns">
+
+            <div class="column is-3">
+                <label class="label">Usuário</label>
+                <p class="control">
+                    <select class="select" style="width: 100%;" id="pacientes_programacoes_usuario_id" autocomplete="off">
+                        <option>Selecione um Usuário</option>
+                        <option v-for="item in usuarios" v-bind:value="item.id">{{item.nome}}</option>
+                    </select>
+                </p>
+
+            </div>
+            <div class="column is-5">
+                <label class="label">Motivo</label>
+                <p class="control">
+                    <input class="input" type="text" id="pacientes_programacoes_motivo" autocomplete="off">
+                </p>
+            </div>
+            <div class="column">
+                <label class="label">Data</label>
+                <p class="control">
+                    <input class="input" type="date" id="pacientes_programacoes_data" autocomplete="off">
+                </p>
+            </div>
+            <div class="column">
+                <label class="label">Hora</label>
+                <p class="control">
+                    <input class="input" type="time" id="pacientes_programacoes_hora" step="1" autocomplete="off">
+                </p>
+            </div>
+            <div class="column text-center">
+                <label class="label">&nbsp;</label>
+                <button type="button" v-on:click="add('pacientes_programacoes')" class="button"><i class="fa fa-plus-circle"></i></button>
+            </div>
+        </div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Usuário</th>
+                    <th>Motivo</th>
+                    <th>Data</th>
+                    <th>Hora</th>
+                    <th style="text-align: center;">Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="(item, k) in paciente.pacientes_programacoes">
+                    <td>{{item.usuario.nome}}</td>
+                    <td>{{item.motivo}}</td>
+                    <td>{{item.data | data}}</td>
+                    <td>{{item.hora | hora}}</td>
+                    <td class="text-center">
+                        <i v-on:click="clone(k, 'pacientes_programacoes')" class="fa fa-pencil"></i>
+                        <i v-on:click="remove(k, 'pacientes_programacoes')" class="fa fa-eraser"></i>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
     </div>
     <div v-if="tabs.servicos.active">
         <h3>Tipos de serviços</h3>
@@ -297,4 +413,6 @@ if (!$paciente->has('midias')) {
 <?php
 $this->Html->script('/js/componentes/filters.js', ['block' => 'script']);
 $this->Html->script('/js/pacientes/add.js', ['block' => 'script']);
+debug($paciente);
 ?>
+

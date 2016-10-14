@@ -428,6 +428,23 @@ PRIMARY KEY (`id`)
 -- Fim das estrutura da tabela `pacientes_midias` --
 
 
+-- Inicio das estrutura da tabela `pacientes_programacoes` --
+/* !40101 SET character_set_client = utf8 */;
+DROP TABLE IF EXISTS `pacientes_programacoes`;
+CREATE TABLE IF NOT EXISTS `pacientes_programacoes` (
+`id` INTEGER(11) NOT NULL AUTO_INCREMENT,
+`paciente_id` INTEGER(11) DEFAULT NULL,
+`usuario_id` INTEGER(11) DEFAULT NULL,
+`motivo` TEXT COLLATE utf8_general_ci DEFAULT NULL,
+`data` DATE DEFAULT NULL,
+`hora` TIME DEFAULT NULL,
+`created` DATETIME DEFAULT NULL,
+`modified` DATETIME DEFAULT NULL,
+PRIMARY KEY (`id`)
+) ENGINE=InnoDB;
+-- Fim das estrutura da tabela `pacientes_programacoes` --
+
+
 -- Inicio das estrutura da tabela `pacientes_servicos` --
 /* !40101 SET character_set_client = utf8 */;
 DROP TABLE IF EXISTS `pacientes_servicos`;

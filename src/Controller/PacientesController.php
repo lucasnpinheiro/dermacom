@@ -86,22 +86,6 @@ class PacientesController extends AppController {
         $this->_setData($paciente);
     }
 
-    public function gravar() {
-        $id = $this->request->data('id');
-        unset($this->request->data['id']);
-        if (!empty($id)) {
-            $paciente = $this->Pacientes->get($id);
-        } else {
-            $paciente = $this->Pacientes->newEntity();
-        }
-        $paciente = $this->Pacientes->patchEntity($paciente, $this->request->data);
-        if ($this->Pacientes->save($paciente)) {
-            $this->sendResponse($paciente, 200);
-        } else {
-            $this->sendResponse($paciente->errors(), 214);
-        }
-    }
-
     /**
      * Edit method
      *
@@ -111,9 +95,22 @@ class PacientesController extends AppController {
      */
     public function edit($id = null) {
         $paciente = $this->Pacientes->get($id, [
-            'contain' => ['Convenios', 'Midias', 'PacientesAcompanhamentos' => function($q) {
+            'contain' => [
+                'Convenios',
+                'Midias',
+                'PacientesAcompanhamentos' => function($q) {
                     return $q->contain('Especialidades');
-                }, 'PacientesEmergencias', 'PacientesServicos', 'Contatos', 'PacientesSoube']
+                },
+                'PacientesEmergencias' => function($q) {
+                    return $q->contain('Parentescos');
+                },
+                'PacientesProgramacoes' => function($q) {
+                    return $q->contain('Usuarios');
+                },
+                'PacientesServicos',
+                'Contatos',
+                'PacientesSoube'
+            ]
         ]);
         $this->_setData($paciente);
     }
@@ -129,9 +126,29 @@ class PacientesController extends AppController {
         $convenios = $this->Pacientes->Convenios->find()->all();
         $midias = $this->Pacientes->Midias->find()->all();
         $this->loadModel('Especialidades');
+        $this->loadModel('Parentescos');
+        $this->loadModel('Usuarios');
         $especialidades = $this->Especialidades->find()->all();
-        $this->set(compact('especialidades', 'paciente', 'sexos', 'estadosCivils', 'escolaridades', 'profissaos', 'nacionalidades', 'religiaos', 'cors', 'convenios', 'midias'));
+        $parentescos = $this->Parentescos->find()->all();
+        $usuarios = $this->Usuarios->find()->all();
+        $this->set(compact('usuarios','parentescos', 'especialidades', 'paciente', 'sexos', 'estadosCivils', 'escolaridades', 'profissaos', 'nacionalidades', 'religiaos', 'cors', 'convenios', 'midias'));
         $this->set('_serialize', ['paciente']);
+    }
+
+    public function gravar() {
+        $id = $this->request->data('id');
+        unset($this->request->data['id']);
+        if (!empty($id)) {
+            $paciente = $this->Pacientes->get($id);
+        } else {
+            $paciente = $this->Pacientes->newEntity();
+        }
+        $paciente = $this->Pacientes->patchEntity($paciente, $this->request->data);
+        if ($this->Pacientes->save($paciente)) {
+            $this->sendResponse($paciente, 200);
+        } else {
+            $this->sendResponse($paciente->errors(), 214);
+        }
     }
 
     /**
