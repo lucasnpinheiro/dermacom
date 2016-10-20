@@ -107,7 +107,9 @@ class PacientesController extends AppController {
                 'PacientesProgramacoes' => function($q) {
                     return $q->contain('Usuarios');
                 },
-                'PacientesServicos',
+                'PacientesServicos' => function($q) {
+                    return $q->contain('ServicosClinicas');
+                },
                 'Contatos',
                 'PacientesSoube'
             ]
@@ -128,10 +130,12 @@ class PacientesController extends AppController {
         $this->loadModel('Especialidades');
         $this->loadModel('Parentescos');
         $this->loadModel('Usuarios');
+        $this->loadModel('ServicosClinicas');
         $especialidades = $this->Especialidades->find()->all();
         $parentescos = $this->Parentescos->find()->all();
         $usuarios = $this->Usuarios->find()->all();
-        $this->set(compact('usuarios','parentescos', 'especialidades', 'paciente', 'sexos', 'estadosCivils', 'escolaridades', 'profissaos', 'nacionalidades', 'religiaos', 'cors', 'convenios', 'midias'));
+        $servicosClinicas = $this->ServicosClinicas->find()->all();
+        $this->set(compact('servicosClinicas', 'usuarios', 'parentescos', 'especialidades', 'paciente', 'sexos', 'estadosCivils', 'escolaridades', 'profissaos', 'nacionalidades', 'religiaos', 'cors', 'convenios', 'midias'));
         $this->set('_serialize', ['paciente']);
     }
 

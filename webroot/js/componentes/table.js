@@ -19,6 +19,9 @@ var app = new Vue({
         list: [],
         colums: params.colums
     },
+    mounted: function(){
+        this.load();
+    },
     methods: {
         preLoad: function () {
             for (s in this.links) {
@@ -148,4 +151,3 @@ var app = new Vue({
         }
     }
 });
-app.load();

@@ -73,6 +73,17 @@ var app = new Vue({
                     document.getElementById('pacientes_programacoes_usuario_id').value = item.usuario_id;
                     break;
 
+                case 'pacientes_servicos':
+                    document.getElementById('pacientes_servicos_servicos_clinica_id').value = item.pacientes_servicos_servicos_clinica_id;
+                    break;
+
+                case 'pacientes_soube':
+                    document.getElementById('pacientes_soube_como').value = item.pacientes_soube_como;
+                    document.getElementById('pacientes_soube_nome').value = item.pacientes_soube_nome;
+                    document.getElementById('pacientes_soube_telefone').value = item.pacientes_soube_telefone;
+                    document.getElementById('pacientes_soube_especialidade_id').value = item.pacientes_soube_especialidade_id;
+                    break;
+
             }
         },
         add: function (lista) {
@@ -130,6 +141,36 @@ var app = new Vue({
                     document.getElementById('pacientes_programacoes_data').value = '';
                     document.getElementById('pacientes_programacoes_hora').value = '';
                     document.getElementById('pacientes_programacoes_usuario_id').value = '';
+                    break;
+                    
+                case 'pacientes_servicos':
+                    var dados = {
+                        servicos_clinica_id: document.getElementById('pacientes_servicos_servicos_clinica_id').value,
+                        servicos_clinica: {
+                            nome: extra.input.getSelectedText('pacientes_servicos_servicos_clinica_id'),
+                            id: document.getElementById('pacientes_servicos_servicos_clinica_id').value
+                        }
+                    };
+                    this.paciente[lista].push(dados);
+                    document.getElementById('pacientes_servicos_servicos_clinica_id').value = '';
+                    break;
+                    
+                case 'pacientes_soube':
+                    var dados = {
+                        como: document.getElementById('pacientes_soube_como').value,
+                        nome: document.getElementById('pacientes_soube_nome').value,
+                        telefone: document.getElementById('pacientes_soube_telefone').value,
+                        especialidade_id: document.getElementById('pacientes_soube_especialidade_id').value,
+                        especialidade: {
+                            nome: extra.input.getSelectedText('pacientes_soube_especialidade_id'),
+                            id: document.getElementById('pacientes_soube_especialidade_id').value
+                        }
+                    };
+                    this.paciente[lista].push(dados);
+                    document.getElementById('pacientes_soube_como').value = '';
+                    document.getElementById('pacientes_soube_nome').value = '';
+                    document.getElementById('pacientes_soube_telefone').value = '';
+                    document.getElementById('pacientes_soube_especialidade_id').value = '';
                     break;
 
             }
