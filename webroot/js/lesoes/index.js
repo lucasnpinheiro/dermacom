@@ -79,4 +79,4 @@ var app = new Vue({
 });
 
 var windowHeight = window.innerHeight;
-document.getElementById('listagem-lesoes').style.height = (windowHeight - 60) + "px";
+document.getElementById('listagem-lesoes').style.height = (windowHeight - 78) + "px";

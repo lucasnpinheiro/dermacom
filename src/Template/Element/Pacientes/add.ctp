@@ -28,7 +28,7 @@ if (!$paciente->has('pacientes_programacoes')) {
 }
 ?>
 <script>
-    var data = <?php echo json_encode(['servicosClinicas' => $servicosClinicas, 'usuarios' => $usuarios, 'parentescos' => $parentescos, 'especialidades' => $especialidades, 'paciente' => $paciente, 'sexos' => $sexos, 'estadosCivils' => $estadosCivils, 'escolaridades' => $escolaridades, 'profissaos' => $profissaos, 'nacionalidades' => $nacionalidades, 'religiaos' => $religiaos, 'cors' => $cors, 'convenios' => $convenios, 'midias' => $midias]); ?>;
+    var data = <?php echo json_encode(['contatosTipos' => $contatosTipos, 'servicosClinicas' => $servicosClinicas, 'usuarios' => $usuarios, 'parentescos' => $parentescos, 'especialidades' => $especialidades, 'paciente' => $paciente, 'sexos' => $sexos, 'estadosCivils' => $estadosCivils, 'escolaridades' => $escolaridades, 'profissaos' => $profissaos, 'nacionalidades' => $nacionalidades, 'religiaos' => $religiaos, 'cors' => $cors, 'convenios' => $convenios, 'midias' => $midias]); ?>;
     data.tabs = {
         'profissional': {label: 'Profissional', active: true, class: 'is-active'},
         'emergencia': {label: 'Emergência', active: false, class: ''},
@@ -45,8 +45,8 @@ if (!$paciente->has('pacientes_programacoes')) {
     <div class="columns">
         <div class="column">
             <label class="label">ID</label>
-            <p class="control">
-                <input class="input" disabled="disabled" type="number" v-model="paciente.id" autocomplete="off" maxlength="11">
+            <p class="control" style="width: 100%;">
+                <span class="input disabled">{{paciente.id}}</span>
             </p>
         </div>
         <div class="column">
@@ -73,13 +73,13 @@ if (!$paciente->has('pacientes_programacoes')) {
         <div class="column">
             <label class="label">Nascimento</label>
             <p class="control">
-                <input class="input" type="text" v-model="paciente.data_nascimento" v-bind="dataNascimentoMask"  autocomplete="off" maxlength="8">
+                <input class="input" type="date" v-model="paciente.data_nascimento" autocomplete="off">
             </p>
         </div>
         <div class="column">
             <label class="label">Idade</label>
-            <p class="control">
-                <input class="input" type="text" v-model="paciente.idade" autocomplete="off" disabled="disabled">
+            <p class="control" style="width: 100%;">
+                <span class="input disabled">{{paciente.data_nascimento | idade}}</span>
             </p>
         </div>
 
@@ -199,7 +199,7 @@ if (!$paciente->has('pacientes_programacoes')) {
             </p>
         </div>
         <div class="column is-2">
-            <label class="label">Religiao</label>
+            <label class="label">Religião</label>
             <p class="control">
                 <select class="select" style="width: 100%;" v-model="paciente.religiao_id" autocomplete="off">
                     <option>Selecione uma Religião</option>
@@ -219,298 +219,352 @@ if (!$paciente->has('pacientes_programacoes')) {
     </div>
 
 
-    <div class="tabs">
-        <ul>
-            <li v-for="(item, k) in tabs" :class="item.class" v-on:click="tabActive(k)"><a>{{item.label}}</a></li>
-        </ul>
-    </div>
 
-    <div v-if="tabs.profissional.active">
-        <h3 class="title text-center">Possui acompanhamento de profissional da saúde</h3>
-        <input type="hidden" id="pacientes_acompanhamentos_id" autocomplete="off">
-        <div class="columns">
 
-            <div class="column is-3">
-                <label class="label">Especialidade</label>
-                <p class="control">
-                    <select class="select" style="width: 100%;" id="pacientes_acompanhamentos_especialidade_id" autocomplete="off">
-                        <option>Selecione uma Profissão</option>
-                        <option v-for="item in especialidades" v-bind:value="item.id">{{item.nome}}</option>
-                    </select>
-                </p>
+
+    <nav class="panel">
+        <div class="panel-heading">
+            Dados auxiliares
+        </div>
+        <div class="tabs">
+            <ul>
+                <li v-for="(item, k) in tabs" :class="item.class" v-on:click="tabActive(k)"><a>{{item.label}}</a></li>
+            </ul>
+        </div>
+
+        <div class="container">
+
+            <div v-if="tabs.profissional.active">
+                <h3 class="title text-center">Possui acompanhamento de profissional da saúde</h3>
+                <input type="hidden" id="pacientes_acompanhamentos_id" autocomplete="off">
+                <div class="columns">
+
+                    <div class="column is-3">
+                        <label class="label">Especialidade</label>
+                        <p class="control">
+                            <select class="select" style="width: 100%;" id="pacientes_acompanhamentos_especialidade_id" autocomplete="off">
+                                <option>Selecione uma Profissão</option>
+                                <option v-for="item in especialidades" v-bind:value="item.id">{{item.nome}}</option>
+                            </select>
+                        </p>
+
+                    </div>
+                    <div class="column is-6">
+                        <label class="label">Nome profissional/Entidade</label>
+                        <p class="control">
+                            <input class="input" type="text" id="pacientes_acompanhamentos_medico" autocomplete="off">
+                        </p>
+                    </div>
+                    <div class="column is-2">
+                        <label class="label">Telefone</label>
+                        <p class="control">
+                            <input class="input" type="text" id="pacientes_acompanhamentos_telefone" onkeyup="mascaraTel(this, '(##) #####-####')" maxlength="15"  autocomplete="off">
+                        </p>
+                    </div>
+                    <div class="column text-center">
+                        <label class="label">&nbsp;</label>
+                        <button type="button" v-on:click="add('pacientes_acompanhamentos')" class="button"><i class="fa fa-plus-circle"></i></button>
+                    </div>
+                </div>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Especialidade</th>
+                            <th>Nome profissional/Entidade</th>
+                            <th>Telefone</th>
+                            <th style="text-align: center;">Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="(item, k) in paciente.pacientes_acompanhamentos">
+                            <td>{{item.especialidade.nome}}</td>
+                            <td>{{item.medico}}</td>
+                            <td>{{item.telefone}}</td>
+                            <td class="text-center">
+                                <i v-on:click="clone(k, 'pacientes_acompanhamentos')" class="fa fa-pencil"></i>
+                                <i v-on:click="remove(k, 'pacientes_acompanhamentos')" class="fa fa-eraser"></i>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
 
             </div>
-            <div class="column is-6">
-                <label class="label">Nome profissional/Entidade</label>
-                <p class="control">
-                    <input class="input" type="text" id="pacientes_acompanhamentos_medico" autocomplete="off">
-                </p>
+
+            <div v-if="tabs.emergencia.active">
+                <h3 class="title text-center">Em caso de emergência avisar</h3>
+                <input type="hidden" id="pacientes_emergencias_id" autocomplete="off">
+                <div class="columns">
+
+                    <div class="column is-3">
+                        <label class="label">Parentesco</label>
+                        <p class="control">
+                            <select class="select" style="width: 100%;" id="pacientes_emergencias_parentesco_id" autocomplete="off">
+                                <option>Selecione uma Profissão</option>
+                                <option v-for="item in parentescos" v-bind:value="item.id">{{item.nome}}</option>
+                            </select>
+                        </p>
+
+                    </div>
+                    <div class="column is-6">
+                        <label class="label">Nome</label>
+                        <p class="control">
+                            <input class="input" type="text" id="pacientes_emergencias_nome" autocomplete="off">
+                        </p>
+                    </div>
+                    <div class="column is-2">
+                        <label class="label">Telefone</label>
+                        <p class="control">
+                            <input class="input" type="text" id="pacientes_emergencias_telefone" onkeyup="mascaraTel(this, '(##) #####-####')" maxlength="15"  autocomplete="off">
+                        </p>
+                    </div>
+                    <div class="column text-center">
+                        <label class="label">&nbsp;</label>
+                        <button type="button" v-on:click="add('pacientes_emergencias')" class="button"><i class="fa fa-plus-circle"></i></button>
+                    </div>
+                </div>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Parentesco</th>
+                            <th>Nome</th>
+                            <th>Telefone</th>
+                            <th style="text-align: center;">Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="(item, k) in paciente.pacientes_emergencias">
+                            <td>{{item.parentesco.nome}}</td>
+                            <td>{{item.nome}}</td>
+                            <td>{{item.telefone}}</td>
+                            <td class="text-center">
+                                <i v-on:click="clone(k, 'pacientes_emergencias')" class="fa fa-pencil"></i>
+                                <i v-on:click="remove(k, 'pacientes_emergencias')" class="fa fa-eraser"></i>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
-            <div class="column is-2">
-                <label class="label">Telefone</label>
-                <p class="control">
-                    <input class="input" type="text" id="pacientes_acompanhamentos_telefone" autocomplete="off">
-                </p>
+            <div v-if="tabs.programacao.active">
+                <h3 class="title text-center">Programação de retorno do Paciente</h3>
+                <input type="hidden" id="pacientes_programacoes_id" autocomplete="off">
+                <div class="columns">
+
+                    <div class="column is-3">
+                        <label class="label">Usuário</label>
+                        <p class="control">
+                            <select class="select" style="width: 100%;" id="pacientes_programacoes_usuario_id" autocomplete="off">
+                                <option>Selecione um Usuário</option>
+                                <option v-for="item in usuarios" v-bind:value="item.id">{{item.nome}}</option>
+                            </select>
+                        </p>
+
+                    </div>
+                    <div class="column is-5">
+                        <label class="label">Motivo</label>
+                        <p class="control">
+                            <input class="input" type="text" id="pacientes_programacoes_motivo" autocomplete="off">
+                        </p>
+                    </div>
+                    <div class="column">
+                        <label class="label">Data</label>
+                        <p class="control">
+                            <input class="input" type="date" id="pacientes_programacoes_data" autocomplete="off">
+                        </p>
+                    </div>
+                    <div class="column">
+                        <label class="label">Hora</label>
+                        <p class="control">
+                            <input class="input" type="time" id="pacientes_programacoes_hora" step="1" autocomplete="off">
+                        </p>
+                    </div>
+                    <div class="column text-center">
+                        <label class="label">&nbsp;</label>
+                        <button type="button" v-on:click="add('pacientes_programacoes')" class="button"><i class="fa fa-plus-circle"></i></button>
+                    </div>
+                </div>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Usuário</th>
+                            <th>Motivo</th>
+                            <th>Data</th>
+                            <th>Hora</th>
+                            <th style="text-align: center;">Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="(item, k) in paciente.pacientes_programacoes">
+                            <td>{{item.usuario.nome}}</td>
+                            <td>{{item.motivo}}</td>
+                            <td>{{item.data | data}}</td>
+                            <td>{{item.hora | hora}}</td>
+                            <td class="text-center">
+                                <i v-on:click="clone(k, 'pacientes_programacoes')" class="fa fa-pencil"></i>
+                                <i v-on:click="remove(k, 'pacientes_programacoes')" class="fa fa-eraser"></i>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
-            <div class="column text-center">
-                <label class="label">&nbsp;</label>
-                <button type="button" v-on:click="add('pacientes_acompanhamentos')" class="button"><i class="fa fa-plus-circle"></i></button>
+            <div v-if="tabs.servicos.active">
+                <h3>Tipo de serviço procurado para atendimento</h3>
+                <input type="hidden" id="pacientes_servicos_id" autocomplete="off">
+                <div class="columns">
+
+                    <div class="column is-11">
+                        <label class="label">Serviço</label>
+                        <p class="control">
+                            <select class="select" style="width: 100%;" id="pacientes_servicos_servicos_clinica_id" autocomplete="off">
+                                <option>Selecione um Serviço</option>
+                                <option v-for="item in servicosClinicas" v-bind:value="item.id">{{item.nome}}</option>
+                            </select>
+                        </p>
+
+                    </div>
+                    <div class="column text-center">
+                        <label class="label">&nbsp;</label>
+                        <button type="button" v-on:click="add('pacientes_servicos')" class="button"><i class="fa fa-plus-circle"></i></button>
+                    </div>
+                </div>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Serviço</th>
+                            <th style="text-align: center;">Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="(item, k) in paciente.pacientes_servicos">
+                            <td>{{item.servicos_clinica.nome}}</td>
+                            <td class="text-center">
+                                <i v-on:click="clone(k, 'pacientes_servicos')" class="fa fa-pencil"></i>
+                                <i v-on:click="remove(k, 'pacientes_servicos')" class="fa fa-eraser"></i>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div v-if="tabs.contato.active">
+                <h3>Tipos de Contatos</h3> 
+                <input type="hidden" id="contatos_id" autocomplete="off">
+                <div class="columns">
+
+                    <div class="column is-3">
+                        <label class="label">Tipo</label>
+                        <p class="control">
+                            <select class="select" style="width: 100%;" id="contatos_contatos_tipo_id" autocomplete="off" @change="changeItem($event)">
+                                <option>Selecione um Tipo de Contato</option>
+                                <option v-for="item in contatosTipos" v-bind:value="item.id">{{item.nome}}</option>
+                            </select>
+                        </p>
+
+                    </div>
+
+                    <div class="column is-8">
+                        <label class="label">Descreva o contato</label>
+                        <p class="control">
+                            <input class="input" maxlength="255" type="text" id="contatos_valor" autocomplete="off">
+                        </p>
+                    </div>
+                    <div class="column text-center">
+                        <label class="label">&nbsp;</label>
+                        <button type="button" v-on:click="add('contatos')" class="button"><i class="fa fa-plus-circle"></i></button>
+                    </div>
+                </div>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Tipo</th>
+                            <th>Descrição do Contato</th>
+                            <th style="text-align: center;">Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="(item, k) in paciente.contatos">
+                            <td>{{item.contatos_tipo.nome}}</td>
+                            <td>{{item.valor}}</td>
+                            <td class="text-center">
+                                <i v-on:click="clone(k, 'contatos')" class="fa fa-pencil"></i>
+                                <i v-on:click="remove(k, 'contatos')" class="fa fa-eraser"></i>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div v-if="tabs.como.active">
+                <h3>Nos conheceu como</h3>
+                <input type="hidden" id="pacientes_soube_id" autocomplete="off">
+                <div class="columns">
+
+                    <div class="column is-3">
+                        <label class="label">Como</label>
+                        <p class="control">
+                            <input class="input" type="text" id="pacientes_soube_como" autocomplete="off">
+                        </p>
+                    </div>
+
+                    <div class="column is-3">
+                        <label class="label">Especialidade</label>
+                        <p class="control">
+                            <select class="select" style="width: 100%;" id="pacientes_soube_especialidade_id" autocomplete="off">
+                                <option>Selecione um Serviço</option>
+                                <option v-for="item in especialidades" v-bind:value="item.id">{{item.nome}}</option>
+                            </select>
+                        </p>
+
+                    </div>
+
+                    <div class="column is-3">
+                        <label class="label">Nome</label>
+                        <p class="control">
+                            <input class="input" type="text" id="pacientes_soube_nome" autocomplete="off">
+                        </p>
+                    </div>
+                    <div class="column is-2">
+                        <label class="label">Telefone</label>
+                        <p class="control">
+                            <input class="input" type="tel" id="pacientes_soube_telefone" onkeyup="mascaraTel(this, '(##) #####-####')" maxlength="15" autocomplete="off">
+                        </p>
+                    </div>
+
+
+                    <div class="column text-center">
+                        <label class="label">&nbsp;</label>
+                        <button type="button" v-on:click="add('pacientes_soube')" class="button"><i class="fa fa-plus-circle"></i></button>
+                    </div>
+                </div>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Motivo</th>
+                            <th>Especialidade</th>
+                            <th>Nome</th>
+                            <th>Telefone</th>
+                            <th style="text-align: center;">Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="(item, k) in paciente.pacientes_soube">
+                            <td>{{item.como}}</td>
+                            <td>{{item.especialidade.nome}}</td>
+                            <td>{{item.nome}}</td>
+                            <td>{{item.telefone}}</td>
+                            <td class="text-center">
+                                <i v-on:click="clone(k, 'pacientes_soube')" class="fa fa-pencil"></i>
+                                <i v-on:click="remove(k, 'pacientes_soube')" class="fa fa-eraser"></i>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Especialidade</th>
-                    <th>Nome profissional/Entidade</th>
-                    <th>Telefone</th>
-                    <th style="text-align: center;">Ações</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr v-for="(item, k) in paciente.pacientes_acompanhamentos">
-                    <td>{{item.especialidade.nome}}</td>
-                    <td>{{item.medico}}</td>
-                    <td>{{item.telefone}}</td>
-                    <td class="text-center">
-                        <i v-on:click="clone(k, 'pacientes_acompanhamentos')" class="fa fa-pencil"></i>
-                        <i v-on:click="remove(k, 'pacientes_acompanhamentos')" class="fa fa-eraser"></i>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-
-    </div>
-
-    <div v-if="tabs.emergencia.active">
-        <h3 class="title text-center">Em caso de emergência avisar</h3>
-        <input type="hidden" id="pacientes_emergencias_id" autocomplete="off">
-        <div class="columns">
-
-            <div class="column is-3">
-                <label class="label">Parentesco</label>
-                <p class="control">
-                    <select class="select" style="width: 100%;" id="pacientes_emergencias_parentesco_id" autocomplete="off">
-                        <option>Selecione uma Profissão</option>
-                        <option v-for="item in parentescos" v-bind:value="item.id">{{item.nome}}</option>
-                    </select>
-                </p>
-
-            </div>
-            <div class="column is-6">
-                <label class="label">Nome</label>
-                <p class="control">
-                    <input class="input" type="text" id="pacientes_emergencias_nome" autocomplete="off">
-                </p>
-            </div>
-            <div class="column is-2">
-                <label class="label">Telefone</label>
-                <p class="control">
-                    <input class="input" type="text" id="pacientes_emergencias_telefone" autocomplete="off">
-                </p>
-            </div>
-            <div class="column text-center">
-                <label class="label">&nbsp;</label>
-                <button type="button" v-on:click="add('pacientes_emergencias')" class="button"><i class="fa fa-plus-circle"></i></button>
-            </div>
-        </div>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Parentesco</th>
-                    <th>Nome</th>
-                    <th>Telefone</th>
-                    <th style="text-align: center;">Ações</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr v-for="(item, k) in paciente.pacientes_emergencias">
-                    <td>{{item.parentesco.nome}}</td>
-                    <td>{{item.nome}}</td>
-                    <td>{{item.telefone}}</td>
-                    <td class="text-center">
-                        <i v-on:click="clone(k, 'pacientes_emergencias')" class="fa fa-pencil"></i>
-                        <i v-on:click="remove(k, 'pacientes_emergencias')" class="fa fa-eraser"></i>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-    <div v-if="tabs.programacao.active">
-        <h3 class="title text-center">Programação de retorno do Paciente</h3>
-        <input type="hidden" id="pacientes_programacoes_id" autocomplete="off">
-        <div class="columns">
-
-            <div class="column is-3">
-                <label class="label">Usuário</label>
-                <p class="control">
-                    <select class="select" style="width: 100%;" id="pacientes_programacoes_usuario_id" autocomplete="off">
-                        <option>Selecione um Usuário</option>
-                        <option v-for="item in usuarios" v-bind:value="item.id">{{item.nome}}</option>
-                    </select>
-                </p>
-
-            </div>
-            <div class="column is-5">
-                <label class="label">Motivo</label>
-                <p class="control">
-                    <input class="input" type="text" id="pacientes_programacoes_motivo" autocomplete="off">
-                </p>
-            </div>
-            <div class="column">
-                <label class="label">Data</label>
-                <p class="control">
-                    <input class="input" type="date" id="pacientes_programacoes_data" autocomplete="off">
-                </p>
-            </div>
-            <div class="column">
-                <label class="label">Hora</label>
-                <p class="control">
-                    <input class="input" type="time" id="pacientes_programacoes_hora" step="1" autocomplete="off">
-                </p>
-            </div>
-            <div class="column text-center">
-                <label class="label">&nbsp;</label>
-                <button type="button" v-on:click="add('pacientes_programacoes')" class="button"><i class="fa fa-plus-circle"></i></button>
-            </div>
-        </div>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Usuário</th>
-                    <th>Motivo</th>
-                    <th>Data</th>
-                    <th>Hora</th>
-                    <th style="text-align: center;">Ações</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr v-for="(item, k) in paciente.pacientes_programacoes">
-                    <td>{{item.usuario.nome}}</td>
-                    <td>{{item.motivo}}</td>
-                    <td>{{item.data | data}}</td>
-                    <td>{{item.hora | hora}}</td>
-                    <td class="text-center">
-                        <i v-on:click="clone(k, 'pacientes_programacoes')" class="fa fa-pencil"></i>
-                        <i v-on:click="remove(k, 'pacientes_programacoes')" class="fa fa-eraser"></i>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-    <div v-if="tabs.servicos.active">
-        <h3>Tipo de serviço procurado para atendimento</h3>
-        <input type="hidden" id="pacientes_servicos_id" autocomplete="off">
-        <div class="columns">
-
-            <div class="column is-11">
-                <label class="label">Serviço</label>
-                <p class="control">
-                    <select class="select" style="width: 100%;" id="pacientes_servicos_servicos_clinica_id" autocomplete="off">
-                        <option>Selecione um Serviço</option>
-                        <option v-for="item in servicosClinicas" v-bind:value="item.id">{{item.nome}}</option>
-                    </select>
-                </p>
-
-            </div>
-            <div class="column text-center">
-                <label class="label">&nbsp;</label>
-                <button type="button" v-on:click="add('pacientes_servicos')" class="button"><i class="fa fa-plus-circle"></i></button>
-            </div>
-        </div>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Serviço</th>
-                    <th style="text-align: center;">Ações</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr v-for="(item, k) in paciente.pacientes_servicos">
-                    <td>{{item.servicos_clinica.nome}}</td>
-                    <td class="text-center">
-                        <i v-on:click="clone(k, 'pacientes_servicos')" class="fa fa-pencil"></i>
-                        <i v-on:click="remove(k, 'pacientes_servicos')" class="fa fa-eraser"></i>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-    <div v-if="tabs.contato.active">
-        <h3>Tipos de Contatos</h3> 
-    </div>
-    <div v-if="tabs.como.active">
-        <h3>Nos conheceu como</h3>
-        <input type="hidden" id="pacientes_soube_id" autocomplete="off">
-        <div class="columns">
-
-            <div class="column is-3">
-                <label class="label">Como</label>
-                <p class="control">
-                    <input class="input" type="text" id="pacientes_soube_como" autocomplete="off">
-                </p>
-            </div>
-            
-            <div class="column is-3">
-                <label class="label">Especialidade</label>
-                <p class="control">
-                    <select class="select" style="width: 100%;" id="pacientes_soube_especialidade_id" autocomplete="off">
-                        <option>Selecione um Serviço</option>
-                        <option v-for="item in especialidades" v-bind:value="item.id">{{item.nome}}</option>
-                    </select>
-                </p>
-
-            </div>
-            
-            <div class="column is-3">
-                <label class="label">Nome</label>
-                <p class="control">
-                    <input class="input" type="text" id="pacientes_soube_nome" autocomplete="off">
-                </p>
-            </div>
-            <div class="column is-2">
-                <label class="label">Telefone</label>
-                <p class="control">
-                    <input class="input" type="tel" id="pacientes_soube_telefone" autocomplete="off">
-                </p>
-            </div>
-            
-            
-            <div class="column text-center">
-                <label class="label">&nbsp;</label>
-                <button type="button" v-on:click="add('pacientes_soube')" class="button"><i class="fa fa-plus-circle"></i></button>
-            </div>
-        </div>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Motivo</th>
-                    <th>Especialidade</th>
-                    <th>Nome</th>
-                    <th>Telefone</th>
-                    <th style="text-align: center;">Ações</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr v-for="(item, k) in paciente.pacientes_soube">
-                     <td>{{item.como}}</td>
-                     <td>{{item.especialidade.nome}}</td>
-                     <td>{{item.nome}}</td>
-                     <td>{{item.telefone}}</td>
-                    <td class="text-center">
-                        <i v-on:click="clone(k, 'pacientes_soube')" class="fa fa-pencil"></i>
-                        <i v-on:click="remove(k, 'pacientes_soube')" class="fa fa-eraser"></i>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-
+    </nav>
 </form>
 
 
 <?php
 $this->Html->script('/js/componentes/filters.js', ['block' => 'script']);
 $this->Html->script('/js/pacientes/add.js', ['block' => 'script']);
-debug($paciente);
+//debug($paciente);
 ?>
 

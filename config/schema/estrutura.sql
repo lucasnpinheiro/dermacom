@@ -108,6 +108,7 @@ CREATE TABLE IF NOT EXISTS `contatos_tipos` (
 `nome` VARCHAR(255) COLLATE latin1_swedish_ci DEFAULT NULL,
 `created` DATETIME DEFAULT NULL,
 `modified` DATETIME DEFAULT NULL,
+`mascara` VARCHAR(45) COLLATE utf8_general_ci DEFAULT NULL,
 PRIMARY KEY (`id`)
 ) ENGINE=InnoDB;
 -- Fim das estrutura da tabela `contatos_tipos` --

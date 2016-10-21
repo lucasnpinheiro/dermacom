@@ -1,34 +1,47 @@
-var extra = {};
-extra.input = {};
-extra.input.data = function (val) {
-    var d = val.data_nascimento;
-    var data = val.data_nascimento;
-    if (!!d) {
-        d = d.replace(/\D/g, '');
-        data = data.replace(/\D/g, '');
-        if (d.length > 7) {
-            d = data.substr(0, 2);
-            d += '/' + data.substr(2, 2);
-            d += '/' + data.substr(4, 4);
-            var a = moment(d.split('/').reverse().join('-'));
-            var b = moment(new Date());
-            var dfa = b.diff(a, 'years');
-            var dfm = a.format('MM');
-            var ma = moment().format('MM');
-            var mad = parseInt(ma) - parseInt(dfm);
-            mad = mad < 0 ? mad * -1 : mad;
-
-            var dfd = a.format('DD');
-            var md = moment().format('DD');
-            var mdd = parseInt(md) - parseInt(dfd);
-            mdd = mdd < 0 ? mdd * -1 : mdd;
-
-            val.idade = dfa + ' A, ' + mad + ' M e ' + mdd + ' D';
-        }
+function mascara(t, mask) {
+    t.value = extra.processaMascara(t.value, mask);
+}
+function mascaraTel(t, mask) {
+    t.value = t.value.replace(/\D/g, '');
+    if (t.value.length > 0) {
+        mascara(t, mask);
+    } else {
+        t.value = '';
     }
-    val.data_nascimento = d;
-    return val;
+}
+
+var extra = {};
+extra.processaMascara = function (input, mask, remove) {
+    if (!!input) {
+        if (remove === 'int') {
+            input = input.replace(/\D/g, '');
+        }
+        var maskared = '';
+        var k = 0;
+        for (var i = 0; i <= mask.length - 1; i++) {
+            if (mask[i] === '#') {
+                if (input[k] !== undefined)
+                    maskared += input[k++];
+            } else {
+                if (mask[i] !== undefined)
+                    maskared += mask[i];
+            }
+        }
+        return maskared;
+    } else {
+        return '';
+    }
 };
+extra.byId = function (name) {
+    return document.getElementById(name);
+};
+extra.byClass = function (name) {
+    return document.getElementsByClassName(name);
+};
+extra.byName = function (name) {
+    return document.getElementsByTagName(name);
+};
+extra.input = {};
 extra.input.hora = function (value) {
     var v = value.split('T');
     if (v.length > 1) {
@@ -55,11 +68,9 @@ extra.input.cpf = function (val) {
 };
 extra.input.cep = function (val, obj) {
     var d = val.cep;
-    if (!!d) {
+    if (!!val) {
         d = d.replace(/\D/g, '');
         if (d.length > 7) {
-            d = d.substr(0, 5) + '-' + d.substr(5, 3);
-
             obj.$http.post(router.url + 'utilits/cep/' + d).then(function (resp) {
                 resp = resp.body.retorno.result;
                 if (resp.status === 'OK') {
@@ -74,7 +85,6 @@ extra.input.cep = function (val, obj) {
 
         }
     }
-    val.cep = d;
     return val;
 };
 
@@ -116,6 +126,39 @@ Vue.filter('cpf', function (value) {
 Vue.filter('data', function (value) {
     return extra.input._data(value).split('-').reverse().join('/');
 });
+
+Vue.filter('idade', function (value) {
+    var d = value;
+    if (!!d) {
+        d = d.replace(/\D/g, '');
+        if (d.length > 7) {
+            var data = moment(value).format('DD/MM/YYYY');
+            d = data.substr(0, 2);
+            d += '/' + data.substr(2, 2);
+            d += '/' + data.substr(4, 4);
+            var a = moment(value);
+            var b = moment(new Date());
+            var dfa = b.diff(a, 'years');
+            var dfm = a.format('MM');
+            var ma = moment().format('MM');
+            var mad = parseInt(ma) - parseInt(dfm);
+            mad = mad < 0 ? mad * -1 : mad;
+
+            var dfd = a.format('DD');
+            var md = moment().format('DD');
+            var mdd = parseInt(md) - parseInt(dfd);
+            mdd = mdd < 0 ? mdd * -1 : mdd;
+
+            d = dfa + ' A, ' + mad + ' M e ' + mdd + ' D';
+        }
+    }
+    return d;
+});
+
 Vue.filter('hora', function (value) {
     return extra.input.hora(value);
 });
+
+Vue.component('my-component', {
+    template: '<p class="control has-addons"> <span class="select"> <select> <option>$</option> <option>£</option> <option>€</option> </select> </span> <input class="input" type="text" placeholder="Amount of money"> <a class="button is-primary"> Transfer </a> </p>'
+})

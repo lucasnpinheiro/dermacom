@@ -131,15 +131,19 @@ class PacientesController extends AppController {
         $this->loadModel('Parentescos');
         $this->loadModel('Usuarios');
         $this->loadModel('ServicosClinicas');
+        $this->loadModel('ContatosTipos');
         $especialidades = $this->Especialidades->find()->all();
         $parentescos = $this->Parentescos->find()->all();
         $usuarios = $this->Usuarios->find()->all();
         $servicosClinicas = $this->ServicosClinicas->find()->all();
-        $this->set(compact('servicosClinicas', 'usuarios', 'parentescos', 'especialidades', 'paciente', 'sexos', 'estadosCivils', 'escolaridades', 'profissaos', 'nacionalidades', 'religiaos', 'cors', 'convenios', 'midias'));
+        $contatosTipos = $this->ContatosTipos->find()->all();
+        $this->set(compact('contatosTipos', 'servicosClinicas', 'usuarios', 'parentescos', 'especialidades', 'paciente', 'sexos', 'estadosCivils', 'escolaridades', 'profissaos', 'nacionalidades', 'religiaos', 'cors', 'convenios', 'midias'));
         $this->set('_serialize', ['paciente']);
     }
 
     public function gravar() {
+        debug($this->request->data);
+        exit;
         $id = $this->request->data('id');
         unset($this->request->data['id']);
         if (!empty($id)) {

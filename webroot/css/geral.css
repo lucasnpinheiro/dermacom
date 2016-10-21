@@ -161,3 +161,8 @@ body,
 .table.is-striped tbody tr.linha-selecionada:nth-child(even){
     background-color: yellow;
 }
+
+.disabled {
+    background-color: #555;
+    color: #fff;
+}

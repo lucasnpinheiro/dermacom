@@ -1,14 +1,4 @@
-<script>
 
-    var data = <?= json_encode($data) ?>;
-    var lesoesList = <?= json_encode($lesoesList) ?>;
-    var classificacoesList = [];
-</script>
-
-<?php
-$this->Html->script('/js/lesoes/index.js', ['block' => 'script']);
-$this->Html->css('/css/lesoes/index.css', ['block' => 'css']);
-?>
 <div class="columns">
     <div class="column" id="listagem-lesoes" style="overflow: auto;">
         <ul class="tree">
@@ -48,44 +38,66 @@ $this->Html->css('/css/lesoes/index.css', ['block' => 'css']);
         </ul>
     </div>
     <div class="column is-4">
+        <nav class="panel">
+            <div class="panel-heading">
+                Cadastrar/Alterar lesão
+            </div>
+            <div class="columns">
+                <div class="column is-offset-1 is-10">
 
-        <form>
-            <input id="input-id" type="hidden">
-            <input id="input-classificacao-id" type="hidden">
-            <input id="input-estagio-id" type="hidden">
-            <label class="label">Lesão</label>
-            <p class="control">
-                <input class="input" list="listLesao" id="input-lesao" type="text" autocomplete="off" @keyup="keydown">
-                <datalist id="listLesao">
-                    <option v-for="i in listaLesao">{{i.nome}}</option>
-                </datalist>
-            </p>
+                    <form style="padding: 15px 0px;">
+                        <input id="input-id" type="hidden">
+                        <input id="input-classificacao-id" type="hidden">
+                        <input id="input-estagio-id" type="hidden">
+                        <label class="label">Lesão</label>
+                        <p class="control">
+                            <input class="input" list="listLesao" id="input-lesao" type="text" autocomplete="off" @keyup="keydown">
+                            <datalist id="listLesao">
+                                <option v-for="i in listaLesao">{{i.nome}}</option>
+                            </datalist>
+                        </p>
 
-            <label class="label">Classificação</label>
-            <p class="control">
-                <input class="input"  list="listClassificacao" id="input-classificacao" type="text" autocomplete="off">
-                <datalist id="listClassificacao">
-                    <option v-for="i in listaClassificacoes">{{i.nome}}</option>
-                </datalist>
-            </p>
+                        <label class="label">Classificação</label>
+                        <p class="control">
+                            <input class="input"  list="listClassificacao" id="input-classificacao" type="text" autocomplete="off">
+                            <datalist id="listClassificacao">
+                                <option v-for="i in listaClassificacoes">{{i.nome}}</option>
+                            </datalist>
+                        </p>
 
-            <label class="label">Estagio</label>
-            <p class="control">
-                <input class="input" id="input-estagio" type="text" autocomplete="off">
-            </p>
+                        <label class="label">Estagio</label>
+                        <p class="control">
+                            <input class="input" id="input-estagio" type="text" autocomplete="off">
+                        </p>
 
-            <label class="label">Descrição</label>
-            <p class="control">
-                <input class="input" id="input-descricao" type="text" autocomplete="off">
-            </p>
+                        <label class="label">Descrição</label>
+                        <p class="control">
+                            <input class="input" id="input-descricao" type="text" autocomplete="off">
+                        </p>
 
-            <label class="label">Peso</label>
-            <p class="control">
-                <input class="input" id="input-peso" type="text" autocomplete="off">
-            </p>
+                        <label class="label">Peso</label>
+                        <p class="control">
+                            <input class="input" id="input-peso" type="text" autocomplete="off">
+                        </p>
 
-        </form>
-
+                    </form>
+                </div>
+                <div class="column">
+                </div>
+            </div>
+        </nav>
     </div>
 
 </div>
+
+<script>
+
+    var data = <?= json_encode($data) ?>;
+    var lesoesList = <?= json_encode($lesoesList) ?>;
+    var classificacoesList = [];
+</script>
+
+<?php
+$this->Html->script('/js/lesoes/index.js', ['block' => 'script']);
+$this->Html->css('/css/lesoes/index.css', ['block' => 'css']);
+?>
