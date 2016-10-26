@@ -64,14 +64,41 @@ class Paciente extends Entity {
     protected $_accessible = [
         '*' => true,
         'cpf_mask',
+        'status_mask',
     ];
-    protected $_virtual = ['cpf_mask'];
+    protected $_virtual = ['cpf_mask', 'status_mask'];
 
     protected function _getCpfMask() {
         if (!empty($this->_properties['cpf'])) {
             return $this->mask($this->_properties['cpf'], '###.###.###-##');
         }
         return '';
+    }
+
+    protected function _getStatusMask() {
+        switch ($this->_properties['status']) {
+            case 0:
+            case '0':
+                return 'Inativo';
+
+                break;
+
+            case 1:
+            case '1':
+                return 'Ativo';
+
+                break;
+
+            case 9:
+            case '9':
+                return 'Excluido';
+
+                break;
+
+            default:
+                return 'Não informado';
+                break;
+        }
     }
 
 }

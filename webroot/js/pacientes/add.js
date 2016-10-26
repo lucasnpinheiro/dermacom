@@ -90,7 +90,7 @@ var app = new Vue({
         },
         changeItem: function (event) {
             console.log(event.target.value);
-            extra.byId('contatos_valor').removeAttribute("onkeypress");
+            extra.byId('contatos_valor').removeAttribute("onkeyup");
             extra.byId('contatos_valor').removeAttribute("maxlength");
             var k = event.target.value;
             var item = this.contatosTipos.filter(function (item, chave) {

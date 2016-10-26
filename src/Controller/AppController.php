@@ -25,14 +25,14 @@ use Cake\I18n\Number;
 
 I18n::locale('pt_BR');
 // Habilita o parseamento de datas localizadas
-Type::build('date')->useLocaleParser()->setLocaleFormat('dd/M/yyyy');
+/*Type::build('date')->useLocaleParser()->setLocaleFormat('dd/M/yyyy');
 Type::build('datetime')->useLocaleParser()->setLocaleFormat('dd/M/yyyy HH:ii:ss');
 Type::build('timestamp')->useLocaleParser()->setLocaleFormat('dd/M/yyyy HH:ii:ss');
 
 // Habilita o parseamento de decimal localizaddos
 Type::build('decimal')->useLocaleParser();
 Type::build('float')->useLocaleParser();
-
+*/
 /**
  * Application Controller
  *
@@ -64,6 +64,9 @@ class AppController extends Controller {
      */
     public function initialize() {
         parent::initialize();
+        if (!empty($this->request->input())) {
+            $this->request->data = json_decode($this->request->input(), true);
+        }
 
         $this->loadComponent('RequestHandler');
         $this->loadComponent('Flash');

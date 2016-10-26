@@ -168,10 +168,6 @@ class PacientesTable extends Table {
                 ->allowEmpty('rg');
 
         $validator
-                ->date('data_nascimento',['dmy'])
-                ->allowEmpty('data_nascimento');
-
-        $validator
                 ->allowEmpty('foto');
 
         $validator
@@ -206,9 +202,10 @@ class PacientesTable extends Table {
     }
 
     public function patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = []) {
-        if(!empty($data['cpf'])){
+        if (!empty($data['cpf'])) {
             $data['cpf'] = $this->removeMascara($data['cpf']);
         }
+        $data = $this->removeColunas($data);
         return parent::patchEntity($entity, $data, $options);
     }
 

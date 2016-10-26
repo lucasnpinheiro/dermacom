@@ -1,4 +1,5 @@
 <?php
+
 /**
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
  * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
@@ -12,7 +13,6 @@
  * @since         0.10.8
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
-
 /*
  * You can remove this if you are confident that your PHP version is sufficient.
  */
@@ -188,11 +188,11 @@ Request::addDetector('tablet', function ($request) {
  * @link http://book.cakephp.org/3.0/en/core-libraries/internationalization-and-localization.html#parsing-localized-datetime-data
  */
 Type::build('time')
-    ->useImmutable();
+        ->useImmutable();
 Type::build('date')
-    ->useImmutable();
+        ->useImmutable();
 Type::build('datetime')
-    ->useImmutable();
+        ->useImmutable();
 
 /*
  * Custom Inflector rules, can be set to correctly pluralize or singularize
@@ -225,3 +225,17 @@ if (Configure::read('debug')) {
 Plugin::loadAll();
 Plugin::load('Migrations');
 Plugin::load('Search');
+
+function Capitalize(&$input, $key) {
+    if (is_string($input)) {
+        $input = mb_strtoupper($input, 'UTF-8');
+    }
+}
+
+
+function nestedUppercase($value) {
+    if (is_array($value)) {
+        return array_map('nestedUppercase', $value);
+    }
+    return strtoupper($value);
+}

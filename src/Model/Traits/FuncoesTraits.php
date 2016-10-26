@@ -26,6 +26,16 @@ trait FuncoesTraits {
         return $str;
     }
 
+    public function removeColunas($data) {
+        if (isset($data['created'])) {
+            unset($data['created']);
+        }
+        if (isset($data['modified'])) {
+            unset($data['modified']);
+        }
+        return $data;
+    }
+
     public function converteData($str, $explode = '/', $split = '-') {
         if (!empty($str)) {
             if (stripos($explode, $str) !== FALSE) {

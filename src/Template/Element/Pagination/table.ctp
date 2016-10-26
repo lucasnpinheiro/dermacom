@@ -1,6 +1,6 @@
 <div class="columns">
     <div class="column is-8">
-        <input placeholder="Informe o termo a pesquisar" class="input" type="search" v-model="paging.q" @keyup.enter="search()">
+        <input placeholder="Informe o termo a pesquisar" class="input" type="text" v-model="paging.q" @keyup.enter="search()">
     </div>
     <div class="column">
         <div v-on:click.prevent="dropdown()" class="checkbox-dropdown" :class="isOpenDropdown">
@@ -52,7 +52,7 @@
 <nav v-if="isPagination" class="pagination">
     <a class="button" v-on:click.prevent="loadPage(paging.page-1)">Anterior</a>
     <a class="button" v-on:click.prevent="loadPage(paging.page+1)">Próximo</a>
-    <ul>
+    <ul style="list-style: none;">
         <li v-for="i in links">
             <a class="button" :class="[activePage(i.page), i.css]" v-on:click.prevent="loadPage(i.page)"> {{i.page}}</a>
         </li>

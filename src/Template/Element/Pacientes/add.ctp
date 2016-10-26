@@ -26,6 +26,10 @@ if (!$paciente->has('midias')) {
 if (!$paciente->has('pacientes_programacoes')) {
     $paciente->pacientes_programacoes = [];
 }
+if (!empty($paciente->data_nascimento)) {
+    $paciente->data_nascimento = (string) date('Y-m-d', strtotime($paciente->data_nascimento));
+    //$paciente->data_nascimento = $data_nascimento;
+}
 ?>
 <script>
     var data = <?php echo json_encode(['contatosTipos' => $contatosTipos, 'servicosClinicas' => $servicosClinicas, 'usuarios' => $usuarios, 'parentescos' => $parentescos, 'especialidades' => $especialidades, 'paciente' => $paciente, 'sexos' => $sexos, 'estadosCivils' => $estadosCivils, 'escolaridades' => $escolaridades, 'profissaos' => $profissaos, 'nacionalidades' => $nacionalidades, 'religiaos' => $religiaos, 'cors' => $cors, 'convenios' => $convenios, 'midias' => $midias]); ?>;
@@ -55,7 +59,7 @@ if (!$paciente->has('pacientes_programacoes')) {
                 <input class="input" type="text" autofocus v-model="paciente.cpf" v-bind="cpfMask" autocomplete="off" maxlength="14">
             </p>
         </div>
-        <div class="column is-5">
+        <div class="column is-4">
             <label class="label">Nome</label>
             <p class="control">
                 <input class="input" type="text" v-model="paciente.nome" autocomplete="off" maxlength="255">
@@ -76,7 +80,7 @@ if (!$paciente->has('pacientes_programacoes')) {
                 <input class="input" type="date" v-model="paciente.data_nascimento" autocomplete="off">
             </p>
         </div>
-        <div class="column">
+        <div class="column is-2">
             <label class="label">Idade</label>
             <p class="control" style="width: 100%;">
                 <span class="input disabled">{{paciente.data_nascimento | idade}}</span>
@@ -407,7 +411,7 @@ if (!$paciente->has('pacientes_programacoes')) {
                 </table>
             </div>
             <div v-if="tabs.servicos.active">
-                <h3>Tipo de serviço procurado para atendimento</h3>
+                <h3 class="title text-center">Tipo de serviço procurado para atendimento</h3>
                 <input type="hidden" id="pacientes_servicos_id" autocomplete="off">
                 <div class="columns">
 
@@ -445,7 +449,7 @@ if (!$paciente->has('pacientes_programacoes')) {
                 </table>
             </div>
             <div v-if="tabs.contato.active">
-                <h3>Tipos de Contatos</h3> 
+                <h3 class="title text-center">Tipos de Contatos</h3> 
                 <input type="hidden" id="contatos_id" autocomplete="off">
                 <div class="columns">
 
@@ -492,7 +496,7 @@ if (!$paciente->has('pacientes_programacoes')) {
                 </table>
             </div>
             <div v-if="tabs.como.active">
-                <h3>Nos conheceu como</h3>
+                <h3 class="title text-center">Nos conheceu como</h3>
                 <input type="hidden" id="pacientes_soube_id" autocomplete="off">
                 <div class="columns">
 

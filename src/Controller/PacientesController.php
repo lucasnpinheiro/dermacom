@@ -99,16 +99,16 @@ class PacientesController extends AppController {
                 'Convenios',
                 'Midias',
                 'PacientesAcompanhamentos' => function($q) {
-                    return $q->contain('Especialidades');
+                    return $q->where(['PacientesAcompanhamentos.status' => 1])->contain('Especialidades');
                 },
                 'PacientesEmergencias' => function($q) {
-                    return $q->contain('Parentescos');
+                    return $q->where(['PacientesEmergencias.status' => 1])->contain('Parentescos');
                 },
                 'PacientesProgramacoes' => function($q) {
-                    return $q->contain('Usuarios');
+                    return $q->where(['PacientesProgramacoes.status' => 1])->contain('Usuarios');
                 },
                 'PacientesServicos' => function($q) {
-                    return $q->contain('ServicosClinicas');
+                    return $q->where(['PacientesServicos.status' => 1])->contain('ServicosClinicas');
                 },
                 'Contatos',
                 'PacientesSoube'
@@ -142,8 +142,6 @@ class PacientesController extends AppController {
     }
 
     public function gravar() {
-        debug($this->request->data);
-        exit;
         $id = $this->request->data('id');
         unset($this->request->data['id']);
         if (!empty($id)) {
@@ -151,8 +149,17 @@ class PacientesController extends AppController {
         } else {
             $paciente = $this->Pacientes->newEntity();
         }
-        $paciente = $this->Pacientes->patchEntity($paciente, $this->request->data);
+        $__data = $this->request->data;
+        array_walk_recursive($__data, 'Capitalize');
+        //debug($this->request->data);
+        //$this->request->data = $__data;
+        //debug($__data);
+        $paciente = $this->Pacientes->patchEntity($paciente, $__data, ['associated' => []]);
         if ($this->Pacientes->save($paciente)) {
+            $this->savePacientesServicos($paciente);
+            $this->savePacientesAcompanhamentos($paciente);
+            $this->savePacientesEmergencias($paciente);
+            $this->savePacientesProgramacoes($paciente);
             $this->sendResponse($paciente, 200);
         } else {
             $this->sendResponse($paciente->errors(), 214);
@@ -176,6 +183,101 @@ class PacientesController extends AppController {
         }
 
         return $this->redirect(['action' => 'index']);
+    }
+
+    private function savePacientesServicos($paciente) {
+        $this->loadModel('PacientesServicos');
+        $this->PacientesServicos->updateAll(['status' => $this->PacientesServicos->statusExcluido], ['paciente_id' => $paciente->id]);
+        if (!empty($this->request->data['pacientes_servicos'])) {
+            foreach ($this->request->data['pacientes_servicos'] as $key => $value) {
+                $servicos = $this->PacientesServicos->newEntity();
+                if (!empty($value['id'])) {
+                    $servicos = $this->PacientesServicos->get($value['id']);
+                    if (count($servicos) === 0) {
+                        $servicos = $this->PacientesServicos->newEntity();
+                    }
+                }
+
+                $servicos->paciente_id = $paciente->id;
+                $servicos->status = $this->PacientesServicos->statusAtivo;
+                $servicos->servicos_clinica_id = $value['servicos_clinica_id'];
+                $this->PacientesServicos->save($servicos);
+            }
+        }
+        return true;
+    }
+
+    private function savePacientesProgramacoes($paciente) {
+        $this->loadModel('PacientesProgramacoes');
+        $this->PacientesProgramacoes->updateAll(['status' => $this->PacientesProgramacoes->statusExcluido], ['paciente_id' => $paciente->id]);
+        if (!empty($this->request->data['pacientes_programacoes'])) {
+            foreach ($this->request->data['pacientes_programacoes'] as $key => $value) {
+                $programacoes = $this->PacientesProgramacoes->newEntity();
+                if (!empty($value['id'])) {
+                    $programacoes = $this->PacientesProgramacoes->get($value['id']);
+                    if (count($programacoes) === 0) {
+                        $programacoes = $this->PacientesProgramacoes->newEntity();
+                    }
+                }
+
+                $programacoes->paciente_id = $paciente->id;
+                $programacoes->status = $this->PacientesProgramacoes->statusAtivo;
+                $programacoes->usuario_id = $value['usuario_id'];
+                $programacoes->motivo = $value['motivo'];
+                $programacoes->data = date('Y-m-d', strtotime($value['data']));
+                $programacoes->hora = date('H:i:s', strtotime($value['hora']));
+                $this->PacientesProgramacoes->save($programacoes);
+            }
+        }
+        return true;
+    }
+
+    private function savePacientesEmergencias($paciente) {
+        $this->loadModel('PacientesEmergencias');
+        $this->PacientesEmergencias->updateAll(['status' => $this->PacientesEmergencias->statusExcluido], ['paciente_id' => $paciente->id]);
+        if (!empty($this->request->data['pacientes_emergencias'])) {
+            foreach ($this->request->data['pacientes_emergencias'] as $key => $value) {
+                $emergencias = $this->PacientesEmergencias->newEntity();
+                if (!empty($value['id'])) {
+                    $emergencias = $this->PacientesEmergencias->get($value['id']);
+                    if (count($emergencias) === 0) {
+                        $emergencias = $this->PacientesEmergencias->newEntity();
+                    }
+                }
+
+                $emergencias->paciente_id = $paciente->id;
+                $emergencias->status = $this->PacientesEmergencias->statusAtivo;
+                $emergencias->nome = $value['nome'];
+                $emergencias->parentesco_id = $value['parentesco_id'];
+                $emergencias->telefone = $value['telefone'];
+                $this->PacientesEmergencias->save($emergencias);
+            }
+        }
+        return true;
+    }
+
+    private function savePacientesAcompanhamentos($paciente) {
+        $this->loadModel('PacientesAcompanhamentos');
+        $this->PacientesAcompanhamentos->updateAll(['status' => $this->PacientesAcompanhamentos->statusExcluido], ['paciente_id' => $paciente->id]);
+        if (!empty($this->request->data['pacientes_acompanhamentos'])) {
+            foreach ($this->request->data['pacientes_acompanhamentos'] as $key => $value) {
+                $acompanhamentos = $this->PacientesAcompanhamentos->newEntity();
+                if (!empty($value['id'])) {
+                    $acompanhamentos = $this->PacientesAcompanhamentos->get($value['id']);
+                    if (count($acompanhamentos) === 0) {
+                        $acompanhamentos = $this->PacientesAcompanhamentos->newEntity();
+                    }
+                }
+
+                $acompanhamentos->paciente_id = $paciente->id;
+                $acompanhamentos->status = $this->PacientesAcompanhamentos->statusAtivo;
+                $acompanhamentos->especialidade_id = $value['especialidade_id'];
+                $acompanhamentos->medico = $value['medico'];
+                $acompanhamentos->telefone = $value['telefone'];
+                $this->PacientesAcompanhamentos->save($acompanhamentos);
+            }
+        }
+        return true;
     }
 
 }

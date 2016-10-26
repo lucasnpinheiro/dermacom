@@ -1,5 +1,9 @@
+*{
+    text-transform: uppercase;
+}
 html, body{
     background: #fff;
+
 }
 body, 
 .menu,
@@ -165,4 +169,13 @@ body,
 .disabled {
     background-color: #555;
     color: #fff;
+}
+
+.button.is-info,
+a.button.is-info,
+a:visited.button.is-info
+{
+    background-color: #3273dc;
+    border-width: 0;
+    color: white;
 }

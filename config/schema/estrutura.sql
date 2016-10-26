@@ -377,6 +377,7 @@ CREATE TABLE IF NOT EXISTS `pacientes_acompanhamentos` (
 `telefone` VARCHAR(45) COLLATE latin1_swedish_ci DEFAULT NULL,
 `created` DATETIME DEFAULT NULL,
 `modified` DATETIME DEFAULT NULL,
+`status` INTEGER(1) DEFAULT NULL COMMENT '0 - Inativo | 1 - Ativo | 9 - Excluido',
 PRIMARY KEY (`id`)
 ) ENGINE=InnoDB;
 -- Fim das estrutura da tabela `pacientes_acompanhamentos` --
@@ -394,6 +395,7 @@ CREATE TABLE IF NOT EXISTS `pacientes_convenios` (
 `titular` VARCHAR(255) COLLATE latin1_swedish_ci DEFAULT NULL,
 `created` DATETIME DEFAULT NULL,
 `modified` DATETIME DEFAULT NULL,
+`status` INTEGER(1) DEFAULT NULL COMMENT '0 - Inativo | 1 - Ativo | 9 - Excluido',
 PRIMARY KEY (`id`)
 ) ENGINE=InnoDB;
 -- Fim das estrutura da tabela `pacientes_convenios` --
@@ -410,6 +412,7 @@ CREATE TABLE IF NOT EXISTS `pacientes_emergencias` (
 `telefone` VARCHAR(45) COLLATE latin1_swedish_ci DEFAULT NULL,
 `created` DATETIME DEFAULT NULL,
 `modified` DATETIME DEFAULT NULL,
+`status` INTEGER(1) DEFAULT NULL COMMENT '0 - Inativo | 1 - Ativo | 9 - Excluido',
 PRIMARY KEY (`id`)
 ) ENGINE=InnoDB;
 -- Fim das estrutura da tabela `pacientes_emergencias` --
@@ -424,6 +427,7 @@ CREATE TABLE IF NOT EXISTS `pacientes_midias` (
 `midia_id` INTEGER(11) DEFAULT NULL,
 `created` DATETIME DEFAULT NULL,
 `modified` DATETIME DEFAULT NULL,
+`status` INTEGER(1) DEFAULT NULL COMMENT '0 - Inativo | 1 - Ativo | 9 - Excluido',
 PRIMARY KEY (`id`)
 ) ENGINE=InnoDB;
 -- Fim das estrutura da tabela `pacientes_midias` --
@@ -441,6 +445,7 @@ CREATE TABLE IF NOT EXISTS `pacientes_programacoes` (
 `hora` TIME DEFAULT NULL,
 `created` DATETIME DEFAULT NULL,
 `modified` DATETIME DEFAULT NULL,
+`status` INTEGER(1) DEFAULT NULL COMMENT '0 - Inativo | 1 - Ativo | 9 - Excluido',
 PRIMARY KEY (`id`)
 ) ENGINE=InnoDB;
 -- Fim das estrutura da tabela `pacientes_programacoes` --
@@ -455,6 +460,7 @@ CREATE TABLE IF NOT EXISTS `pacientes_servicos` (
 `servicos_clinica_id` INTEGER(11) DEFAULT NULL,
 `created` DATETIME DEFAULT NULL,
 `modified` DATETIME DEFAULT NULL,
+`status` INTEGER(1) DEFAULT NULL COMMENT '0 - Inativo | 1 - Ativo | 9 - Excluido',
 PRIMARY KEY (`id`)
 ) ENGINE=InnoDB;
 -- Fim das estrutura da tabela `pacientes_servicos` --
@@ -472,6 +478,7 @@ CREATE TABLE IF NOT EXISTS `pacientes_soube` (
 `especialidade_id` INTEGER(11) DEFAULT NULL,
 `created` DATETIME DEFAULT NULL,
 `modified` DATETIME DEFAULT NULL,
+`status` INTEGER(1) DEFAULT NULL COMMENT '0 - Inativo | 1 - Ativo | 9 - Excluido',
 PRIMARY KEY (`id`)
 ) ENGINE=InnoDB;
 -- Fim das estrutura da tabela `pacientes_soube` --

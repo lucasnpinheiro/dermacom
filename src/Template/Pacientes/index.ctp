@@ -3,6 +3,13 @@
         url: 'pacientes/index-load',
         colums: [
             {
+                label: 'ID',
+                key: 'id',
+                chave: 'id',
+                ative: false,
+                css: ''
+            },
+            {
                 label: 'Nome',
                 key: 'nome',
                 chave: 'nome',
@@ -26,7 +33,7 @@
             {
                 label: 'Situação',
                 key: 'status',
-                chave: 'status',
+                chave: 'status_mask',
                 ative: true,
                 css: 'active'
             },
