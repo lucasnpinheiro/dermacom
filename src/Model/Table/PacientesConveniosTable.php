@@ -102,5 +102,15 @@ class PacientesConveniosTable extends Table {
 
         return $rules;
     }
+    
+    
+    public function patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = []) {
+        $data = $this->capitalize($data);
+        if (!empty($data['telefone'])) {
+            $data['telefone'] = $this->removeMascara($data['cpf']);
+        }
+        $data = $this->removeColunas($data);
+        return parent::patchEntity($entity, $data, $options);
+    }
 
 }

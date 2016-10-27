@@ -202,6 +202,7 @@ class PacientesTable extends Table {
     }
 
     public function patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = []) {
+        $data = $this->capitalize($data);
         if (!empty($data['cpf'])) {
             $data['cpf'] = $this->removeMascara($data['cpf']);
         }

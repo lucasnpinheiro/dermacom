@@ -36,6 +36,17 @@ trait FuncoesTraits {
         return $data;
     }
 
+    public function capitalize($list) {
+        if (count($list) > 0) {
+            foreach ($list as $key => $value) {
+                if (!is_array($value) AND ! is_object($value)) {
+                    $list[$key] = mb_strtoupper($value, 'UTF-8');
+                }
+            }
+        }
+        return $list;
+    }
+
     public function converteData($str, $explode = '/', $split = '-') {
         if (!empty($str)) {
             if (stripos($explode, $str) !== FALSE) {

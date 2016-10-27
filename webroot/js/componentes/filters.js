@@ -127,6 +127,10 @@ Vue.filter('data', function (value) {
     return extra.input._data(value).split('-').reverse().join('/');
 });
 
+Vue.filter('telefone', function (value) {
+    return extra.processaMascara(value, '(##) #####-####', 'int');
+});
+
 Vue.filter('idade', function (value) {
     var d = value;
     if (!!d) {

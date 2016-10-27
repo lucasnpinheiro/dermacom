@@ -283,7 +283,7 @@ if (!empty($paciente->data_nascimento)) {
                         <tr v-for="(item, k) in paciente.pacientes_acompanhamentos">
                             <td>{{item.especialidade.nome}}</td>
                             <td>{{item.medico}}</td>
-                            <td>{{item.telefone}}</td>
+                            <td>{{item.telefone | telefone}}</td>
                             <td class="text-center">
                                 <i v-on:click="clone(k, 'pacientes_acompanhamentos')" class="fa fa-pencil"></i>
                                 <i v-on:click="remove(k, 'pacientes_acompanhamentos')" class="fa fa-eraser"></i>
@@ -339,7 +339,7 @@ if (!empty($paciente->data_nascimento)) {
                         <tr v-for="(item, k) in paciente.pacientes_emergencias">
                             <td>{{item.parentesco.nome}}</td>
                             <td>{{item.nome}}</td>
-                            <td>{{item.telefone}}</td>
+                            <td>{{item.telefone | telefone}}</td>
                             <td class="text-center">
                                 <i v-on:click="clone(k, 'pacientes_emergencias')" class="fa fa-pencil"></i>
                                 <i v-on:click="remove(k, 'pacientes_emergencias')" class="fa fa-eraser"></i>
@@ -552,7 +552,7 @@ if (!empty($paciente->data_nascimento)) {
                             <td>{{item.como}}</td>
                             <td>{{item.especialidade.nome}}</td>
                             <td>{{item.nome}}</td>
-                            <td>{{item.telefone}}</td>
+                            <td>{{item.telefone | telefone}}</td>
                             <td class="text-center">
                                 <i v-on:click="clone(k, 'pacientes_soube')" class="fa fa-pencil"></i>
                                 <i v-on:click="remove(k, 'pacientes_soube')" class="fa fa-eraser"></i>
@@ -569,6 +569,6 @@ if (!empty($paciente->data_nascimento)) {
 <?php
 $this->Html->script('/js/componentes/filters.js', ['block' => 'script']);
 $this->Html->script('/js/pacientes/add.js', ['block' => 'script']);
-//debug($paciente);
+debug($paciente);
 ?>
 

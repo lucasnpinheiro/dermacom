@@ -64,9 +64,9 @@ class AppController extends Controller {
      */
     public function initialize() {
         parent::initialize();
-        if (!empty($this->request->input())) {
+        /*if (!empty($this->request->input())) {
             $this->request->data = json_decode($this->request->input(), true);
-        }
+        }*/
 
         $this->loadComponent('RequestHandler');
         $this->loadComponent('Flash');

@@ -150,16 +150,14 @@ class PacientesController extends AppController {
             $paciente = $this->Pacientes->newEntity();
         }
         $__data = $this->request->data;
-        array_walk_recursive($__data, 'Capitalize');
-        //debug($this->request->data);
-        //$this->request->data = $__data;
-        //debug($__data);
         $paciente = $this->Pacientes->patchEntity($paciente, $__data, ['associated' => []]);
         if ($this->Pacientes->save($paciente)) {
+            $this->saveContatos($paciente);
             $this->savePacientesServicos($paciente);
             $this->savePacientesAcompanhamentos($paciente);
             $this->savePacientesEmergencias($paciente);
             $this->savePacientesProgramacoes($paciente);
+            $this->savePacientesSoube($paciente);
             $this->sendResponse($paciente, 200);
         } else {
             $this->sendResponse($paciente->errors(), 214);
@@ -202,6 +200,55 @@ class PacientesController extends AppController {
                 $servicos->status = $this->PacientesServicos->statusAtivo;
                 $servicos->servicos_clinica_id = $value['servicos_clinica_id'];
                 $this->PacientesServicos->save($servicos);
+            }
+        }
+        return true;
+    }
+
+    private function savePacientesSoube($paciente) {
+        $this->loadModel('PacientesSoube');
+        $this->PacientesSoube->updateAll(['status' => $this->PacientesSoube->statusExcluido], ['paciente_id' => $paciente->id]);
+        if (!empty($this->request->data['pacientes_soube'])) {
+            foreach ($this->request->data['pacientes_soube'] as $key => $value) {
+                $servicos = $this->PacientesSoube->newEntity();
+                if (!empty($value['id'])) {
+                    $servicos = $this->PacientesSoube->get($value['id']);
+                    if (count($servicos) === 0) {
+                        $servicos = $this->PacientesSoube->newEntity();
+                    }
+                }
+
+                $servicos->paciente_id = $paciente->id;
+                $servicos->status = $this->PacientesSoube->statusAtivo;
+                $servicos->como = $value['como'];
+                $servicos->nome = $value['nome'];
+                $servicos->telefone = $value['telefone'];
+                $servicos->especialidade_id = $value['especialidade_id'];
+                $this->PacientesSoube->save($servicos);
+            }
+        }
+        return true;
+    }
+
+    private function saveContatos($paciente) {
+        $this->loadModel('Contatos');
+        $this->Contatos->updateAll(['status' => $this->Contatos->statusExcluido], ['referencia_id' => $paciente->id, 'tabela' => 'Pacientes']);
+        if (!empty($this->request->data['contatos'])) {
+            foreach ($this->request->data['contatos'] as $key => $value) {
+                $servicos = $this->Contatos->newEntity();
+                if (!empty($value['id'])) {
+                    $servicos = $this->Contatos->get($value['id']);
+                    if (count($servicos) === 0) {
+                        $servicos = $this->Contatos->newEntity();
+                    }
+                }
+
+                $servicos->referencia_id = $paciente->id;
+                $servicos->tabela = 'Pacientes';
+                $servicos->status = $this->Contatos->statusAtivo;
+                $servicos->valor = $value['valor'];
+                $servicos->contatos_tipo_id = $value['contatos_tipo_id'];
+                $this->Contatos->save($servicos);
             }
         }
         return true;
