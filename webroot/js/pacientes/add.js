@@ -17,6 +17,22 @@ var app = new Vue({
         }
     },
     methods: {
+        onFileChange(e) {
+            var files = e.target.files || e.dataTransfer.files;
+            if (!files.length)
+                return;
+            this.createImage(files[0]);
+        },
+        createImage(file) {
+            var image = new Image();
+            var reader = new FileReader();
+            var vm = this;
+
+            reader.onload = (e) => {
+                vm.paciente.foto = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        },
         gravar: function () {
             this.$http.post(router.url + 'pacientes/gravar', this.paciente).then(function (resp) {
                 this.retorno(resp);
@@ -49,6 +65,8 @@ var app = new Vue({
         },
         clone: function (k, lista) {
             var item = this.paciente[lista][k];
+            console.log(k);
+            console.log(item);
             extra.byId(lista + '_id').value = k;
             switch (lista) {
                 case 'pacientes_acompanhamentos':
@@ -74,6 +92,13 @@ var app = new Vue({
                     extra.byId('pacientes_servicos_servicos_clinica_id').value = item.servicos_clinica_id;
                     break;
 
+                case 'pacientes_convenios':
+                    extra.byId('pacientes_convenios_convenio_id').value = item.convenio_id;
+                    extra.byId('pacientes_convenios_plano').value = item.plano;
+                    extra.byId('pacientes_convenios_matricula').value = item.matricula;
+                    extra.byId('pacientes_convenios_titular').value = item.titular;
+                    break;
+
                 case 'pacientes_soube':
                     extra.byId('pacientes_soube_como').value = item.como;
                     extra.byId('pacientes_soube_nome').value = item.nome;
@@ -89,15 +114,12 @@ var app = new Vue({
             }
         },
         changeItem: function (event) {
-            console.log(event.target.value);
             extra.byId('contatos_valor').removeAttribute("onkeyup");
             extra.byId('contatos_valor').removeAttribute("maxlength");
             var k = event.target.value;
             var item = this.contatosTipos.filter(function (item, chave) {
                 return item.id == k;
             });
-            console.log(item);
-            console.log(item[0].mascara);
             if (item[0].mascara === 'tel') {
                 extra.byId('contatos_valor').setAttribute("onkeyup", "mascaraTel(this, '(##) #####-####')");
                 extra.byId('contatos_valor').setAttribute("maxlength", 15);
@@ -188,6 +210,24 @@ var app = new Vue({
                     extra.byId('pacientes_soube_nome').value = '';
                     extra.byId('pacientes_soube_telefone').value = '';
                     extra.byId('pacientes_soube_especialidade_id').value = '';
+                    break;
+
+                case 'pacientes_convenios':
+                    var dados = {
+                        titular: extra.byId('pacientes_convenios_titular').value,
+                        matricula: extra.byId('pacientes_convenios_matricula').value,
+                        plano: extra.byId('pacientes_convenios_plano').value,
+                        convenio_id: extra.byId('pacientes_convenios_convenio_id').value,
+                        convenio: {
+                            nome: extra.input.getSelectedText('pacientes_convenios_convenio_id'),
+                            id: extra.byId('pacientes_convenios_convenio_id').value
+                        }
+                    };
+                    this.paciente[lista].push(dados);
+                    extra.byId('pacientes_convenios_titular').value = '';
+                    extra.byId('pacientes_convenios_matricula').value = '';
+                    extra.byId('pacientes_convenios_plano').value = '';
+                    extra.byId('pacientes_convenios_convenio_id').value = '';
                     break;
 
                 case 'contatos':

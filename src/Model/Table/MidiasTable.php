@@ -28,9 +28,11 @@ class MidiasTable extends Table {
 
     use \App\Model\Traits\FuncoesTraits,
         \App\Model\Traits\SearchTraits;
-public $statusInativo = 0;
+
+    public $statusInativo = 0;
     public $statusAtivo = 1;
     public $statusExcluido = 9;
+
     /**
      * Initialize method
      *
@@ -47,7 +49,7 @@ public $statusInativo = 0;
         $this->addBehavior('Timestamp');
 
         $this->belongsTo('ContatosTipos', [
-            'foreignKey' => 'contatotipo_id'
+            'foreignKey' => 'contatos_tipo_id'
         ]);
         $this->belongsToMany('Pacientes', [
             'foreignKey' => 'midia_id',
@@ -91,7 +93,7 @@ public $statusInativo = 0;
      * @return \Cake\ORM\RulesChecker
      */
     public function buildRules(RulesChecker $rules) {
-        $rules->add($rules->existsIn(['contatotipo_id'], 'ContatosTipos'));
+        $rules->add($rules->existsIn(['contatos_tipo_id'], 'ContatosTipos'));
 
         return $rules;
     }

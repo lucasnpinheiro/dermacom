@@ -17,8 +17,8 @@ if (!$paciente->has('pacientes_servicos')) {
 if (!$paciente->has('pacientes_emergencias')) {
     $paciente->pacientes_emergencias = [];
 }
-if (!$paciente->has('convenios')) {
-    $paciente->convenios = [];
+if (!$paciente->has('pacientes_convenios')) {
+    $paciente->pacientes_convenios = [];
 }
 if (!$paciente->has('midias')) {
     $paciente->midias = [];
@@ -32,114 +32,146 @@ if (!empty($paciente->data_nascimento)) {
 }
 ?>
 <script>
-    var data = <?php echo json_encode(['contatosTipos' => $contatosTipos, 'servicosClinicas' => $servicosClinicas, 'usuarios' => $usuarios, 'parentescos' => $parentescos, 'especialidades' => $especialidades, 'paciente' => $paciente, 'sexos' => $sexos, 'estadosCivils' => $estadosCivils, 'escolaridades' => $escolaridades, 'profissaos' => $profissaos, 'nacionalidades' => $nacionalidades, 'religiaos' => $religiaos, 'cors' => $cors, 'convenios' => $convenios, 'midias' => $midias]); ?>;
+    var data = <?php
+echo json_encode([
+    'contatosTipos' => $contatosTipos,
+    'servicosClinicas' => $servicosClinicas,
+    'usuarios' => $usuarios,
+    'parentescos' => $parentescos,
+    'especialidades' => $especialidades,
+    'paciente' => $paciente,
+    'sexos' => $sexos,
+    'estadosCivils' => $estadosCivils,
+    'escolaridades' => $escolaridades,
+    'profissaos' => $profissaos,
+    'nacionalidades' => $nacionalidades,
+    'religiaos' => $religiaos,
+    'cors' => $cors,
+    'convenios' => $convenios,
+    'midias' => $midias
+]);
+?>;
     data.tabs = {
         'profissional': {label: 'Profissional', active: true, class: 'is-active'},
         'emergencia': {label: 'Emergência', active: false, class: ''},
         'programacao': {label: 'Programação', active: false, class: ''},
         'servicos': {label: 'Serviços', active: false, class: ''},
         'contato': {label: 'Contatos', active: false, class: ''},
-        'como': {label: 'Como nos conheceu', active: false, class: ''}
+        'como': {label: 'Como nos conheceu', active: false, class: ''},
+        'convenio': {label: 'Convênio', active: false, class: ''},
+        'midias': {label: 'Midia', active: false, class: ''}
     };
-    console.log(data);
-</script>
+    console.log(data);</script>
 
 <form autocomplete="off">
 
     <div class="columns">
-        <div class="column">
-            <label class="label">ID</label>
-            <p class="control" style="width: 100%;">
-                <span class="input disabled">{{paciente.id}}</span>
-            </p>
-        </div>
-        <div class="column">
-            <label class="label">CPF</label>
-            <p class="control">
-                <input class="input" type="text" autofocus v-model="paciente.cpf" v-bind="cpfMask" autocomplete="off" maxlength="14">
-            </p>
-        </div>
-        <div class="column is-4">
-            <label class="label">Nome</label>
-            <p class="control">
-                <input class="input" type="text" v-model="paciente.nome" autocomplete="off" maxlength="255">
-            </p>
-        </div>
-        <div class="column">
-            <label class="label">Sexo</label>
-            <p class="control">
-                <select class="select" style="width: 100%;" v-model="paciente.sexo_id" autocomplete="off">
-                    <option>Selecione uma Sexo</option>
-                    <option v-for="item in sexos" v-bind:value="item.id">{{item.nome}}</option>
-                </select>
-            </p>
-        </div>
-        <div class="column">
-            <label class="label">Nascimento</label>
-            <p class="control">
-                <input class="input" type="date" v-model="paciente.data_nascimento" autocomplete="off">
-            </p>
-        </div>
-        <div class="column is-2">
-            <label class="label">Idade</label>
-            <p class="control" style="width: 100%;">
-                <span class="input disabled">{{paciente.data_nascimento | idade}}</span>
-            </p>
-        </div>
+        <div class="column is-10">
+            <div class="columns">
+                <div class="column">
+                    <label class="label">ID</label>
+                    <p class="control" style="width: 100%;">
+                        <span class="input disabled">{{paciente.id}}</span>
+                    </p>
+                </div>
+                <div class="column">
+                    <label class="label">CPF</label>
+                    <p class="control">
+                        <input class="input" type="text" autofocus v-model="paciente.cpf" v-bind="cpfMask" autocomplete="off" maxlength="14">
+                    </p>
+                </div>
+                <div class="column is-4">
+                    <label class="label">Nome</label>
+                    <p class="control">
+                        <input class="input" type="text" v-model="paciente.nome" autocomplete="off" maxlength="255">
+                    </p>
+                </div>
+                <div class="column">
+                    <label class="label">Sexo</label>
+                    <p class="control">
+                        <select class="select" style="width: 100%;" v-model="paciente.sexo_id" autocomplete="off">
+                            <option>Selecione uma Sexo</option>
+                            <option v-for="item in sexos" v-bind:value="item.id">{{item.nome}}</option>
+                        </select>
+                    </p>
+                </div>
+                <div class="column">
+                    <label class="label">Nascimento</label>
+                    <p class="control">
+                        <input class="input" type="date" v-model="paciente.data_nascimento" autocomplete="off">
+                    </p>
+                </div>
+                <div class="column is-2">
+                    <label class="label">Idade</label>
+                    <p class="control" style="width: 100%;">
+                        <span class="input disabled">{{paciente.data_nascimento | idade}}</span>
+                    </p>
+                </div>
 
+            </div>
+
+            <div class="columns">
+                <div class="column">
+                    <label class="label">Situção</label>
+                    <p class="control">
+                        <select class="select" style="width: 100%;" v-model="paciente.status" autocomplete="off">
+                            <option>Selecione uma Situação</option>
+                            <option value="0">Inativo</option>
+                            <option value="1">Ativo</option>
+                        </select>
+                    </p>
+                </div>
+                <div class="column">
+                    <label class="label">Identidade/Local</label>
+                    <p class="control">
+                        <input class="input" type="text" v-model="paciente.rg" autocomplete="off" maxlength="45">
+                    </p>
+                </div>
+                <div class="column">
+                    <label class="label">Nº. Cartão SUS</label>
+                    <p class="control">
+                        <input class="input" type="text" v-model="paciente.cartao_sus" autocomplete="off" maxlength="45">
+                    </p>
+                </div>
+                <div class="column">
+                    <label class="label">Estado Civil</label>
+                    <p class="control">
+                        <select class="select" style="width: 100%;" v-model="paciente.estados_civil_id" autocomplete="off">
+                            <option>Selecione um Estado Civil</option>
+                            <option v-for="item in estadosCivils" v-bind:value="item.id">{{item.nome}}</option>
+                        </select>
+                    </p>
+                </div>
+                <div class="column">
+                    <label class="label">Escolaridade</label>
+                    <p class="control">
+                        <select class="select" style="width: 100%;" v-model="paciente.escolaridade_id" autocomplete="off">
+                            <option>Selecione uma Escolaridade</option>
+                            <option v-for="item in escolaridades" v-bind:value="item.id">{{item.nome}}</option>
+                        </select>
+                    </p>
+                </div>
+                <div class="column">
+                    <label class="label">Profissão</label>
+                    <p class="control">
+                        <select class="select" style="width: 100%;" v-model="paciente.profissao_id" autocomplete="off">
+                            <option>Selecione uma Profissão</option>
+                            <option v-for="item in profissaos" v-bind:value="item.id">{{item.nome}}</option>
+                        </select>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="column text-center">
+
+            <input type='file' id='foto-open' @change="onFileChange" />
+            <img :src="paciente.foto" alt="Foto do Paciente" style="max-height: 115px; max-width: 130px; text-align: center;" />
+
+        </div>
     </div>
 
-    <div class="columns">
-        <div class="column">
-            <label class="label">Situção</label>
-            <p class="control">
-                <select class="select" style="width: 100%;" v-model="paciente.status" autocomplete="off">
-                    <option>Selecione uma Situação</option>
-                    <option value="0">Inativo</option>
-                    <option value="1">Ativo</option>
-                </select>
-            </p>
-        </div>
-        <div class="column">
-            <label class="label">Identidade/Local</label>
-            <p class="control">
-                <input class="input" type="text" v-model="paciente.rg" autocomplete="off" maxlength="45">
-            </p>
-        </div>
-        <div class="column">
-            <label class="label">Nº. Cartão SUS</label>
-            <p class="control">
-                <input class="input" type="text" v-model="paciente.cartao_sus" autocomplete="off" maxlength="45">
-            </p>
-        </div>
-        <div class="column">
-            <label class="label">Estado Civil</label>
-            <p class="control">
-                <select class="select" style="width: 100%;" v-model="paciente.estados_civil_id" autocomplete="off">
-                    <option>Selecione um Estado Civil</option>
-                    <option v-for="item in estadosCivils" v-bind:value="item.id">{{item.nome}}</option>
-                </select>
-            </p>
-        </div>
-        <div class="column">
-            <label class="label">Escolaridade</label>
-            <p class="control">
-                <select class="select" style="width: 100%;" v-model="paciente.escolaridade_id" autocomplete="off">
-                    <option>Selecione uma Escolaridade</option>
-                    <option v-for="item in escolaridades" v-bind:value="item.id">{{item.nome}}</option>
-                </select>
-            </p>
-        </div>
-        <div class="column">
-            <label class="label">Profissão</label>
-            <p class="control">
-                <select class="select" style="width: 100%;" v-model="paciente.profissao_id" autocomplete="off">
-                    <option>Selecione uma Profissão</option>
-                    <option v-for="item in profissaos" v-bind:value="item.id">{{item.nome}}</option>
-                </select>
-            </p>
-        </div>
-    </div>
+
+
 
     <div class="columns">
         <div class="column">
@@ -495,6 +527,8 @@ if (!empty($paciente->data_nascimento)) {
                     </tbody>
                 </table>
             </div>
+
+
             <div v-if="tabs.como.active">
                 <h3 class="title text-center">Nos conheceu como</h3>
                 <input type="hidden" id="pacientes_soube_id" autocomplete="off">
@@ -561,6 +595,90 @@ if (!empty($paciente->data_nascimento)) {
                     </tbody>
                 </table>
             </div>
+
+
+            <div v-if="tabs.convenio.active">
+                <h3 class="title text-center">Convênio</h3>
+                <input type="hidden" id="pacientes_convenios_id" autocomplete="off">
+                <div class="columns">
+
+                    <div class="column is-3">
+                        <label class="label">Convênio</label>
+                        <p class="control">
+                            <select class="select" style="width: 100%;" id="pacientes_convenios_convenio_id" autocomplete="off">
+                                <option>Selecione um Serviço</option>
+                                <option v-for="item in convenios" v-bind:value="item.id">{{item.nome}}</option>
+                            </select>
+                        </p>
+                    </div>
+
+                    <div class="column is-3">
+                        <label class="label">Plano</label>
+                        <p class="control">
+                            <input class="input" type="text" id="pacientes_convenios_plano" autocomplete="off">
+                        </p>
+                    </div>
+
+                    <div class="column is-3">
+                        <label class="label">Número Matricula</label>
+                        <p class="control">
+                            <input class="input" type="text" id="pacientes_convenios_matricula" maxlength="45" autocomplete="off">
+                        </p>
+                    </div>
+                    <div class="column is-2">
+                        <label class="label">Titular do Plano</label>
+                        <p class="control">
+                            <input class="input" type="tel" id="pacientes_convenios_titular" maxlength="255" autocomplete="off">
+                        </p>
+                    </div>
+
+
+                    <div class="column text-center">
+                        <label class="label">&nbsp;</label>
+                        <button type="button" v-on:click="add('pacientes_convenios')" class="button"><i class="fa fa-plus-circle"></i></button>
+                    </div>
+                </div>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Convênio</th>
+                            <th>Plano</th>
+                            <th>Número Matricula</th>
+                            <th>Titular do Plano</th>
+                            <th style="text-align: center;">Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="(item, k) in paciente.pacientes_convenios">
+                            <td>{{item.convenio.nome}}</td>
+                            <td>{{item.plano}}</td>
+                            <td>{{item.matricula}}</td>
+                            <td>{{item.titular}}</td>
+                            <td class="text-center">
+                                <i v-on:click="clone(k, 'pacientes_convenios')" class="fa fa-pencil"></i>
+                                <i v-on:click="remove(k, 'pacientes_convenios')" class="fa fa-eraser"></i>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+
+            <div v-if="tabs.midias.active">
+                <h3 class="title text-center">Midias</h3>
+                <div class="columns">
+                    <p  v-for="(item, k) in midias" class="control column">
+                        <label class="checkbox">
+                            <input type="checkbox" :value="item.id" v-model="paciente.midias">
+                            {{item.nome}}
+                            {{item.checked}}
+                        </label>
+                    </p>
+                </div>
+            </div>
+
+
+
         </div>
     </nav>
 </form>
@@ -569,6 +687,5 @@ if (!empty($paciente->data_nascimento)) {
 <?php
 $this->Html->script('/js/componentes/filters.js', ['block' => 'script']);
 $this->Html->script('/js/pacientes/add.js', ['block' => 'script']);
-debug($paciente);
+//debug($paciente);
 ?>
-

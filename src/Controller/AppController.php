@@ -25,14 +25,15 @@ use Cake\I18n\Number;
 
 I18n::locale('pt_BR');
 // Habilita o parseamento de datas localizadas
-/*Type::build('date')->useLocaleParser()->setLocaleFormat('dd/M/yyyy');
-Type::build('datetime')->useLocaleParser()->setLocaleFormat('dd/M/yyyy HH:ii:ss');
-Type::build('timestamp')->useLocaleParser()->setLocaleFormat('dd/M/yyyy HH:ii:ss');
+/* Type::build('date')->useLocaleParser()->setLocaleFormat('dd/M/yyyy');
+  Type::build('datetime')->useLocaleParser()->setLocaleFormat('dd/M/yyyy HH:ii:ss');
+  Type::build('timestamp')->useLocaleParser()->setLocaleFormat('dd/M/yyyy HH:ii:ss');
 
-// Habilita o parseamento de decimal localizaddos
-Type::build('decimal')->useLocaleParser();
-Type::build('float')->useLocaleParser();
-*/
+  // Habilita o parseamento de decimal localizaddos
+  Type::build('decimal')->useLocaleParser();
+  Type::build('float')->useLocaleParser();
+ */
+
 /**
  * Application Controller
  *
@@ -64,9 +65,9 @@ class AppController extends Controller {
      */
     public function initialize() {
         parent::initialize();
-        /*if (!empty($this->request->input())) {
-            $this->request->data = json_decode($this->request->input(), true);
-        }*/
+        /* if (!empty($this->request->input())) {
+          $this->request->data = json_decode($this->request->input(), true);
+          } */
 
         $this->loadComponent('RequestHandler');
         $this->loadComponent('Flash');
@@ -227,6 +228,27 @@ class AppController extends Controller {
         if (\Cake\Core\Configure::read('debug') === true) {
             \Cake\Log\Log::info('Response: ' . json_encode(compact('message', 'code', 'url', 'paging', 'result'), JSON_PRETTY_PRINT) . "\n", ['scope' => ['api']]);
         }
+    }
+
+    public function base64ToImage($image, $path, $fileName = null) {
+        if (!empty($image)) {
+            if (substr($image, 0, 10) === 'data:image') {
+                list($type, $image) = explode(';', $image);
+                list(, $extension) = explode('/', $type);
+                list(, $image) = explode(',', $image);
+                if (empty($fileName)) {
+                    $fileName = md5(md5(time()) . uniqid()) . '.' . $extension;
+                } else {
+                    $fileName = $fileName . '.' . $extension;
+                }
+                $image = base64_decode($image);
+                if (file_put_contents($path . $fileName, $image)) {
+                    return $fileName;
+                }
+            }
+            return $image;
+        }
+        return null;
     }
 
 }

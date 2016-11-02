@@ -38,7 +38,7 @@
         </tr>
     </thead>
     <tbody>
-        <tr v-for="(item, key) in list" v-on:click.prevent="linhaSelecionada(key)" :class="item.linha_selecionada">
+        <tr v-for="(item, key) in list" v-on:click.prevent="linhaSelecionada(key)" v-on:dblclick.prevent="editar()" :class="item.linha_selecionada">
             <td v-for="c in colums" v-if="c.ative">{{item[c.chave]}}</td>
         </tr>
     </tbody>

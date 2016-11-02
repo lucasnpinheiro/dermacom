@@ -36,11 +36,13 @@ trait FuncoesTraits {
         return $data;
     }
 
-    public function capitalize($list) {
+    public function capitalize($list, $ignore = []) {
         if (count($list) > 0) {
             foreach ($list as $key => $value) {
-                if (!is_array($value) AND ! is_object($value)) {
-                    $list[$key] = mb_strtoupper($value, 'UTF-8');
+                if (!in_array($key, $ignore)) {
+                    if (!is_array($value) AND ! is_object($value)) {
+                        $list[$key] = mb_strtoupper($value, 'UTF-8');
+                    }
                 }
             }
         }

@@ -96,8 +96,6 @@ class PacientesController extends AppController {
     public function edit($id = null) {
         $paciente = $this->Pacientes->get($id, [
             'contain' => [
-                'Convenios',
-                'Midias',
                 'PacientesAcompanhamentos' => function($q) {
                     return $q->where(['PacientesAcompanhamentos.status' => 1])->contain('Especialidades');
                 },
@@ -110,8 +108,15 @@ class PacientesController extends AppController {
                 'PacientesServicos' => function($q) {
                     return $q->where(['PacientesServicos.status' => 1])->contain('ServicosClinicas');
                 },
-                'Contatos',
-                'PacientesSoube'
+                'Contatos' => function($q) {
+                    return $q->contain('ContatosTipos');
+                },
+                'PacientesSoube' => function($q) {
+                    return $q->contain('Especialidades');
+                },
+                'PacientesConvenios' => function($q) {
+                    return $q->where(['PacientesConvenios.status' => 1])->contain('Convenios');
+                }
             ]
         ]);
         $this->_setData($paciente);
@@ -126,18 +131,29 @@ class PacientesController extends AppController {
         $religiaos = $this->Pacientes->Religioes->find()->all();
         $cors = $this->Pacientes->Cores->find()->all();
         $convenios = $this->Pacientes->Convenios->find()->all();
-        $midias = $this->Pacientes->Midias->find()->all();
         $this->loadModel('Especialidades');
         $this->loadModel('Parentescos');
         $this->loadModel('Usuarios');
         $this->loadModel('ServicosClinicas');
         $this->loadModel('ContatosTipos');
+        $this->loadModel('Midias');
         $especialidades = $this->Especialidades->find()->all();
         $parentescos = $this->Parentescos->find()->all();
         $usuarios = $this->Usuarios->find()->all();
         $servicosClinicas = $this->ServicosClinicas->find()->all();
         $contatosTipos = $this->ContatosTipos->find()->all();
-        $this->set(compact('contatosTipos', 'servicosClinicas', 'usuarios', 'parentescos', 'especialidades', 'paciente', 'sexos', 'estadosCivils', 'escolaridades', 'profissaos', 'nacionalidades', 'religiaos', 'cors', 'convenios', 'midias'));
+        $midias = $this->Midias->find()->contain('ContatosTipos')->all();
+        if (!empty($paciente->id)) {
+            $this->loadModel('PacientesMidias');
+            $findPacientesMidias = $this->PacientesMidias->find()->where(['PacientesMidias.paciente_id' => $paciente->id])->all();
+            if (count($findPacientesMidias) > 0) {
+                $paciente->midias = [];
+                foreach ($findPacientesMidias as $k => $v) {
+                    $paciente->midias[] = $v->midia_id;
+                }
+            }
+        }
+        $this->set(compact('midias', 'convenios', 'contatosTipos', 'servicosClinicas', 'usuarios', 'parentescos', 'especialidades', 'paciente', 'sexos', 'estadosCivils', 'escolaridades', 'profissaos', 'nacionalidades', 'religiaos', 'cors'));
         $this->set('_serialize', ['paciente']);
     }
 
@@ -149,7 +165,10 @@ class PacientesController extends AppController {
         } else {
             $paciente = $this->Pacientes->newEntity();
         }
+        $file = $this->base64ToImage($this->request->data['foto'], WWW_ROOT . 'files' . DS . 'pacientes' . DS);
+        unset($this->request->data['foto']);
         $__data = $this->request->data;
+        $__data['foto'] = $file;
         $paciente = $this->Pacientes->patchEntity($paciente, $__data, ['associated' => []]);
         if ($this->Pacientes->save($paciente)) {
             $this->saveContatos($paciente);
@@ -158,6 +177,8 @@ class PacientesController extends AppController {
             $this->savePacientesEmergencias($paciente);
             $this->savePacientesProgramacoes($paciente);
             $this->savePacientesSoube($paciente);
+            $this->savePacientesConvenios($paciente);
+            $this->savePacientesMidias($paciente);
             $this->sendResponse($paciente, 200);
         } else {
             $this->sendResponse($paciente->errors(), 214);
@@ -322,6 +343,53 @@ class PacientesController extends AppController {
                 $acompanhamentos->medico = $value['medico'];
                 $acompanhamentos->telefone = $value['telefone'];
                 $this->PacientesAcompanhamentos->save($acompanhamentos);
+            }
+        }
+        return true;
+    }
+
+    private function savePacientesConvenios($paciente) {
+        $this->loadModel('PacientesConvenios');
+        $this->PacientesConvenios->updateAll(['status' => $this->PacientesConvenios->statusExcluido], ['paciente_id' => $paciente->id]);
+        if (!empty($this->request->data['pacientes_convenios'])) {
+            foreach ($this->request->data['pacientes_convenios'] as $key => $value) {
+                $acompanhamentos = $this->PacientesConvenios->newEntity();
+                if (!empty($value['id'])) {
+                    $acompanhamentos = $this->PacientesConvenios->get($value['id']);
+                    if (count($acompanhamentos) === 0) {
+                        $acompanhamentos = $this->PacientesConvenios->newEntity();
+                    }
+                }
+
+                $acompanhamentos->paciente_id = $paciente->id;
+                $acompanhamentos->status = $this->PacientesConvenios->statusAtivo;
+                $acompanhamentos->convenio_id = $value['convenio_id'];
+                $acompanhamentos->plano = $value['plano'];
+                $acompanhamentos->matricula = $value['matricula'];
+                $acompanhamentos->titular = $value['titular'];
+                $this->PacientesConvenios->save($acompanhamentos);
+            }
+        }
+        return true;
+    }
+
+    private function savePacientesMidias($paciente) {
+        $this->loadModel('PacientesMidias');
+        $this->PacientesMidias->updateAll(['status' => $this->PacientesMidias->statusExcluido], ['paciente_id' => $paciente->id]);
+        if (!empty($this->request->data['midias'])) {
+            foreach ($this->request->data['midias'] as $key => $value) {
+                $acompanhamentos = $this->PacientesMidias->newEntity();
+                if (!empty($value['id'])) {
+                    $acompanhamentos = $this->PacientesMidias->get($value['id']);
+                    if (count($acompanhamentos) === 0) {
+                        $acompanhamentos = $this->PacientesMidias->newEntity();
+                    }
+                }
+
+                $acompanhamentos->paciente_id = $paciente->id;
+                $acompanhamentos->status = $this->PacientesMidias->statusAtivo;
+                $acompanhamentos->midia_id = $value;
+                $this->PacientesMidias->save($acompanhamentos);
             }
         }
         return true;

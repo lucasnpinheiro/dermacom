@@ -11,6 +11,19 @@ function mascaraTel(t, mask) {
 }
 
 var extra = {};
+extra.readURL = function (input, obj) {
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+            //extra.byId(id).setAttribute('src', e.target.result);
+            obj = e.target.result;
+        };
+
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+
 extra.processaMascara = function (input, mask, remove) {
     if (!!input) {
         if (remove === 'int') {

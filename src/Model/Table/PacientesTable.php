@@ -92,6 +92,9 @@ class PacientesTable extends Table {
         $this->hasMany('PacientesServicos', [
             'foreignKey' => 'paciente_id'
         ]);
+        $this->hasMany('PacientesConvenios', [
+            'foreignKey' => 'paciente_id'
+        ]);
         $this->hasMany('Contatos', [
             'foreignKey' => 'referencia_id',
             'className' => 'Contatos',
@@ -202,7 +205,7 @@ class PacientesTable extends Table {
     }
 
     public function patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = []) {
-        $data = $this->capitalize($data);
+        $data = $this->capitalize($data,['foto']);
         if (!empty($data['cpf'])) {
             $data['cpf'] = $this->removeMascara($data['cpf']);
         }

@@ -93,7 +93,7 @@
         </style>
 
 
-        <div class="flexbox-parent" id="app">
+        <div class="flexbox-parent" id="app" style="overflow: none;">
             <div class="flexbox-item header">
                 <div class="menu-container">
                     <ul class="menu clearfix">

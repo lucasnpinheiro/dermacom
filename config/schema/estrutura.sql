@@ -95,6 +95,7 @@ CREATE TABLE IF NOT EXISTS `contatos` (
 `tabela` INTEGER(11) DEFAULT NULL,
 `created` DATETIME DEFAULT NULL,
 `modified` DATETIME DEFAULT NULL,
+`status` INTEGER(1) DEFAULT NULL COMMENT '0 - Inativo | 1 - Ativo | 9 - Excluido',
 PRIMARY KEY (`id`)
 ) ENGINE=InnoDB;
 -- Fim das estrutura da tabela `contatos` --
@@ -309,7 +310,7 @@ DROP TABLE IF EXISTS `midias`;
 CREATE TABLE IF NOT EXISTS `midias` (
 `id` INTEGER(11) NOT NULL AUTO_INCREMENT,
 `nome` VARCHAR(255) COLLATE latin1_swedish_ci DEFAULT NULL,
-`contatotipo_id` INTEGER(11) DEFAULT NULL,
+`contatos_tipo_id` INTEGER(11) DEFAULT NULL,
 `created` DATETIME DEFAULT NULL,
 `modified` DATETIME DEFAULT NULL,
 PRIMARY KEY (`id`)
