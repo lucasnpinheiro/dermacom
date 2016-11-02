@@ -119,6 +119,9 @@ class PacientesController extends AppController {
                 }
             ]
         ]);
+        if (!empty($paciente->foto)) {
+            $paciente->foto = \Cake\Routing\Router::url('/files/pacientes/' . $paciente->foto, true);
+        }
         $this->_setData($paciente);
     }
 
