@@ -18,6 +18,7 @@ var app = new Vue({
     },
     methods: {
         onFileChange(e) {
+            console.log(e);
             var files = e.target.files || e.dataTransfer.files;
             if (!files.length)
                 return;
@@ -29,9 +30,29 @@ var app = new Vue({
             var vm = this;
 
             reader.onload = (e) => {
-                vm.paciente.foto = e.target.result;
+                vm.paciente.foto_url = e.target.result;
+                vm.paciente.foto = vm.paciente.foto_url;
             };
             reader.readAsDataURL(file);
+        },
+        excluir: function () {
+            var obj = this;
+            if (obj.paciente.id > 0) {
+                extra.modalConfirme({msg: 'Deseja realmente excluir este registro?'}, function (a) {
+                    if (a === true) {
+                        obj.$http.get(router.url + Inflector.dasherize(Inflector.underscore(router.params.controller)) + '/delete/' + linha).then(function (resp) {
+                            extra.modal({msg: 'Registro excluido com sucesso.'}, function () {
+                                obj.novo();
+                            });
+                        }, function (resp) {
+                            extra.modal({msg: 'Não foi possivel excluir o registro'}, function () {});
+                        });
+                    }
+                });
+            } else {
+                obj.novo();
+            }
+            return true;
         },
         gravar: function () {
             this.$http.post(router.url + 'pacientes/gravar', this.paciente).then(function (resp) {
@@ -41,13 +62,28 @@ var app = new Vue({
             });
             return true;
         },
+        editar: function () {
+            extra.modal({msg: 'Funcionalidade indisponível nesta tela.'}, function () {});
+        },
+        novo: function () {
+            window.location.href = router.url + Inflector.dasherize(Inflector.underscore(router.params.controller)) + '/add';
+        },
+        consultar: function () {
+            window.location.href = router.url + Inflector.dasherize(Inflector.underscore(router.params.controller));
+        },
+        imprimir: function () {
+            extra.modal({msg: 'Funcionalidade não implementada.'}, function () {});
+        },
         retorno: function (resp) {
             if (resp.status === 200) {
                 this.paciente.id = resp.body.result.id;
-                return this.paciente.id;
+                this.paciente.id;
+                extra.modal({msg: 'Os dados foram salvo com sucesso.'}, function () {});
             } else {
+                extra.modal({msg: 'Não foi possivel salvar os dados, verifique novamente.'}, function () {});
 
             }
+            return;
         },
         tabActive: function (key) {
             for (var i in this.tabs) {

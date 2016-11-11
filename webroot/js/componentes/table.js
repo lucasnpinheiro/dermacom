@@ -19,7 +19,7 @@ var app = new Vue({
         list: [],
         colums: params.colums
     },
-    mounted: function(){
+    mounted: function () {
         this.load();
     },
     methods: {
@@ -134,7 +134,7 @@ var app = new Vue({
             this.list[key].linha_selecionada = 'linha-selecionada';
         },
         gravar: function () {
-            alert('Função indisponivel nesta tela.');
+            extra.modal({msg: 'Função indisponivel nesta tela.'}, function () {});
         },
         editar: function () {
             var linha = null;
@@ -146,8 +146,45 @@ var app = new Vue({
             if (linha > 0) {
                 window.location.href = router.url + 'pacientes/edit/' + linha;
             } else {
-                alert('Selecione um registro para ser editado.');
+                extra.modal({msg: 'Selecione um registro para ser editado.'}, function () {});
             }
+        },
+        excluir: function () {
+            var obj = this;
+
+            var linha = null;
+            for (var i in obj.list) {
+                if (obj.list[i].linha_selecionada !== '') {
+                    linha = obj.list[i].id;
+                }
+            }
+            if (linha > 0) {
+
+                extra.modalConfirme({msg: 'Deseja realmente excluir este registro?'}, function (a) {
+                    if (a === true) {
+                        obj.$http.get(router.url + Inflector.dasherize(Inflector.underscore(router.params.controller)) + '/delete/' + linha).then(function (resp) {
+                            extra.modal({msg: 'Registro excluido com sucesso.'}, function () {
+                                window.location.reload();
+                            });
+                        }, function (resp) {
+                            extra.modal({msg: 'Não foi possivel excluir o registro'}, function () {});
+                        });
+                    }
+                });
+
+            } else {
+                extra.modal({msg: 'Não foi selecionado nenhum registro pra exclusão.'}, function () {});
+            }
+
+        },
+        novo: function () {
+            window.location.href = router.url + Inflector.dasherize(Inflector.underscore(router.params.controller)) + '/add';
+        },
+        consultar: function () {
+            window.location.href = router.url + Inflector.dasherize(Inflector.underscore(router.params.controller));
+        },
+        imprimir: function () {
+            extra.modal({msg: 'Funcionalidade não implementada.'}, function () {});
         }
     }
 });

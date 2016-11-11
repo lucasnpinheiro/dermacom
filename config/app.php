@@ -231,7 +231,7 @@ return [
              */
             //'port' => 'non_standard_port_number',
             'username' => 'root',
-            'password' => '123456',
+            'password' => '',
             'database' => 'dermacom',
             'encoding' => 'utf8',
             //'timezone' => 'UTC',
@@ -343,6 +343,6 @@ return [
      */
     'Session' => [
         'defaults' => 'php',
-        'timeout' => 60,
+        'timeout' => 480,
     ],
 ];

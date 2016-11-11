@@ -163,9 +163,10 @@ echo json_encode([
             </div>
         </div>
         <div class="column text-center">
-
-            <input type='file' id='foto-open' @change="onFileChange" />
-            <img :src="paciente.foto" alt="Foto do Paciente" style="max-height: 115px; max-width: 130px; text-align: center;" />
+            <span class="button is-info is-small btn-file">
+                Seelecionar Foto <input type="file" id='foto-open' @change="onFileChange">
+            </span>
+            <img :src="paciente.foto_url" alt="Foto do Paciente" style="max-height: 115px; max-width: 130px; text-align: center;" />
 
         </div>
     </div>
@@ -685,7 +686,6 @@ echo json_encode([
 
 
 <?php
-$this->Html->script('/js/componentes/filters.js', ['block' => 'script']);
 $this->Html->script('/js/pacientes/add.js', ['block' => 'script']);
 //debug($paciente);
 ?>

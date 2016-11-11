@@ -11,6 +11,46 @@ function mascaraTel(t, mask) {
 }
 
 var extra = {};
+
+extra.modal = function (config, callback) {
+    config = _.merge({msg: '', title: 'Aviso!',  ok: 'OK'}, config);
+    var template = ' <div id="modal-alert" class="modal"> <div class="modal-background"></div> <div class="modal-card"> <header class="modal-card-head"> <p class="modal-card-title">' + config.title + '</p> <button class="delete"></button> </header> <section class="modal-card-body">' + config.msg + '</section> <footer class="modal-card-foot"> <a class="button is-primary ok">' + config.ok + '</a> </footer> </div> </div>';
+
+    $('#item-extras').html(template);
+    $('html').addClass('is-clipped');
+    $('#modal-alert').addClass('is-active');
+
+    $('#modal-alert .ok').click(function () {
+        $('html').removeClass('is-clipped');
+        $(this).parent().removeClass('is-active');
+        $('#item-extras').html('');
+        callback(true);
+    });
+}
+
+extra.modalConfirme = function (config, callback) {
+    config = _.merge({msg: '', title: 'Aviso!', cancel: 'Cancelar', ok: 'OK'}, config);
+    var template = ' <div id="modal-confirme" class="modal"> <div class="modal-background"></div> <div class="modal-card"> <header class="modal-card-head"> <p class="modal-card-title">' + config.title + '</p> <button class="delete"></button> </header> <section class="modal-card-body">' + config.msg + '</section> <footer class="modal-card-foot"> <a class="button is-primary ok">' + config.ok + '</a> <a class="button is-danger cancel">' + config.cancel + '</a> </footer> </div> </div>';
+
+    $('#item-extras').html(template);
+    $('html').addClass('is-clipped');
+    $('#modal-confirme').addClass('is-active');
+
+    $('#modal-confirme .ok').click(function () {
+        $('html').removeClass('is-clipped');
+        $(this).parent().removeClass('is-active');
+        $('#item-extras').html('');
+        callback(true);
+    });
+
+    $('#modal-confirme .cancel').click(function () {
+        $('html').removeClass('is-clipped');
+        $(this).parent().removeClass('is-active');
+        $('#item-extras').html('');
+        callback(false);
+    });
+}
+
 extra.readURL = function (input, obj) {
     if (input.files && input.files[0]) {
         var reader = new FileReader();

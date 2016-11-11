@@ -70,6 +70,7 @@ class PacientesController extends AppController {
         $paciente->data_nascimento = null;
         $paciente->sexo_id = null;
         $paciente->foto = null;
+        $paciente->foto_url = null;
         $paciente->cartao_sus = null;
         $paciente->estados_civil_id = null;
         $paciente->escolaridade_id = null;
@@ -119,9 +120,6 @@ class PacientesController extends AppController {
                 }
             ]
         ]);
-        if (!empty($paciente->foto)) {
-            $paciente->foto = \Cake\Routing\Router::url('/files/pacientes/' . $paciente->foto, true);
-        }
         $this->_setData($paciente);
     }
 
@@ -196,15 +194,13 @@ class PacientesController extends AppController {
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
     public function delete($id = null) {
-        $this->request->allowMethod(['post', 'delete']);
         $paciente = $this->Pacientes->get($id);
-        if ($this->Pacientes->delete($paciente)) {
-            $this->Flash->success(__('Registro removido com sucesso.'));
+        $paciente->status = $this->Pacientes->statusExcluido;
+        if ($this->Pacientes->save($paciente)) {
+            $this->sendResponse($paciente, 200);
         } else {
-            $this->Flash->error(__('Não foi possivel removido o registro.'));
+            $this->sendResponse($paciente->errors(), 412);
         }
-
-        return $this->redirect(['action' => 'index']);
     }
 
     private function savePacientesServicos($paciente) {

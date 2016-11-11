@@ -146,11 +146,15 @@
 
         </div>
 
+        <div id="item-extras"></div>
+
+        <?= $this->Html->script('/bower_components/jquery/dist/jquery.min.js'); ?>
         <?= $this->Html->script('/bower_components/lodash/dist/lodash.min.js'); ?>
         <?= $this->Html->script('/bower_components/vue/dist/vue.min.js'); ?>
         <?= $this->Html->script('/bower_components/vue-resource/dist/vue-resource.min.js'); ?>
         <?= $this->Html->script('/bower_components/moment/min/moment.min.js'); ?>
-
+        <?= $this->Html->script('/bower_components/bower_components/inflector-js/index.js'); ?>
+        <?= $this->Html->script('/js/componentes/filters.js'); ?>
         <?= $this->fetch('script') ?>
 
     </body>

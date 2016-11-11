@@ -7,16 +7,16 @@ var app = new Vue({
     },
     methods: {
         excluir: function () {
-            alert('Não implementado');
+            extra.modal({msg: 'Funcionalidade não implementada.'}, function () {});
         },
         imprimir: function () {
-            alert('Não implementado');
+            extra.modal({msg: 'Funcionalidade não implementada.'}, function () {});
         },
         consultar: function () {
-            alert('Não implementado');
+            extra.modal({msg: 'Funcionalidade não implementada.'}, function () {});
         },
         editar: function () {
-            alert('Não implementado');
+            extra.modal({msg: 'Funcionalidade não implementada.'}, function () {});
         },
         novo: function () {
             var itens = [

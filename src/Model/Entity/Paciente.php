@@ -65,8 +65,21 @@ class Paciente extends Entity {
         '*' => true,
         'cpf_mask',
         'status_mask',
+        'foto_url',
     ];
-    protected $_virtual = ['cpf_mask', 'status_mask'];
+    protected $_virtual = ['cpf_mask', 'status_mask', 'foto_url'];
+
+    protected function _getFotoUrl() {
+        if (empty($this->_properties['foto'])) {
+            return \Cake\Routing\Router::url('/img/icon-user.png', true);
+        }
+        
+        if (!file_exists(WWW_ROOT . 'files' . DS . 'pacientes' . DS . $this->_properties['foto'])) {
+            return \Cake\Routing\Router::url('/img/icon-user.png', true);
+        }
+
+        return \Cake\Routing\Router::url('/files/pacientes/' . $this->_properties['foto'], true);
+    }
 
     protected function _getCpfMask() {
         if (!empty($this->_properties['cpf'])) {
