@@ -73,7 +73,7 @@ class Paciente extends Entity {
         if (empty($this->_properties['foto'])) {
             return \Cake\Routing\Router::url('/img/icon-user.png', true);
         }
-        
+
         if (!file_exists(WWW_ROOT . 'files' . DS . 'pacientes' . DS . $this->_properties['foto'])) {
             return \Cake\Routing\Router::url('/img/icon-user.png', true);
         }
@@ -89,6 +89,9 @@ class Paciente extends Entity {
     }
 
     protected function _getStatusMask() {
+        if (!isset($this->_properties['status'])) {
+            return 'Não informado';
+        }
         switch ($this->_properties['status']) {
             case 0:
             case '0':

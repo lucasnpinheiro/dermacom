@@ -97,7 +97,7 @@
             <div class="flexbox-item header">
                 <div class="menu-container">
                     <ul class="menu clearfix">
-                        <!--li><a href="#">Item</a>
+                        <li><a href="#">Item</a>
                             <ul class="sub-menu clearfix">
                                 <li><a href="#">Sub</a>
                                     <ul class="sub-menu">
@@ -122,7 +122,7 @@
                                 <li><a href="#">Sub</a></li>
                                 <li><a href="#">Sub</a></li>
                             </ul>
-                        </li -->
+                        </li>
                         <li><a href="<?= Cake\Routing\Router::url(['controller' => 'Lesoes', 'action' => 'index']) ?>">Lesões</a></li>
                         <li><a href="<?= Cake\Routing\Router::url(['controller' => 'Pacientes', 'action' => 'index']) ?>">Pacientes</a></li>
                     </ul>
