@@ -49,8 +49,16 @@ class AppController extends Controller {
 
     public function __construct(\Cake\Network\Request $request = null, \Cake\Network\Response $response = null, $name = null, $eventManager = null, $components = null) {
         parent::__construct($request, $response, $name, $eventManager, $components);
-        $this->set('title', $this->title);
-        $this->set('sub_title', $this->sub_title);
+        header("Access-Control-Allow-Origin: *");
+        header("Access-Control-Allow-Headers: *");
+        header("Access-Control-Allow-Methods: GET,POST,PUT,DELETE,OPTIONS");
+        header("Access-Control-Allow-Headers: X-ApiToken, X-ApiDocumento, X-My-Api-Version, X-MyApiTokenHeader, Engaged-Auth-Token, Access-Control-Allow-Headers, Content-Type, Authorization, Content-Length, X-Requested-With");
+        header('X-Api-Version: V1');
+        $this->viewBuilder()->layout('ajax');
+        if ($this->request->is(['options'])) {
+            $this->resp([], 200);
+        }
+
         //$this->definedTitles();
     }
 
@@ -72,82 +80,82 @@ class AppController extends Controller {
         $this->loadComponent('RequestHandler');
         $this->loadComponent('Flash');
 
-        $this->helpers = [
-            'Flash' => [
-                'className' => 'MyFlash'
-            ],
-            'Form' => [
-                'className' => 'MyForm'
-            ],
-            'Html' => [
-                'className' => 'MyHtml'
-            ],
-            'Number' => [
-                'className' => 'MyNumber'
-            ],
-            'Paginator' => [
-                'className' => 'MyPaginator'
-            ],
-            'Rss' => [
-                'className' => 'MyRss'
-            ],
-            'Text' => [
-                'className' => 'MyText'
-            ],
-            'Time' => [
-                'className' => 'MyTime'
-            ],
-            'Url' => [
-                'className' => 'MyUrl'
-            ],
-            'Modal' => [
-                'className' => 'MyModal'
-            ],
-        ];
+        /* $this->helpers = [
+          'Flash' => [
+          'className' => 'MyFlash'
+          ],
+          'Form' => [
+          'className' => 'MyForm'
+          ],
+          'Html' => [
+          'className' => 'MyHtml'
+          ],
+          'Number' => [
+          'className' => 'MyNumber'
+          ],
+          'Paginator' => [
+          'className' => 'MyPaginator'
+          ],
+          'Rss' => [
+          'className' => 'MyRss'
+          ],
+          'Text' => [
+          'className' => 'MyText'
+          ],
+          'Time' => [
+          'className' => 'MyTime'
+          ],
+          'Url' => [
+          'className' => 'MyUrl'
+          ],
+          'Modal' => [
+          'className' => 'MyModal'
+          ],
+          ];
 
-
+         */
         if ($this->request->action === 'index') {
             $this->loadComponent('Search.Prg');
         }
-        $this->loadComponent('Auth', [
-            'loginRedirect' => [
-                'controller' => 'Usuarios',
-                'action' => 'login',
-                'prefix' => false,
-                'plugin' => null
-            ],
-            'loginAction' => [
-                'controller' => 'Usuarios',
-                'action' => 'login',
-                'prefix' => false,
-                'plugin' => null
-            ],
-            'logoutRedirect' => '/',
-            'authorize' => ['Controller'], // Added this line
-            'authenticate' => [
-                'Form' => [
-                    'passwordHasher' => [
-                        'className' => 'Default',
-                    ],
-                    'fields' => ['username' => 'login', 'password' => 'senha'],
-                    'userModel' => 'Usuarios',
-                    'scope' => [
-                        'Usuarios.status' => 1
-                    ],
-                ],
-            ],
-            'storage' => 'Session'
-        ]);
-        $this->viewBuilder()->layout('simples');
+        /* $this->loadComponent('Auth', [
+          'loginRedirect' => [
+          'controller' => 'Usuarios',
+          'action' => 'login',
+          'prefix' => false,
+          'plugin' => null
+          ],
+          'loginAction' => [
+          'controller' => 'Usuarios',
+          'action' => 'login',
+          'prefix' => false,
+          'plugin' => null
+          ],
+          'logoutRedirect' => '/',
+          'authorize' => ['Controller'], // Added this line
+          'authenticate' => [
+          'Form' => [
+          'passwordHasher' => [
+          'className' => 'Default',
+          ],
+          'fields' => ['username' => 'login', 'password' => 'senha'],
+          'userModel' => 'Usuarios',
+          'scope' => [
+          'Usuarios.status' => 1
+          ],
+          ],
+          ],
+          'storage' => 'Session'
+          ]);
+          $this->viewBuilder()->layout('simples');
 
-        if ($this->RequestHandler->accepts('json') OR $this->request->accepts('application/json') OR $this->request->is('ajax')) {
-            $this->viewBuilder()->layout('ajax');
-            $this->response->disableCache();
-            $this->RequestHandler->prefers('json');
-            $this->RequestHandler->renderAs($this, 'json');
-            $this->response->type('application/json');
-            $this->set('_serialize', true);
-        }
+          if ($this->RequestHandler->accepts('json') OR $this->request->accepts('application/json') OR $this->request->is('ajax')) {
+          $this->viewBuilder()->layout('ajax');
+          $this->response->disableCache();
+          $this->RequestHandler->prefers('json');
+          $this->RequestHandler->renderAs($this, 'json');
+          $this->response->type('application/json');
+          $this->set('_serialize', true);
+          } */
     }
 
     /**
@@ -157,9 +165,15 @@ class AppController extends Controller {
      * @return void
      */
     public function beforeRender(Event $event) {
+        parent::beforeRender($event);
         if (!array_key_exists('_serialize', $this->viewVars) &&
                 in_array($this->response->type(), ['application/json', 'application/xml'])
         ) {
+            $this->set('_serialize', true);
+        }
+        if (empty($this->request->params['_ext'])) {
+            $this->RequestHandler->renderAs($this, 'json');
+            $this->response->type('application/json');
             $this->set('_serialize', true);
         }
     }
@@ -173,25 +187,13 @@ class AppController extends Controller {
 
     public function beforeFilter(Event $event) {
         parent::beforeFilter($event);
-        if ($this->request->params['controller'] != 'Usuarios' AND $this->request->params['action'] != 'login') {
-            if (!empty($this->Auth->user())) {
-                $this->Auth->allow();
-            }
-        }
+        /* if ($this->request->params['controller'] != 'Usuarios' AND $this->request->params['action'] != 'login') {
+          if (!empty($this->Auth->user())) {
+          $this->Auth->allow();
+          }
+          } */
 
-        // $this->Auth->allow();
-    }
-
-    protected function definedTitles() {
-        $this->loadModel('Menus');
-        $find = $this->Menus->find()->where(['Menus.controller' => $this->request->params['controller'], 'Menus.action' => 'index'])->cache(false)->first();
-        if (!empty($find)) {
-            $this->set('title', __($find->titulo));
-        }
-        $find = $this->Menus->find()->where(['Menus.controller' => $this->request->params['controller'], 'Menus.action' => $this->request->params['action']])->cache(false)->first();
-        if (!empty($find)) {
-            $this->set('sub_title', __($find->titulo) . ' Registro');
-        }
+        //$this->Auth->allow();
     }
 
     public function sendResponse($result = [], $code = 200, $msg = 'Generico') {
