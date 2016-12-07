@@ -56,7 +56,7 @@ class AppController extends Controller {
         header('X-Api-Version: V1');
         $this->viewBuilder()->layout('ajax');
         if ($this->request->is(['options'])) {
-            $this->resp([], 200);
+            $this->sendResponse([], 200);
         }
 
         //$this->definedTitles();
@@ -251,6 +251,69 @@ class AppController extends Controller {
             return $image;
         }
         return null;
+    }
+
+    public function getCollunsTabela($id_usuario, $tabela) {
+        $this->loadModel('ParametrosTabelas');
+        $this->loadModel('ParametrosPaginacoes');
+
+        $find = $this->ParametrosTabelas->find()->where(['usuario_id' => $id_usuario, 'tabela' => $tabela])->all();
+        if (count($find) === 0) {
+            if ($id_usuario > 1) {
+                $find = $this->ParametrosTabelas->find()->where(['usuario_id' => 1, 'tabela' => $tabela])->all();
+            }
+        }
+
+        $findConfig = $this->ParametrosPaginacoes->find()->where(['usuario_id' => $id_usuario, 'tabela' => $tabela])->first();
+        if (count($find) === 0) {
+            if ($id_usuario > 1) {
+                $findConfig = $this->ParametrosPaginacoes->find()->where(['usuario_id' => 1, 'tabela' => $tabela])->first();
+            }
+        }
+
+        if (count($find) > 0) {
+            $retorno = [
+                'colunas' => $find,
+                'config' => $findConfig,
+            ];
+            $this->sendResponse($retorno, 200);
+        } else {
+            $this->sendResponse([], 216);
+        }
+    }
+
+    public function setCollunsTabela($id_usuario, $tabela) {
+        if ($this->request->is(['patch', 'post', 'put'])) {
+            $this->loadModel('ParametrosTabelas');
+            $this->loadModel('ParametrosPaginacoes');
+
+            foreach ($this->request->data('colunas') as $key => $value) {
+                $find = $this->ParametrosTabelas->find()->where(['ParametrosTabelas.usuario_id' => $id_usuario, 'ParametrosTabelas.tabela' => $tabela, 'ParametrosTabelas.coluna' => $value['coluna']])->first();
+                if (count($find) === 0) {
+                    $find = $this->ParametrosTabelas->newEntity();
+                }
+                $find = $this->ParametrosTabelas->patchEntity($find, $value);
+
+                $find->tabela = $tabela;
+                $find->usuario_id = $id_usuario;
+                $find->ative = ($value['ative'] == true ? 1 : 0);
+                $find->css = $find->ative > 0 ? 'active' : null;
+                $this->ParametrosTabelas->save($find);
+            }
+
+
+            $findConfig = $this->ParametrosPaginacoes->find()->where(['ParametrosPaginacoes.usuario_id' => $id_usuario, 'ParametrosPaginacoes.tabela' => $tabela])->first();
+            if (count($findConfig) === 0) {
+                $findConfig = $this->ParametrosPaginacoes->newEntity();
+            }
+
+            $findConfig = $this->ParametrosPaginacoes->patchEntity($findConfig, $this->request->data('paginacao'));
+            $findConfig->tabela = $tabela;
+            $findConfig->usuario_id = $id_usuario;
+            $this->ParametrosPaginacoes->save($findConfig);
+
+            $this->sendResponse([], 200);
+        }
     }
 
 }

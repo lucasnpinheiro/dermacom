@@ -23,9 +23,19 @@ class PacientesController extends AppController {
     public function indexLoad() {
         $this->loadComponent('Search.Prg');
         $query = $this->{$this->modelClass}->find('search', $this->{$this->modelClass}->filterParams($this->request->query))
-                ->where([$this->modelClass . '.status !=' => $this->{$this->modelClass}->statusExcluido]);
+                ->where([$this->modelClass . '.status !=' => $this->{$this->modelClass}->statusExcluido])
+                ->contain(['Sexos', 'EstadosCivis', 'Escolaridades', 'Profissoes', 'Nacionalidades', 'Religioes', 'Cores']);
         $result = $this->paginate($query);
         if (count($result) > 0) {
+            foreach ($result as $key => $value) {
+                $value->sexo_mask = !empty($value->sexo->nome) ? $value->sexo->nome : null;
+                $value->estados_civil_mask = !empty($value->estados_civi->nome) ? $value->estados_civi->nome : null;
+                $value->escolaridade_mask = !empty($value->escolaridade->nome) ? $value->escolaridade->nome : null;
+                $value->profissao_mask = !empty($value->profisso->nome) ? $value->profisso->nome : null;
+                $value->nacionalidade_mask = !empty($value->nacionalidade->nome) ? $value->nacionalidade->nome : null;
+                $value->religiao_mask = !empty($value->religio->nome) ? $value->religio->nome : null;
+                $value->cor_mask = !empty($value->core->nome) ? $value->core->nome : null;
+            }
             $this->sendResponse($result, 200);
         } else {
             $this->sendResponse($result, 216);
