@@ -22,7 +22,8 @@ class UtilitsController extends AppController {
         $this->viewBuilder()->layout('ajax');
         $http = new Client();
         $response = $http->get('http://cep.agenciavoxel.com.br/' . $cep . '.json');
-        $this->set('retorno', json_decode($response->body(), true));
+        $response = json_decode($response->body(), true);
+        $this->sendResponse($response['result'], 200);
     }
 
 }

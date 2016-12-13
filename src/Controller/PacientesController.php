@@ -164,8 +164,7 @@ class PacientesController extends AppController {
                 }
             }
         }
-        $this->set(compact('midias', 'convenios', 'contatosTipos', 'servicosClinicas', 'usuarios', 'parentescos', 'especialidades', 'paciente', 'sexos', 'estadosCivils', 'escolaridades', 'profissaos', 'nacionalidades', 'religiaos', 'cors'));
-        $this->set('_serialize', ['paciente']);
+        $this->sendResponse(compact('midias', 'convenios', 'contatosTipos', 'servicosClinicas', 'usuarios', 'parentescos', 'especialidades', 'paciente', 'sexos', 'estadosCivils', 'escolaridades', 'profissaos', 'nacionalidades', 'religiaos', 'cors'), 200);
     }
 
     public function gravar() {
